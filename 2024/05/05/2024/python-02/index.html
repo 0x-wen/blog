@@ -9,7 +9,7 @@
     
     <title>
         
-            diary-2024-04-24 |
+            python-02 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        diary-2024-04-24
+                        python-02
                     </div>
                 
 
@@ -238,12 +238,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-04-24 14:10:38</span>
+                <span class="datetime">2024-05-05 20:36:25</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Wed Apr 24 2024 14:30:18 GMT+0800">2024-04-24 14:30:18</span>
+                <span class="datetime" data-updated="Sun May 05 2024 20:59:01 GMT+0800">2024-05-05 20:59:01</span>
             </span>
         
 
@@ -253,7 +253,7 @@
             <span class="post-tag meta-info-item border-box">
                 <ul class="post-tag-ul">
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/invest/">invest</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/python/">python</a></li>
                         
                     
                 </ul>
@@ -263,12 +263,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>135 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>662 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
             </span>
         
         
@@ -285,14 +285,42 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="韭菜的自我修养"><a href="#韭菜的自我修养" class="headerlink" title="韭菜的自我修养"></a>韭菜的自我修养</h2><ul>
-<li><p>A股就是屎一样市场【big shit market】<br>今天清空了所有定投买入的基金，如葛x的医疗股中下跌幅度高达56%,还定投个锤子<br>白酒也迟迟萎靡不振，全部割肉割肉，留给有需要的人吧</p>
-</li>
-<li><p>大A就是垃圾市场，股票基金都一样，没有区别</p>
-</li>
-<li><p>全面转战加密，又找不到自己核心的竞争力，需要静下来整理下突破的方向和短期要达到的目标</p>
-</li>
-</ul>
+                    <h2 id="python文件运行时路径导入的问题"><a href="#python文件运行时路径导入的问题" class="headerlink" title="python文件运行时路径导入的问题"></a>python文件运行时路径导入的问题</h2><blockquote>
+<p> 错误提示：ModuleNotFoundError: No module named ‘xxxx’</p>
+</blockquote>
+<p>解决这个问题首先要明白Python运行时，Python解释器会按照一定的搜索路径来查找模块和包。</p>
+<p>可以通过sys.path查看具体信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="built_in">print</span>(sys.path)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;/Users/jw/Documents/github/abcd/b&#x27;, &#x27;/opt/homebrew/Cellar/python@3.12/3.12.3/Frameworks/Python.framework/Versions/3.12/lib/python312.zip&#x27;, &#x27;/opt/homebrew/Cellar/python@3.12/3.12.3/Frameworks/Python.framework/Versions/3.12/lib/python3.12&#x27;, &#x27;/opt/homebrew/Cellar/python@3.12/3.12.3/Frameworks/Python.framework/Versions/3.12/lib/python3.12/lib-dynload&#x27;, &#x27;/opt/homebrew/lib/python3.12/site-packages&#x27;, &#x27;/Users/jw/Documents/github/abcd&#x27;]</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>当前工作目录：即列表下标为0的元素，解释器会首先在当前目录中搜索模块，当前工作目录是指在运行Python脚本时所在的目录</li>
+<li>PYTHONPATH环境变量：<code>PYTHONPATH</code>环境变量可以用来指定额外的模块搜索路径。它是一个包含多个目录路径的列表，Python解释器会按照列表中的顺序进行搜索。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以通过以下命令在终端查看</span></span><br><span class="line">echo $PYTHONPATH </span><br></pre></td></tr></table></figure>
+
+<p>这种方式比较隐蔽，不常用，需要操作者知情才会去查看此环境变量</p>
+<ol start="3">
+<li>系统默认路径：Python解释器会在一组默认的系统路径中搜索模块。这些路径包括Python标准库的位置以及安装的第三方库的位置。【参考上述path路径中展示，除最后一个元素和第一个元素外】</li>
+</ol>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">abcd/</span><br><span class="line">├── a/</span><br><span class="line">│ ├── init.py</span><br><span class="line">│ └── m.py           # m.py中有一个变量 aa = 11</span><br><span class="line">└── b/</span><br><span class="line">├── init.py</span><br><span class="line">└── mb.py          #  在此路径下运行 mb.py 文件 并打印出变量 aa</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mb.py</span></span><br><span class="line"><span class="keyword">from</span> a.m <span class="keyword">import</span> aa</span><br><span class="line"><span class="built_in">print</span>(aa)</span><br><span class="line"></span><br><span class="line">File <span class="string">&quot;/Users/jw/Documents/github/abcd/b/mb.py&quot;</span>, line <span class="number">29</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="keyword">from</span> a.m <span class="keyword">import</span> aa</span><br><span class="line">ModuleNotFoundError: No module named <span class="string">&#x27;a&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>将模块a添加至path路径中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line"></span><br><span class="line">root_path = Path(__file__).resolve().parent.parent</span><br><span class="line">sys.path.append(<span class="built_in">str</span>(root_path))  <span class="comment"># 将root_path添加到PATH，并会在此模块下搜索</span></span><br><span class="line"><span class="built_in">print</span>(sys.path)  <span class="comment"># 此处会输出path的所有内容</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> a.m <span class="keyword">import</span> aa</span><br><span class="line"><span class="built_in">print</span>(aa)   <span class="comment"># 成功输出变量信息</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="类似场景"><a href="#类似场景" class="headerlink" title="类似场景"></a>类似场景</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">abcd/</span><br><span class="line">├── a/</span><br><span class="line">│ ├── init.py</span><br><span class="line">│ └── m.py           # m.py中有一个变量 aa = 11</span><br><span class="line">└── b/</span><br><span class="line">├── init.py</span><br><span class="line">└── mb.py            #  在此路径下运行 mb.py 文件 并打印出变量 aa</span><br><span class="line">└ main.py             # 程序主入口</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">mian.py</span></span><br><span class="line">from a.m import aa</span><br><span class="line">print(aa)</span><br></pre></td></tr></table></figure>
+
+<p><code>main.py</code> 无需添加至PATH即可成功输出aa变量的原因现在知道了吗？</p>
+<h3 id="根据上述结论推导："><a href="#根据上述结论推导：" class="headerlink" title="根据上述结论推导："></a>根据上述结论推导：</h3><ol>
+<li><code>main.py</code>文件在运行时，会在当前工作目录下搜索包，即能找到a模块也可以找到b模块，无需添加</li>
+</ol>
 
                 </div>
                 
@@ -301,11 +329,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                diary-2024-04-24
+                python-02
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/04/24/2024/diary/
+                2024/05/05/2024/python-02/
             </div>
         </div>
 
@@ -321,7 +349,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-04-24 14:10</div>
+                <div class="content">2024-05-05 20:36</div>
             </div>
 
 
@@ -357,7 +385,7 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/invest/">invest</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/python/">python</a>
                                     </li>
                                 
                             </ul>
@@ -396,31 +424,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/blog/2024/05/05/2024/python-02/"
-                                   title="python-02"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">python-02</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2023/08/21/2023/project-optimize/"
-                                   title="Python重复逻辑优化篇"
+                                   href="/blog/2024/04/24/2024/diary/"
+                                   title="diary-2024-04-24"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Python重复逻辑优化篇</span>
+                                        <span class="post-nav-title-item text-ellipsis">diary-2024-04-24</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -448,7 +460,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%AD%E8%8F%9C%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB"><span class="nav-number">1.</span> <span class="nav-text">韭菜的自我修养</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E6%96%87%E4%BB%B6%E8%BF%90%E8%A1%8C%E6%97%B6%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">python文件运行时路径导入的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E4%BC%BC%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">类似场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E4%B8%8A%E8%BF%B0%E7%BB%93%E8%AE%BA%E6%8E%A8%E5%AF%BC%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">根据上述结论推导：</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -616,7 +628,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%AD%E8%8F%9C%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB"><span class="nav-number">1.</span> <span class="nav-text">韭菜的自我修养</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python%E6%96%87%E4%BB%B6%E8%BF%90%E8%A1%8C%E6%97%B6%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">python文件运行时路径导入的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E4%BC%BC%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.</span> <span class="nav-text">类似场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E4%B8%8A%E8%BF%B0%E7%BB%93%E8%AE%BA%E6%8E%A8%E5%AF%BC%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">根据上述结论推导：</span></a></li></ol></li></ol>
     </div>
 </div>
 
