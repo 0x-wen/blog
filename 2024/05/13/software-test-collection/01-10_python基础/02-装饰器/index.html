@@ -9,7 +9,7 @@
     
     <title>
         
-            00-区块链基础 |
+            02-装饰器 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        00-区块链基础
+                        02-装饰器
                     </div>
                 
 
@@ -238,12 +238,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-05-08 18:01:37</span>
+                <span class="datetime">2024-05-13 21:38:49</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Mon May 13 2024 14:34:32 GMT+0800">2024-05-13 14:34:32</span>
+                <span class="datetime" data-updated="Mon May 13 2024 21:39:19 GMT+0800">2024-05-13 21:39:19</span>
             </span>
         
 
@@ -251,7 +251,7 @@
             <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
                 <ul class="post-category-ul">
                     
-                            <li class="category-item"><a href="/blog/categories/blockchain-collection/">blockchain-collection</a></li>
+                            <li class="category-item"><a href="/blog/categories/software-test-collection/">software-test-collection</a></li>
                         
                     
                 </ul>
@@ -262,7 +262,10 @@
             <span class="post-tag meta-info-item border-box">
                 <ul class="post-tag-ul">
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/software-test/">software-test</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/python/">python</a></li>
                         
                     
                 </ul>
@@ -272,12 +275,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>573 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
             </span>
         
         
@@ -294,88 +297,34 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <blockquote>
-<p>文章将使用问答的形式进行区块链基础知识的讲解，同时满足学习和面试需求</p>
+                    <h2 id="2-装饰器-decorator"><a href="#2-装饰器-decorator" class="headerlink" title="2.装饰器(decorator)"></a>2.装饰器(decorator)</h2><blockquote>
+<p>本质函数当作参数传递,利用闭包特性实现</p>
 </blockquote>
-<h2 id="1-什么是区块链？"><a href="#1-什么是区块链？" class="headerlink" title="1.什么是区块链？"></a>1.什么是区块链？</h2><p>区块链是一种<code>分布式</code>的、<code>去中心化</code>的数字账本技术，用于记录和验证交易与数据。<br>区块链的核心概念是将交易和数据记录在一个被称为”区块”的数据结构中，并通过<code>加密</code>和<code>共识算法</code>保证数据的<code>安全性</code>和<code>一致性</code>。<br>每个区块包含了一批交易的信息，以及与之前区块的链接，形成了一个链式结构。</p>
-<h2 id="2-区块链有什么特点？"><a href="#2-区块链有什么特点？" class="headerlink" title="2.区块链有什么特点？"></a>2.区块链有什么特点？</h2><p>在区块链中，参与者通过网络共享和维护这个账本的副本，而不是依赖于中央机构来验证交易。这种去中心化的特性使得区块链具有以下特点：</p>
-<ol>
-<li><code>透明性</code>：区块链中的交易和数据是公开可见的，任何人都可以查看账本的副本。这提供了一种透明的方式来验证交易和监督系统的运作。</li>
-<li><code>安全性</code>：区块链使用密码学技术对数据进行加密和验证，从而确保数据的安全性和完整性。由于数据存储在多个节点上，篡改数据变得非常困难。</li>
-<li><code>去中心化</code>：区块链没有中央机构或控制权，参与者通过共识算法来达成对账本的一致认可。这使得区块链具有更高的可信度和抗攻击能力。</li>
-<li><code>不可篡改性</code>：一旦数据被记录在区块链上，由于每个区块都包含了前一个区块的哈希值，任何对数据的篡改都将被其他节点检测到。</li>
-</ol>
-<h2 id="3-区块链的运作方式"><a href="#3-区块链的运作方式" class="headerlink" title="3.区块链的运作方式"></a>3.区块链的运作方式</h2><h3 id="3-1-哈希函数"><a href="#3-1-哈希函数" class="headerlink" title="3.1 哈希函数"></a>3.1 哈希函数</h3><p>理想的加密哈希函数具备5个主要属性：</p>
-<ol>
-<li><strong>确定性：</strong>相同的消息总是产生相同的哈希值。</li>
-<li><strong>快速：</strong>快速计算任何给定消息的哈希值。</li>
-<li><strong>抵抗性：</strong>除非尝试所有可能的消息，否则从其哈希值生成消息是不可行的。</li>
-<li><strong>不相关：</strong>对消息的微小更改会极大地改变哈希值，以至于新值与旧值没有关系。</li>
-<li><strong>抗碰撞：</strong>不可能找到具有相同哈希值的两个不同消息。</li>
-</ol>
-<h3 id="3-2-区块、链"><a href="#3-2-区块、链" class="headerlink" title="3.2 区块、链"></a>3.2 区块、链</h3><ul>
-<li>有效区块是一组有序的<strong>交易</strong>。</li>
-<li>每个块都包含前一个块的<strong>哈希值。</strong> </li>
-<li>区块的哈希值具有<strong>易证明难伪造。</strong></li>
-</ul>
-<p>区块链接方式如下图示例：</p>
-<img    
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/image-03.png"
-                         alt="image-03" style="zoom:120%;" 
-                 >
+<h3 id="2-1-最原始的装饰器"><a href="#2-1-最原始的装饰器" class="headerlink" title="2.1 最原始的装饰器"></a>2.1 最原始的装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把函数当做参数,传递给另外一个函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">new_add</span>(<span class="params">func, *args</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;对原函数进行装饰 遵循开放封闭原则: <span class="subst">&#123;func(*args)&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(new_add(add, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
 
-<h2 id="4-交易的运作方式"><a href="#4-交易的运作方式" class="headerlink" title="4.交易的运作方式"></a>4.交易的运作方式</h2><h3 id="4-1-加密钱包"><a href="#4-1-加密钱包" class="headerlink" title="4.1 加密钱包"></a>4.1 加密钱包</h3><blockquote>
-<p>钱包并不存储加密资产，它们只存储私钥</p>
-</blockquote>
-<p>先理解三个重要概念：</p>
-<ul>
-<li>私钥、公钥、地址：公私钥通过<code>非对称加密</code>生成，公钥用于分发，私钥用于个人保留，地址通过公钥推导</li>
-<li>加密与解密：消息传递通过公钥加密、私钥解密</li>
-<li>签名与验证：交易信息通过私钥签名、公钥验证签名</li>
-</ul>
-<img    
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/image-0401.png"
-                         alt="image-0401" style="zoom:70%;" 
-                 >
 
-<h3 id="4-2-以BTC为例，讲解一笔交易流程"><a href="#4-2-以BTC为例，讲解一笔交易流程" class="headerlink" title="4.2 以BTC为例，讲解一笔交易流程"></a>4.2 以BTC为例，讲解一笔交易流程</h3><blockquote>
-<p>用户B转账 1 bitcoin 至用户A</p>
-</blockquote>
-<img    
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/image-0402.png"
-                         alt="image-0402" style="zoom:120%;" 
-                 >
 
-<ol>
-<li>用户B使用自己的私钥签名完成交易信息【确认用户B有足够的代币】</li>
-<li>将交易信息发送至节点，节点使用公钥验证交易信息，并存储在<code>内存池</code>中。</li>
-<li>节点将交易分组在区块中，并广播到其他节点。</li>
-<li>共识成功并出块后，用户A才能获取到1 bitcoin。</li>
-</ol>
-<h2 id="5-共识"><a href="#5-共识" class="headerlink" title="5.共识"></a>5.共识</h2><h3 id="5-1-工作量证明（PoW）"><a href="#5-1-工作量证明（PoW）" class="headerlink" title="5.1 工作量证明（PoW）"></a>5.1 工作量证明（PoW）</h3><blockquote>
-<p>去中心化程度高，消耗资源高<br>在 PoW 共识中，用户必须完成任意难度的任务，当与块中的有序交易结合时，会产生符合特定标准的哈希函数结果。</p>
+<h3 id="2-2-常见使用方式"><a href="#2-2-常见使用方式" class="headerlink" title="2.2 常见使用方式"></a>2.2 常见使用方式</h3><blockquote>
+<p>编写一个记录日志 和 统计函数执行耗时的装饰器</p>
 </blockquote>
-<ol>
-<li>称为“矿工”的节点通过暴力竞争来解决数学问题（找到特定规则的哈希值）</li>
-<li>第一个解决问题的矿工可以创建一个区块</li>
-<li>其他节点检查该块是否有效。如果是，矿工将获得加密货币奖励。如果不是，矿工就浪费了时间和精力。</li>
-<li>所有的节点都将新块添加到其区块链副本中。</li>
-</ol>
-<h3 id="5-2-股权证明-PoS"><a href="#5-2-股权证明-PoS" class="headerlink" title="5.2 股权证明 (PoS)"></a>5.2 股权证明 (PoS)</h3><blockquote>
-<p>去中心化的一种妥协方案，更像选择代表人参与网络，相比工作量证明大大降低资源消耗</p>
-</blockquote>
-<ol>
-<li>称为验证者节点会抵押一些加密货币。投入一定数量的加密货币来参与和分配出块奖励。</li>
-<li>验证者节点所占的权重越高更有可能被选择来处理交易并创建区块。</li>
-<li>其他验证者节点检查该块是否有效。如果是，所有参与的验证者都会赚取收益。如果不是，创建该块的验证者可能会失去其权益或者获得惩罚。</li>
-</ol>
-<p>还有其他共识算法将后续介绍，比如：权威证明、委托权益证明等</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">loger</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;1 记录日志的代码...&quot;</span>)</span><br><span class="line">        result = func(*args)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;2 日志分析的代码...&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编写一个计算方法执行耗时的装饰器</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timer</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;3 计算耗时开始&quot;</span>)</span><br><span class="line">        start_time = time.time()</span><br><span class="line">        result = func(*args)</span><br><span class="line">        end_time = time.time()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;func.__name__&#125;</span>: 耗时: <span class="subst">&#123;end_time - start_time&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;4 计算耗时结束&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@loger</span></span><br><span class="line"><span class="meta">@timer</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">11</span>, <span class="number">1</span>))  <span class="comment"># 执行顺序: 1 -&gt; 3 -&gt; func.__name__耗时 -&gt; 4 -&gt; 2 -&gt; func执行结果</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-3-装饰器带参数"><a href="#2-3-装饰器带参数" class="headerlink" title="2.3 装饰器带参数"></a>2.3 装饰器带参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 编写一个带参数的装饰器，用于验证用户登录</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login_verify</span>(<span class="params">is_login=<span class="literal">False</span></span>):  <span class="comment"># 这里接收装饰器的参数</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">func</span>):  <span class="comment"># 接收被装饰的函数</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">wrapper</span>(<span class="params">*args, **kwargs</span>):  <span class="comment"># 这里接收被装饰函数的参数</span></span><br><span class="line">            <span class="keyword">if</span> is_login:  <span class="comment"># 装饰器的参数在这里使用，用于判断</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;被装饰函数执行前&quot;</span>)</span><br><span class="line">                result = func(*args)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;被装饰函数执行后&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> result</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> wrapper  <span class="comment"># 返回函数的包装器</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@login_verify(<span class="params">is_login=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">*args, **kwargs</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">11</span>, <span class="number">22</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-4-给类添加一个装饰器"><a href="#2-4-给类添加一个装饰器" class="headerlink" title="2.4 给类添加一个装饰器"></a>2.4 给类添加一个装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">class_name</span>(<span class="params">cls</span>):</span><br><span class="line">    cls.name = <span class="string">&quot;小明&quot;</span></span><br><span class="line">    <span class="keyword">return</span> cls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给类添加装饰器</span></span><br><span class="line"><span class="meta">@class_name</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(A.name)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-5-使用类编写装饰器"><a href="#2-5-使用类编写装饰器" class="headerlink" title="2.5 使用类编写装饰器"></a>2.5 使用类编写装饰器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, func</span>):</span><br><span class="line">        self.func = func</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;__call__ is running ...&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> self.func(*args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@A  </span><span class="comment"># 本质 A(add)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(add(<span class="number">1</span>, <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="2-6-使用类编写装饰器带参数"><a href="#2-6-使用类编写装饰器带参数" class="headerlink" title="2.6 使用类编写装饰器带参数"></a>2.6 使用类编写装饰器带参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">S</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, func, name</span>):</span><br><span class="line">        self.func = func</span><br><span class="line">        self.name = name</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__call__</span>(<span class="params">self, *args, **kwargs</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;类装饰器转入的参数&quot;</span>, self.name)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;1 装饰函数执行之前&quot;</span>)</span><br><span class="line">        result = self.func(*args)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;2 装饰函数执行之后&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add</span>(<span class="params">*args</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(args)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">s = S(add, <span class="string">&quot;hello&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s(<span class="number">1</span>, <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
 
                 </div>
                 
@@ -384,11 +333,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                00-区块链基础
+                02-装饰器
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/05/08/blockchain/base/00-区块链基础/
+                2024/05/13/software-test-collection/01-10_python基础/02-装饰器/
             </div>
         </div>
 
@@ -404,7 +353,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-05-08 18:01</div>
+                <div class="content">2024-05-13 21:38</div>
             </div>
 
 
@@ -440,7 +389,11 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/software-test/">software-test</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/python/">python</a>
                                     </li>
                                 
                             </ul>
@@ -482,14 +435,14 @@
                             <div class="prev-post">
                                 <a class="prev"
                                    rel="prev"
-                                   href="/blog/2024/05/10/software-test-collection/00-%E5%BC%80%E7%AF%87/"
-                                   title="00-开篇"
+                                   href="/blog/2024/05/13/software-test-collection/01-10_python%E5%9F%BA%E7%A1%80/03-%E5%AF%B9%E8%B1%A1/"
+                                   title="03-对象"
                                 >
                                     <span class="left arrow-icon flex-center">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">00-开篇</span>
+                                        <span class="post-nav-title-item text-ellipsis">03-对象</span>
                                         <span class="post-nav-item">上一篇</span>
                                     </span>
                                 </a>
@@ -499,11 +452,11 @@
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2024/05/05/python/base/py-02%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5/"
-                                   title="python-路径导入问题"
+                                   href="/blog/2024/05/13/software-test-collection/01-10_python%E5%9F%BA%E7%A1%80/01-%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+                                   title="01-基础数据类型"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">python-路径导入问题</span>
+                                        <span class="post-nav-title-item text-ellipsis">01-基础数据类型</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -531,7 +484,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%9F"><span class="nav-text">1.什么是区块链？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%EF%BC%9F"><span class="nav-text">2.区块链有什么特点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-text">3.区块链的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="nav-text">3.1 哈希函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8C%BA%E5%9D%97%E3%80%81%E9%93%BE"><span class="nav-text">3.2 区块、链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BA%A4%E6%98%93%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-text">4.交易的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8A%A0%E5%AF%86%E9%92%B1%E5%8C%85"><span class="nav-text">4.1 加密钱包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BB%A5BTC%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%B2%E8%A7%A3%E4%B8%80%E7%AC%94%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-text">4.2 以BTC为例，讲解一笔交易流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%B1%E8%AF%86"><span class="nav-text">5.共识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%EF%BC%88PoW%EF%BC%89"><span class="nav-text">5.1 工作量证明（PoW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%82%A1%E6%9D%83%E8%AF%81%E6%98%8E-PoS"><span class="nav-text">5.2 股权证明 (PoS)</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%A3%85%E9%A5%B0%E5%99%A8-decorator"><span class="nav-text">2.装饰器(decorator)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%9C%80%E5%8E%9F%E5%A7%8B%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.1 最原始的装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 常见使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%A3%85%E9%A5%B0%E5%99%A8%E5%B8%A6%E5%8F%82%E6%95%B0"><span class="nav-text">2.3 装饰器带参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%BB%99%E7%B1%BB%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.4 给类添加一个装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E4%BD%BF%E7%94%A8%E7%B1%BB%E7%BC%96%E5%86%99%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.5 使用类编写装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E4%BD%BF%E7%94%A8%E7%B1%BB%E7%BC%96%E5%86%99%E8%A3%85%E9%A5%B0%E5%99%A8%E5%B8%A6%E5%8F%82%E6%95%B0"><span class="nav-text">2.6 使用类编写装饰器带参数</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -570,7 +523,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">10.3k</span>
+                    <span class="item-value border-box word">10.1k</span>
                 </span>
             
 
@@ -699,7 +652,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%9F"><span class="nav-text">1.什么是区块链？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%EF%BC%9F"><span class="nav-text">2.区块链有什么特点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-text">3.区块链的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="nav-text">3.1 哈希函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8C%BA%E5%9D%97%E3%80%81%E9%93%BE"><span class="nav-text">3.2 区块、链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BA%A4%E6%98%93%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-text">4.交易的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8A%A0%E5%AF%86%E9%92%B1%E5%8C%85"><span class="nav-text">4.1 加密钱包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BB%A5BTC%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%B2%E8%A7%A3%E4%B8%80%E7%AC%94%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-text">4.2 以BTC为例，讲解一笔交易流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%B1%E8%AF%86"><span class="nav-text">5.共识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%EF%BC%88PoW%EF%BC%89"><span class="nav-text">5.1 工作量证明（PoW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%82%A1%E6%9D%83%E8%AF%81%E6%98%8E-PoS"><span class="nav-text">5.2 股权证明 (PoS)</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%A3%85%E9%A5%B0%E5%99%A8-decorator"><span class="nav-text">2.装饰器(decorator)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%9C%80%E5%8E%9F%E5%A7%8B%E7%9A%84%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.1 最原始的装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-text">2.2 常见使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E8%A3%85%E9%A5%B0%E5%99%A8%E5%B8%A6%E5%8F%82%E6%95%B0"><span class="nav-text">2.3 装饰器带参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E7%BB%99%E7%B1%BB%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.4 给类添加一个装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E4%BD%BF%E7%94%A8%E7%B1%BB%E7%BC%96%E5%86%99%E8%A3%85%E9%A5%B0%E5%99%A8"><span class="nav-text">2.5 使用类编写装饰器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E4%BD%BF%E7%94%A8%E7%B1%BB%E7%BC%96%E5%86%99%E8%A3%85%E9%A5%B0%E5%99%A8%E5%B8%A6%E5%8F%82%E6%95%B0"><span class="nav-text">2.6 使用类编写装饰器带参数</span></a></li></ol></li></ol>
     </div>
 </div>
 
