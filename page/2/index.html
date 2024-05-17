@@ -9,8 +9,6 @@
     
     <title>
         
-            标签: note |
-        
         Blog
     </title>
     
@@ -51,10 +49,10 @@
     
 
     <!-- page content -->
-    <div class="page-main-content border-box">
+    <div class="page-main-content border-box is-home">
         <div class="page-main-content-top">
             
-<header class="header-wrapper">
+<header class="header-wrapper transparent-1">
 
     <div class="border-box header-content">
         <div class="left border-box">
@@ -98,7 +96,7 @@
                     
                         
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/blog/tags"
                             >
                                 
@@ -169,7 +167,7 @@
             
                 
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/blog/tags"
                     >标签</a>
                 </li>
@@ -203,35 +201,103 @@
             <div class="main-content border-box">
                 
 
-                    <div class="fade-in-down-animation">
-    <div class="tag-container border-box">
-        <div class="tag-name"><i class="fas fa-hashtag"></i>&nbsp;note
-        </div>
-        <div class="tag-post-list">
-            
-<div class="archive-list-container border-box">
+                    <div class="home-content-container fade-in-down-animation">
     
-        <section class="archive-item border-box">
-            <div class="archive-item-header border-box">
-                <span class="archive-year">2023</span>
-            </div>
-            <ul class="archive-item-body border-box">
+    <ul class="home-post-list border-box">
+        
+            <li class="home-post-item">
+
                 
-                    <li class="post-item border-box">
-                        <span class="post-date border-box">01-10</span>
-                        <a class="post-title border-box text-ellipsis"
-                           href="/blog/2023/01/10/note/python/py-%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/"
-                        >python-路径导入问题</a>
-                    </li>
-                
-            </ul>
-        </section>
+
+                <div class="home-post-item-bottom border-box">
+                    
+                    <h3 class="home-post-title border-box">
+                        <a href="/blog/2023/01/10/note/python/py-%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/">
+                            python-路径导入问题
+                        </a>
+                    </h3>
+
+                    <div class="home-post-content keep-markdown-body">
+                        
+                            python文件运行时路径导入的问题
+ 错误提示：ModuleNotFoundError: No module named ‘xxxx’
+
+解决这个问题首先要明白Python运行时，Python解释器会按照一定的搜索路径来查找模块和包。
+可以通过sy...
+                        
+                    </div>
+
+                    
+
+<div class="post-meta-info-container border-box home">
+    <div class="post-meta-info border-box">
+        
+            <span class="meta-info-item border-box">
+                <i class="icon fa-solid fa-history"></i>&nbsp;<span class="home-post-history"
+                                                                                data-updated="Mon May 13 2024 16:09:03 GMT+0800"
+                >2024-05-13 16:09:03</span>
+            </span>
+        
+
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/python/">python</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/note/">note</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+        <a class="home-read-more" href="/blog/2023/01/10/note/python/py-%E8%B7%AF%E5%BE%84%E5%AF%BC%E5%85%A5%E9%97%AE%E9%A2%98/">阅读全文&nbsp;<i class="icon fas fa-angle-right"></i></a>
     
 </div>
 
+                </div>
+            </li>
+        
+    </ul>
+    
+    <div class="paginator border-box flex-center">
+        <div class="btn-wrap allowed">
+            <a class="jump-btn"
+               href="/blog/"
+            ><i class="fa-solid fa-chevron-left"></i></a>
+        </div>
+
+
+        <div class="page-number-box border-box flex-center">
+            <input class="page-number-input border-box base-color-size"
+                   type="number"
+                   value="2"
+                   min="1"
+                   max="2"
+            ><span class="delimiter base-color-size">/</span><span class="base-color-size">2</span>
+        </div>
+
+
+        <div class="btn-wrap">
+            <a class="jump-btn"
+               href="/blog/"
+            ><i class="fa-solid fa-chevron-right"></i></a>
         </div>
     </div>
-    
+
 
 
 
@@ -286,7 +352,7 @@
 
     <!-- side tools -->
     <div class="side-tools">
-        <div class="side-tools-container border-box ">
+        <div class="side-tools-container border-box side-tools-show-handle">
     <ul class="side-tools-list side-tools-show-handle border-box">
         <li class="tools-item tool-font-adjust-plus flex-center">
             <i class="fas fa-search-plus"></i>
@@ -367,6 +433,7 @@
     <!-- tablet toc -->
     
 </main>
+
 
 
 
