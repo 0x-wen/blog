@@ -9,7 +9,7 @@
     
     <title>
         
-            100-cosmpy实践 |
+            103-共享门限秘密算法 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        100-cosmpy实践
+                        103-共享门限秘密算法
                     </div>
                 
 
@@ -238,12 +238,12 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-05-19 14:26:13</span>
+                <span class="datetime">2024-05-28 15:19:55</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Mon May 20 2024 14:31:14 GMT+0800">2024-05-20 14:31:14</span>
+                <span class="datetime" data-updated="Tue May 28 2024 18:13:20 GMT+0800">2024-05-28 18:13:20</span>
             </span>
         
 
@@ -251,7 +251,7 @@
             <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
                 <ul class="post-category-ul">
                     
-                            <li class="category-item"><a href="/blog/categories/software-test-collection/">software-test-collection</a></li>
+                            <li class="category-item"><a href="/blog/categories/blockchain-collection/">blockchain-collection</a></li>
                         
                     
                 </ul>
@@ -262,13 +262,10 @@
             <span class="post-tag meta-info-item border-box">
                 <ul class="post-tag-ul">
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/software-test/">software-test</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
                         
                     
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/python/">python</a></li>
-                        
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/cosmos/">cosmos</a></li>
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/cryptology/">cryptology</a></li>
                         
                     
                 </ul>
@@ -278,12 +275,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>667 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>6 分钟</span>
             </span>
         
         
@@ -300,75 +297,123 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="1-cosmpy源码解读"><a href="#1-cosmpy源码解读" class="headerlink" title="1.cosmpy源码解读"></a>1.cosmpy源码解读</h2><h3 id="1-1-项目简介"><a href="#1-1-项目简介" class="headerlink" title="1.1 项目简介"></a>1.1 项目简介</h3><p>基于 Cosmos-SDK 用于与区块链交互的 Python 客户端库  <a class="link"   target="_blank" rel="noopener" href="https://github.com/fetchai/cosmpy" >cosmpy-项目地址<i class="fas fa-external-link-alt"></i></a></p>
-<p>官方下也有一些示例文档和教程 可参考：<a class="link"   target="_blank" rel="noopener" href="https://fetch.ai/docs" >https://fetch.ai/docs<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="1-2-下载源码并安装依赖"><a href="#1-2-下载源码并安装依赖" class="headerlink" title="1.2 下载源码并安装依赖"></a>1.2 下载源码并安装依赖</h3><ul>
-<li><p>poetry 的使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">brew install poetry    # 这里是mac电脑下安装方式，win可自行查找</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入项目目录下执行下面命令</span></span><br><span class="line">poetry install </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将根据项目根目录中的pyproject.toml文件中定义的依赖项列表，下载并安装所有必需的依赖项</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1-3-调试代码和模块解析"><a href="#1-3-调试代码和模块解析" class="headerlink" title="1.3 调试代码和模块解析"></a>1.3 调试代码和模块解析</h3><p><code>aerial模块</code></p>
-<ul>
-<li>config.py:</li>
-</ul>
-<p>​		核心逻辑是NetworkConfig 和 NetworkConfigError 两个类</p>
-<p>​		NetworkConfig 主要配置 不同网络环境对应的成员数据</p>
-<p>​		validator函数主要检查classdata对象成员是否符合规范</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/config.png"
-                        alt="config"
-                 ></p>
-<ul>
-<li><p>aerial&#x2F;<strong>init</strong>.py</p>
-<p>LedgerClient 根据config中的URL类型建立一个客户端</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/init.png"
-                       
-                 ></p>
-</li>
-</ul>
-<h3 id="1-4-更改配置后调试测试用例"><a href="#1-4-更改配置后调试测试用例" class="headerlink" title="1.4 更改配置后调试测试用例"></a>1.4 更改配置后调试测试用例</h3><p>项目测试用例中有一个简单示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cosmospy/tests/integration/test_tx.py::test_faucet_transaction_balance</span><br></pre></td></tr></table></figure>
-
-<p>更改相关配置主要是代币名称，节点地址等，先保证此用例通过</p>
-<h2 id="2-cosmpy实践"><a href="#2-cosmpy实践" class="headerlink" title="2.cosmpy实践"></a>2.cosmpy实践</h2><h3 id="2-1-找到proto源文件并导入相关依赖"><a href="#2-1-找到proto源文件并导入相关依赖" class="headerlink" title="2.1 找到proto源文件并导入相关依赖"></a>2.1 找到proto源文件并导入相关依赖</h3><p>改造 cosmos-sdk 项目的 proto 源文件路径一般在根目录下的 proto 文件夹中</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/proto.png"
-                        alt="proto"
-                 ></p>
-<p>需注意 <code>py-proto</code> 是最后生成的Python调用文件，至于其他三个文件都可通过Google下载</p>
-<h3 id="2-2-编译proto文件"><a href="#2-2-编译proto文件" class="headerlink" title="2.2 编译proto文件"></a>2.2 编译proto文件</h3><ul>
-<li><p>编译命令, <code>需进入proto路径下，并提前创建py-proto文件夹</code></p>
-<p>–proto_path&#x3D;.&#x2F;proto         # 指定proto文件的路径</p>
-<p>–python_out&#x3D;.&#x2F;proto&#x2F;py-proto –grpc_python_out&#x3D;.&#x2F;proto&#x2F;py-proto    # 指定Python调用文件路径</p>
-<p>$(find .&#x2F; ( -path “<em>&#x2F;proto&#x2F;</em>“ ) -type f -name “*.proto”)    # 查找proto文件夹下所有 .proto结尾文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m grpc_tools.protoc --proto_path=./proto --python_out=./proto/py-proto --grpc_python_out=./proto/py-proto $(find ./ \( -path &quot;*/proto/*&quot; \) -type f -name &quot;*.proto&quot;) </span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="2-3-生成的文件可能没有包含-init-文件，需要循环创建"><a href="#2-3-生成的文件可能没有包含-init-文件，需要循环创建" class="headerlink" title="2.3 生成的文件可能没有包含__init__文件，需要循环创建"></a>2.3 生成的文件可能没有包含<code>__init__</code>文件，需要循环创建</h3><blockquote>
-<p>若已经有则可跳过此步骤</p>
+                    <h2 id="门限共享秘密算法（Threshold-Secret-Sharing，TSS）"><a href="#门限共享秘密算法（Threshold-Secret-Sharing，TSS）" class="headerlink" title="门限共享秘密算法（Threshold Secret Sharing，TSS）"></a>门限共享秘密算法（Threshold Secret Sharing，TSS）</h2><h3 id="重点知识点"><a href="#重点知识点" class="headerlink" title="重点知识点"></a>重点知识点</h3><ol>
+<li><strong>密钥分片</strong>：门限共享秘密算法将一个秘密（如加密密钥或钱包的助记词）分割成多个部分，称为份额（shares）。</li>
+<li><strong>门限值</strong>：确定一个门限值（K），只有当收集到至少K个份额时，才能恢复出原始的秘密。</li>
+<li><strong>安全性</strong>：即使部分份额丢失或被攻击者获取，只要不超过门限值，秘密仍然是安全的。</li>
+<li><strong>秘密恢复</strong>：只有当拥有足够数量的份额时，才能通过某种算法恢复原始的秘密。</li>
+<li><strong>可扩展性</strong>：算法可以设计成支持任意数量的份额和门限值，以适应不同的安全需求。</li>
+<li><strong>分布式存储</strong>：份额可以分布式存储在不同的物理位置或服务器上，增强了系统的容错性和抗攻击能力。</li>
+</ol>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ol>
+<li><strong>多签名钱包</strong>：在加密货币钱包中，使用TSS可以允许多个用户共同管理资产，只有当一定数量的用户同意时才能进行交易。</li>
+<li><strong>分布式密钥管理</strong>：在企业或组织中，TSS可以用于安全地管理和访问敏感信息，如服务器的私钥。</li>
+<li><strong>云服务提供商</strong>：云服务可以利用TSS来提供更高级别的数据安全性，确保客户数据的安全存储和访问。</li>
+<li><strong>区块链治理</strong>：在区块链网络中，TSS可以用于实现多签名的治理机制，确保关键决策需要多个参与者的共识。</li>
+</ol>
+<h3 id="技术难点"><a href="#技术难点" class="headerlink" title="技术难点"></a>技术难点</h3><ol>
+<li><strong>秘密分割算法</strong>：设计一个既安全又高效的分割算法是一个挑战，需要确保分割后的份额无法被单独解密。</li>
+<li><strong>恢复算法的安全性</strong>：恢复算法必须能够抵御各种攻击，包括内部和外部的攻击。</li>
+<li><strong>性能问题</strong>：在处理大量数据或高频率的访问请求时，保持高性能是一个技术挑战。</li>
+<li><strong>实际部署的复杂性</strong>：在实际部署中，需要考虑如何安全地生成、存储和传输份额。</li>
+<li><strong>参与者的信任问题</strong>：在分布式系统中，如何确保参与者之间的信任和合作是一个问题。</li>
+<li><strong>容错和备份</strong>：需要设计有效的容错和备份机制，以防止份额的丢失或损坏。</li>
+</ol>
+<h2 id="门限秘密共享方案"><a href="#门限秘密共享方案" class="headerlink" title="门限秘密共享方案"></a>门限秘密共享方案</h2><h3 id="Shamir的-t-n-门限方案："><a href="#Shamir的-t-n-门限方案：" class="headerlink" title="Shamir的(t, n)门限方案："></a><strong>Shamir的(t, n)门限方案</strong>：</h3><blockquote>
+<p>该方案基于多项式插值的原理，特别是拉格朗日插值法。需要n个份额中的任意t个份额来恢复秘密。</p>
 </blockquote>
-<ul>
-<li><p>将 py-proto 文件夹导入cosmpy项目， 重命名为 proto 此时会覆盖旧项目 proto</p>
-</li>
-<li><p>在proto文件夹下创建<code>__init__.py</code> 文件</p>
-</li>
-<li><p>循环遍历每个文件夹并创建<code>__init__.py</code> 文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find ./cosmpy/proto/amino  -type d -not -name &#x27;.*&#x27; -exec sh -c &#x27;if [ ! -f &quot;&#123;&#125;/__init__.py&quot; ]; then touch &quot;&#123;&#125;/__init__.py&quot;; fi&#x27; \;</span><br><span class="line">find ./cosmpy/proto/cosmos  -type d -not -name &#x27;.*&#x27; -exec sh -c &#x27;if [ ! -f &quot;&#123;&#125;/__init__.py&quot; ]; then touch &quot;&#123;&#125;/__init__.py&quot;; fi&#x27; \;</span><br></pre></td></tr></table></figure>
-
-<p>其他文件夹操作方式类似，操作完毕后将得到完整可用的Python客户端调用文件</p>
-</li>
+<h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li><strong>秘密（Secret, s）</strong>：需要被共享的原始数据或密钥。</li>
+<li><strong>份额（Shares）</strong>：秘密分割成的多个部分，每个份额称为一个份额。</li>
+<li><strong>门限值（Threshold, t）</strong>：恢复原始秘密所需的最小份额数。</li>
+<li><strong>参与者数（Total Participants, n）</strong>：总共分割出的份额数量。</li>
 </ul>
-<h3 id="2-4-按proto文件编写对应客户端代码"><a href="#2-4-按proto文件编写对应客户端代码" class="headerlink" title="2.4 按proto文件编写对应客户端代码"></a>2.4 按proto文件编写对应客户端代码</h3><p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/call-proto.png"
-                       
-                 ></p>
+<h4 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h4><ol>
+<li><strong>秘密分割</strong>：<ul>
+<li>秘密分发者选择一个大素数p（通常远大于秘密s）。</li>
+<li>在模p的有限域GF(p)中，秘密分发者构造一个t-1次的多项式f(x)，使得f(0) &#x3D; s（秘密）。</li>
+</ul>
+</li>
+<li><strong>生成份额</strong>：<ul>
+<li>秘密分发者随机选择n个不同的非零值x1, x2, …, xn作为多项式的根。</li>
+<li>对于每个根xi，计算多项式的值yi &#x3D; f(xi)。</li>
+<li>将每个根xi和对应的计算值yi作为一对份额(xi, yi)分发给n个参与者。</li>
+</ul>
+</li>
+<li><strong>秘密恢复</strong>：<ul>
+<li>任何t个或更多的份额持有者可以合作恢复原始秘密s。</li>
+<li>通过拉格朗日插值法，利用t个已知的份额(xi, yi)计算出多项式f(x)在x&#x3D;0处的值，即秘密s。</li>
+</ul>
+</li>
+</ol>
+<h4 id="安全性分析"><a href="#安全性分析" class="headerlink" title="安全性分析"></a>安全性分析</h4><ul>
+<li><strong>安全性前提</strong>：至少t-1个份额持有者是诚实的，没有串通攻击者。</li>
+<li><strong>抵抗攻击</strong>：少于t个份额无法恢复多项式f(x)，因此无法得知秘密s。</li>
+</ul>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li><strong>灵活性</strong>：可以在不改变其他份额的情况下，增加新的份额持有者或更新现有份额。</li>
+<li><strong>可扩展性</strong>：适用于各种规模的参与者集合。</li>
+<li><strong>去中心化</strong>：不需要可信的中心服务器来管理份额。</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li><strong>存储需求</strong>：每个参与者需要存储一个份额对(xi, yi)，随着参与者数量的增加，存储需求也会增加。</li>
+<li><strong>通信复杂性</strong>：在秘密恢复时，需要t个份额持有者之间的通信。</li>
+</ul>
+<h3 id="Blakley的-t-n-门限方案："><a href="#Blakley的-t-n-门限方案：" class="headerlink" title="Blakley的(t, n)门限方案："></a><strong>Blakley的(t, n)门限方案</strong>：</h3><blockquote>
+<p>该方案基于几何概念，特别是基于多维空间中的点的性质。</p>
+</blockquote>
+<h4 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h4><ul>
+<li><strong>秘密（Secret, s）</strong>：需要被共享的数据或密钥。</li>
+<li><strong>份额（Shares）</strong>：秘密分割成的多个部分，每个份额是一个点的坐标。</li>
+<li><strong>门限值（Threshold, t）</strong>：恢复原始秘密所需的最小份额数。</li>
+<li><strong>参与者数（Total Participants, n）</strong>：总共分割出的份额数量。</li>
+</ul>
+<h4 id="工作原理-1"><a href="#工作原理-1" class="headerlink" title="工作原理"></a>工作原理</h4><ol>
+<li><strong>选择空间</strong>：<ul>
+<li>Blakley方案首先在多维空间中选择一个点，该点的坐标表示秘密。</li>
+</ul>
+</li>
+<li><strong>生成份额</strong>：<ul>
+<li>在一个足够高维的空间（通常是t维）中，秘密分发者选择一个点（秘密点），这个点的坐标是秘密s。</li>
+<li>然后，秘密分发者在通过秘密点的超平面上选择n-1个不同的点，这些点与秘密点一起定义了一个超平面。</li>
+</ul>
+</li>
+<li><strong>分配份额</strong>：<ul>
+<li>每个参与者获得一个份额，即超平面上的一个点的坐标。</li>
+<li>为了恢复秘密，需要t个不共线的点（因为一个t维空间中的t个不共线的点可以确定一个超平面）。</li>
+</ul>
+</li>
+<li><strong>秘密恢复</strong>：<ul>
+<li>当收集到t个份额时，这t个点的坐标可以用来确定包含秘密点的超平面。</li>
+<li>通过解这组线性方程，可以找到秘密点的坐标，即原始秘密s。</li>
+</ul>
+</li>
+</ol>
+<h4 id="安全性分析-1"><a href="#安全性分析-1" class="headerlink" title="安全性分析"></a>安全性分析</h4><ul>
+<li><strong>安全性前提</strong>：至少需要t个份额才能确定超平面，从而恢复秘密。</li>
+<li><strong>抵抗攻击</strong>：少于t个份额无法确定超平面，因此无法得知秘密。</li>
+</ul>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><ul>
+<li><strong>安全性</strong>：只有达到门限值的份额才能恢复秘密，提供了良好的安全性。</li>
+<li><strong>直观性</strong>：基于几何概念，易于直观理解。</li>
+</ul>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li><strong>复杂性</strong>：相比于多项式基的方案，Blakley方案在计算和实现上可能更复杂。</li>
+<li><strong>扩展性</strong>：添加或删除参与者可能比较复杂。</li>
+</ul>
+<p>还有一些其他的解决方案，待需要时继续学习:</p>
+<ol>
+<li><strong>Karnin-Green-Hellman方案</strong>：使用矩阵乘法来实现秘密共享, 允许灵活地设置访问结构和门限值。</li>
+<li><strong>一般访问结构上的秘密共享方案</strong>：不限于特定的门限值，支持更复杂的访问结构。允许为不同的参与者组合定义不同的访问权限。</li>
+<li><strong>多重秘密共享方案</strong>：允许每个参与者的子秘密在多次秘密共享过程中被重用。</li>
+<li><strong>多秘密共享方案</strong>：在一次秘密共享过程中可以共享多个秘密。</li>
+<li><strong>可验证秘密共享方案</strong>：允许参与者验证他们收到的子秘密的正确性。分为交互式和非交互式两种。</li>
+<li><strong>动态秘密共享方案</strong>：允许在不改变秘密的情况下，周期性地更新子秘密。提供了对秘密在生命周期内的动态保护。</li>
+<li><strong>量子秘密共享</strong>：利用量子力学原理来实现秘密共享。</li>
+<li><strong>可视秘密共享</strong>：通过图像处理技术，将秘密编码在图像中。</li>
+<li><strong>基于多分辨滤波的秘密共享</strong>：利用多分辨滤波技术来分割和共享秘密。</li>
+<li><strong>基于广义自缩序列的秘密共享</strong>：使用广义自缩序列的数学特性来实现秘密共享。</li>
+</ol>
 
                 </div>
                 
@@ -377,11 +422,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                100-cosmpy实践
+                103-共享门限秘密算法
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/05/19/software-test-collection/100-实践/100-cosmpy实践/
+                2024/05/28/blockchain/100-wallet/103-共享门限秘密算法/
             </div>
         </div>
 
@@ -397,7 +442,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-05-19 14:26</div>
+                <div class="content">2024-05-28 15:19</div>
             </div>
 
 
@@ -433,15 +478,11 @@
                             <ul class="post-tags-box border-box">
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/software-test/">software-test</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
                                     </li>
                                 
                                     <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/python/">python</a>
-                                    </li>
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/cosmos/">cosmos</a>
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/cryptology/">cryptology</a>
                                     </li>
                                 
                             </ul>
@@ -483,14 +524,14 @@
                             <div class="prev-post">
                                 <a class="prev"
                                    rel="prev"
-                                   href="/blog/2024/05/21/blockchain/0-base/03-UTXO%E5%92%8CAccount%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94/"
-                                   title="03-UTXO和Account模型对比"
+                                   href="/blog/2024/05/28/blockchain/100-wallet/104-HD%E9%92%B1%E5%8C%85%E5%8A%A9%E8%AE%B0%E8%AF%8D%E7%94%9F%E6%88%90/"
+                                   title="104-HD钱包助记词生成"
                                 >
                                     <span class="left arrow-icon flex-center">
                                         <i class="fas fa-chevron-left"></i>
                                     </span>
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">03-UTXO和Account模型对比</span>
+                                        <span class="post-nav-title-item text-ellipsis">104-HD钱包助记词生成</span>
                                         <span class="post-nav-item">上一篇</span>
                                     </span>
                                 </a>
@@ -500,11 +541,11 @@
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2024/05/17/blockchain/100-wallet/100-%E9%92%B1%E5%8C%85%E7%B1%BB%E5%88%AB/"
-                                   title="100-钱包类别"
+                                   href="/blog/2024/05/28/blockchain/100-wallet/102-Schnorr%E5%92%8CBLS%E4%B8%8E%E5%93%88%E5%B8%8C%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3/"
+                                   title="102-Schnorr和BLS与哈希算法讲解"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">100-钱包类别</span>
+                                        <span class="post-nav-title-item text-ellipsis">102-Schnorr和BLS与哈希算法讲解</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -532,7 +573,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-cosmpy%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-text">1.cosmpy源码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-text">1.1 项目简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%B9%B6%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-text">1.2 下载源码并安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E5%92%8C%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90"><span class="nav-text">1.3 调试代码和模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E5%90%8E%E8%B0%83%E8%AF%95%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-text">1.4 更改配置后调试测试用例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cosmpy%E5%AE%9E%E8%B7%B5"><span class="nav-text">2.cosmpy实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%89%BE%E5%88%B0proto%E6%BA%90%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-text">2.1 找到proto源文件并导入相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-text">2.2 编译proto文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%9C%89%E5%8C%85%E5%90%AB-init-%E6%96%87%E4%BB%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E5%BE%AA%E7%8E%AF%E5%88%9B%E5%BB%BA"><span class="nav-text">2.3 生成的文件可能没有包含__init__文件，需要循环创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%8C%89proto%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-text">2.4 按proto文件编写对应客户端代码</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%A8%E9%99%90%E5%85%B1%E4%BA%AB%E7%A7%98%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%88Threshold-Secret-Sharing%EF%BC%8CTSS%EF%BC%89"><span class="nav-text">门限共享秘密算法（Threshold Secret Sharing，TSS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">重点知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9"><span class="nav-text">技术难点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%A8%E9%99%90%E7%A7%98%E5%AF%86%E5%85%B1%E4%BA%AB%E6%96%B9%E6%A1%88"><span class="nav-text">门限秘密共享方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shamir%E7%9A%84-t-n-%E9%97%A8%E9%99%90%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-text">Shamir的(t, n)门限方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blakley%E7%9A%84-t-n-%E9%97%A8%E9%99%90%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-text">Blakley的(t, n)门限方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86-1"><span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-1"><span class="nav-text">安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -700,7 +741,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-cosmpy%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-text">1.cosmpy源码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-text">1.1 项目简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%B9%B6%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-text">1.2 下载源码并安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E5%92%8C%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90"><span class="nav-text">1.3 调试代码和模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E5%90%8E%E8%B0%83%E8%AF%95%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-text">1.4 更改配置后调试测试用例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cosmpy%E5%AE%9E%E8%B7%B5"><span class="nav-text">2.cosmpy实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%89%BE%E5%88%B0proto%E6%BA%90%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-text">2.1 找到proto源文件并导入相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-text">2.2 编译proto文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%9C%89%E5%8C%85%E5%90%AB-init-%E6%96%87%E4%BB%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E5%BE%AA%E7%8E%AF%E5%88%9B%E5%BB%BA"><span class="nav-text">2.3 生成的文件可能没有包含__init__文件，需要循环创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%8C%89proto%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-text">2.4 按proto文件编写对应客户端代码</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%A8%E9%99%90%E5%85%B1%E4%BA%AB%E7%A7%98%E5%AF%86%E7%AE%97%E6%B3%95%EF%BC%88Threshold-Secret-Sharing%EF%BC%8CTSS%EF%BC%89"><span class="nav-text">门限共享秘密算法（Threshold Secret Sharing，TSS）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E7%82%B9%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">重点知识点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9"><span class="nav-text">技术难点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%A8%E9%99%90%E7%A7%98%E5%AF%86%E5%85%B1%E4%BA%AB%E6%96%B9%E6%A1%88"><span class="nav-text">门限秘密共享方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shamir%E7%9A%84-t-n-%E9%97%A8%E9%99%90%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-text">Shamir的(t, n)门限方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blakley%E7%9A%84-t-n-%E9%97%A8%E9%99%90%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-text">Blakley的(t, n)门限方案：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-1"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86-1"><span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-1"><span class="nav-text">安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-1"><span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
