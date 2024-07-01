@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            102-Schnorr和BLS与哈希算法讲解 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"真正的大师永远怀着一颗学徒的心.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        102-Schnorr和BLS与哈希算法讲解
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-05-28 13:49:21</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Tue Jun 25 2024 20:17:34 GMT+0800">2024-06-25 20:17:34</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/blog/categories/wallet-collection/">wallet-collection</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/wallet/">wallet</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/cryptology/">cryptology</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>4.1k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>14 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h2 id="Schnorr签名算法"><a href="#Schnorr签名算法" class="headerlink" title="Schnorr签名算法"></a>Schnorr签名算法</h2><blockquote>
+<p>Schnorr签名算法是一种基于离散对数问题的数字签名算法，由克劳斯·施诺尔（Claus-Peter Schnorr）于1989年提出。</p>
+</blockquote>
+<p><strong>重点任务：</strong></p>
+<ol>
+<li>理解Schnorr签名算法的工作原理。</li>
+<li>掌握算法参数的选择和密钥生成过程。</li>
+<li>学习如何生成和验证Schnorr签名。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li><strong>高效性</strong>：Schnorr签名在计算上更加高效，特别是在签名生成和验证过程中。</li>
+<li><strong>短签名</strong>：Schnorr签名长度较短，有助于节省带宽和存储空间。</li>
+<li><strong>安全性</strong>：基于离散对数问题的安全性，难以被破解。</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>Schnorr签名广泛应用于区块链和加密货币领域，例如比特币的Taproot升级中使用了基于Schnorr签名的聚合签名技术。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>Schnorr签名算法以其高效和安全的特点，在对资源要求较高的应用场景中具有显著优势。</p>
+<h2 id="基于有限单群的Schnorr多重数字签名算法"><a href="#基于有限单群的Schnorr多重数字签名算法" class="headerlink" title="基于有限单群的Schnorr多重数字签名算法"></a>基于有限单群的Schnorr多重数字签名算法</h2><blockquote>
+<p>结合了Schnorr签名的效率和有限单群的数学复杂性，以提供一种安全的多重签名方案。</p>
+</blockquote>
+<p><strong>重点任务：</strong></p>
+<ol>
+<li>理解有限单群的概念及其在密码学中的应用。</li>
+<li>掌握基于有限单群的Schnorr签名算法的参数选择和密钥生成。</li>
+<li>学习如何生成和验证基于有限单群的Schnorr多重签名。</li>
+</ol>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li><p><strong>增强的安全性</strong>：有限单群的引入为签名方案提供了额外的保护层，使得攻击者更难以找到有效的签名。</p>
+</li>
+<li><p><strong>高效的签名验证</strong>：尽管基于更复杂的数学结构，该算法仍然保持了Schnorr签名的高效性，特别是在验证过程中。</p>
+</li>
+<li><p><strong>签名聚合</strong>：多重签名可以被聚合为单个签名，这在处理大量交易或需要多个签名者的场景中非常有用。</p>
+</li>
+<li><p><strong>灵活性和可扩展性</strong>：算法支持多个签名者，可以根据需要轻松扩展签名者的数量。</p>
+</li>
+<li><p><strong>节省空间</strong>：聚合签名减少了存储和传输所需的空间，这对于大规模部署尤为重要。</p>
+</li>
+<li><p><strong>抗串谋性</strong>：由于签名的生成和验证机制，即使部分签名者串谋，也难以对系统安全造成威胁。</p>
+</li>
+</ul>
+<h3 id="应用-1"><a href="#应用-1" class="headerlink" title="应用"></a>应用</h3><ul>
+<li><p><strong>区块链技术</strong>：在区块链中，多重签名可以用于实现多重签名钱包，要求多个签名者中的一些同意才能进行交易。</p>
+</li>
+<li><p><strong>金融服务</strong>：在需要多个授权人批准交易的场景中，如大额支付或资产管理。</p>
+</li>
+<li><p><strong>安全通信</strong>：在需要验证消息来源和完整性的加密通信系统中。</p>
+</li>
+</ul>
+<h3 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h3><p>基于有限单群的Schnorr多重数字签名算法是一种强大的密码学工具，它通过结合Schnorr签名的效率和有限单群的安全性，为需要多重认证的场景提供了一种有效的解决方案。</p>
+<h2 id="BLS签名算法"><a href="#BLS签名算法" class="headerlink" title="BLS签名算法"></a>BLS签名算法</h2><blockquote>
+<p><strong>BLS签名算法</strong>是一种基于双线性配对的密码学技术，以其简洁、短签名和强安全性著称。</p>
+</blockquote>
+<h3 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h3><ol>
+<li><strong>基于双线性配对</strong>：BLS签名利用了双线性配对的性质，这是一种在两个不同的椭圆曲线群之间定义的函数，满足双线性、非退化和有效性。</li>
+<li><strong>短签名</strong>：BLS签名生成的签名相对较短，这对于带宽和存储效率至关重要。</li>
+<li><strong>签名聚合</strong>：BLS签名允许将多个签名聚合为一个单一的签名，这在区块链等分布式系统中非常有用，可以显著减少交易数据的大小。</li>
+<li><strong>安全性</strong>：BLS签名的安全性基于计算双线性Diffie-Hellman问题的困难性。</li>
+</ol>
+<h3 id="BLS签名算法步骤"><a href="#BLS签名算法步骤" class="headerlink" title="BLS签名算法步骤"></a>BLS签名算法步骤</h3><ol>
+<li><strong>参数生成</strong>：选择适当的椭圆曲线和相应的群，以及群的生成元。</li>
+<li><strong>密钥生成</strong>：为每个用户生成一个私钥（一个随机数）和相应的公钥（私钥的哈希值）。</li>
+<li><strong>签名生成</strong>：签名者使用其私钥和消息的哈希值来生成签名。</li>
+<li><strong>签名验证</strong>：使用签名、公钥和消息来验证签名的有效性。</li>
+</ol>
+<h3 id="Go语言实现示例"><a href="#Go语言实现示例" class="headerlink" title="Go语言实现示例"></a>Go语言实现示例</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	&quot;crypto/rand&quot;</span><br><span class="line">	&quot;crypto/sha256&quot;</span><br><span class="line">	&quot;golang.org/x/crypto/bn256&quot;</span><br><span class="line">	&quot;golang.org/x/crypto/ecdsa&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">// 生成密钥对</span><br><span class="line">func GenerateKeyPair() (*ecdsa.PrivateKey, *ecdsa.PublicKey) &#123;</span><br><span class="line">	privateKey, err := ecdsa.GenerateKey(bn256.P256(), rand.Reader)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line">	return privateKey, &amp;privateKey.PublicKey</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 哈希消息</span><br><span class="line">func HashMessage(message []byte) []byte &#123;</span><br><span class="line">	hash := sha256.Sum256(message)</span><br><span class="line">	return hash[:]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 签名消息</span><br><span class="line">func Sign(privateKey *ecdsa.PrivateKey, message []byte) (*bn256.G1, error) &#123;</span><br><span class="line">	hash := HashMessage(message)</span><br><span class="line">	r := bn256.ScalarBaseMult(privateKey.D, hash[:])</span><br><span class="line">	s := bn256.ScalarBaseMult(privateKey.D, bn256.G1.Gen().ScalarMult(bn256.ScalarFromBytes(hash)).Add(r))</span><br><span class="line">	return s, nil</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 验证签名</span><br><span class="line">func Verify(publicKey *ecdsa.PublicKey, message []byte, signature *bn256.G1) bool &#123;</span><br><span class="line">	hash := HashMessage(message)</span><br><span class="line">	left := bn256.Pairing(signature, bn256.G2.Gen().ScalarMult(bn256.ScalarFromBytes(hash)))</span><br><span class="line">	right := bn256.Pairing(publicKey.X, bn256.G2.Gen().ScalarMult(bn256.ScalarFromBytes(hash)))</span><br><span class="line">	return left.Equal(right)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	privateKey, publicKey := GenerateKeyPair()</span><br><span class="line"></span><br><span class="line">	message := []byte(&quot;Hello, BLS!&quot;)</span><br><span class="line">	signature, err := Sign(privateKey, message)</span><br><span class="line">	if err != nil &#123;</span><br><span class="line">		panic(err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	isValid := Verify(publicKey, message, signature)</span><br><span class="line">	fmt.Printf(&quot;Signature is valid: %v\n&quot;, isValid)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>:</p>
+<ul>
+<li>这个示例使用了<code>bn256</code>包，它实现了BN256曲线的双线性配对。</li>
+<li>签名生成和验证过程都进行了简化，没有包含异常处理和完整的安全特性。</li>
+<li>在实际应用中，需要对私钥进行安全存储，并确保随机数生成器的安全性。</li>
+</ul>
+<h2 id="单向散列函数"><a href="#单向散列函数" class="headerlink" title="单向散列函数"></a>单向散列函数</h2><blockquote>
+<p>单向散列函数是一种将任意长度的输入转换成固定长度输出的函数，输出称为散列值。它具备单向性，即从输出难以反推出输入。</p>
+</blockquote>
+<h2 id="MD5-算法讲解"><a href="#MD5-算法讲解" class="headerlink" title="MD5 算法讲解"></a>MD5 算法讲解</h2><blockquote>
+<p>MD5（Message Digest Algorithm 5，消息摘要算法第五版）</p>
+</blockquote>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li><strong>固定长度输出</strong>：无论输入数据的大小，输出的哈希值长度始终固定为128位。</li>
+<li><strong>单向性</strong>：从哈希值几乎不可能反推出原始数据。</li>
+<li><strong>抗篡改性</strong>：输入数据的微小变化会导致哈希值的巨大变化，这被称为“雪崩效应”。</li>
+<li><strong>快速计算</strong>：MD5算法计算速度快，适用于需要快速哈希的场景。</li>
+</ol>
+<h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol>
+<li><strong>填充</strong>：对输入数据进行填充，使得数据长度满足对512位整数倍的要求。填充规则是在数据末尾添加一个<code>1</code>，然后添加足够数量的<code>0</code>，最后添加64位的数据原始长度信息。</li>
+<li><strong>初始化缓冲区</strong>：算法开始前，初始化四个32位的变量（A, B, C, D）</li>
+<li><strong>处理消息块</strong>：将填充后的数据分成512位的消息块，每个块进一步被划分为16个32位的子块。</li>
+<li><strong>主循环</strong>：对每个消息块执行以下步骤：<ul>
+<li>将A, B, C, D的值复制到工作变量a, b, c, d中。</li>
+<li>对于每个子块，通过一系列复杂的函数和运算更新a, b, c, d的值。</li>
+<li>这些函数包括位与（AND）、位或（OR）、异或（XOR）和位非（NOT）操作。</li>
+<li>完成所有子块的处理后，将a, b, c, d的值与A, B, C, D相加，更新这些变量。</li>
+</ul>
+</li>
+<li><strong>输出哈希值</strong>：重复上述过程直到所有消息块都被处理完毕，最终得到的A, B, C, D的值即为MD5哈希值。</li>
+</ol>
+<h3 id="安全性"><a href="#安全性" class="headerlink" title="安全性"></a>安全性</h3><ul>
+<li><strong>已破解</strong>：MD5算法已被证明存在安全漏洞，如碰撞攻击，即找到两个不同的输入产生相同的输出。</li>
+<li><strong>不推荐使用</strong>：由于安全问题，MD5不再推荐用于需要高安全性的场合，如数字签名、密码存储等。</li>
+</ul>
+<h3 id="应用-2"><a href="#应用-2" class="headerlink" title="应用"></a>应用</h3><ul>
+<li><strong>数据完整性</strong>：尽管存在安全漏洞，MD5仍然有时被用于检测数据是否被篡改，因为它可以快速生成数据摘要。</li>
+<li><strong>其他</strong>：在一些不需要高安全性的场合，MD5仍可能被用作一种快速的哈希手段。</li>
+</ul>
+<h3 id="结论-2"><a href="#结论-2" class="headerlink" title="结论"></a>结论</h3><p>MD5算法因其快速和简单而被广泛使用，但由于已知的安全问题，它不再适合用于安全性要求高的场合。在需要确保数据安全的应用中，推荐使用更安全的哈希算法，如SHA-256或SHA-3。</p>
+<h2 id="SHA-算法讲解"><a href="#SHA-算法讲解" class="headerlink" title="SHA 算法讲解"></a>SHA 算法讲解</h2><blockquote>
+<p>SHA（Secure Hash Algorithm，安全散列算法）是一系列密码散列函数，设计用于确保信息传输的完整性和安全性。</p>
+</blockquote>
+<h3 id="SHA算法概述"><a href="#SHA算法概述" class="headerlink" title="SHA算法概述"></a>SHA算法概述</h3><ul>
+<li><strong>设计目的</strong>：生成消息摘要，用于数据完整性校验和安全认证。</li>
+<li><strong>单向性</strong>：易于从数据生成摘要，但从摘要几乎不可能反推出原始数据。</li>
+<li><strong>抗篡改性</strong>：输入数据的微小变化会导致生成的消息摘要发生显著变化。</li>
+</ul>
+<h3 id="SHA算法家族"><a href="#SHA算法家族" class="headerlink" title="SHA算法家族"></a>SHA算法家族</h3><ul>
+<li><strong>SHA-0</strong>：最初的版本，很快被发现存在安全问题。</li>
+<li><strong>SHA-1</strong>：SHA-0的后续版本，产生160位的摘要。已发现安全漏洞，不推荐用于高安全需求。</li>
+<li><strong>SHA-2</strong>：包括SHA-224、SHA-256、SHA-384和SHA-512。提供不同长度的摘要，是目前广泛使用的版本。</li>
+<li><strong>SHA-3</strong>：基于Keccak算法，提供与SHA-2相似的安全级别，但具有不同的结构。</li>
+</ul>
+<h3 id="SHA-1算法详解"><a href="#SHA-1算法详解" class="headerlink" title="SHA-1算法详解"></a>SHA-1算法详解</h3><ul>
+<li><strong>消息填充</strong>：将消息扩展到长度为512位倍数。</li>
+<li><strong>初始化缓冲区</strong>：初始化五个32位的变量。</li>
+<li><strong>处理消息块</strong>：将填充后的消息分为512位的块，对每个块进行处理。</li>
+<li><strong>主循环</strong>：对每个块进行80次迭代，使用不同的函数和常量。</li>
+<li><strong>更新缓冲区</strong>：将每轮的结果累加到初始缓冲区变量。</li>
+<li><strong>输出哈希值</strong>：最终的缓冲区变量连接起来形成160位的哈希值。</li>
+</ul>
+<h3 id="SHA-2算法详解"><a href="#SHA-2算法详解" class="headerlink" title="SHA-2算法详解"></a>SHA-2算法详解</h3><ul>
+<li><strong>消息填充</strong>：类似于SHA-1，但细节有所不同。</li>
+<li><strong>初始化缓冲区</strong>：根据算法版本（SHA-224、SHA-256、SHA-384、SHA-512）初始化不同的32位或64位缓冲区变量。</li>
+<li><strong>处理消息块</strong>：将填充后的消息分为512位（对于SHA-256和SHA-224）或1024位（对于SHA-512和SHA-384）的块。</li>
+<li><strong>主循环</strong>：进行64或80次迭代，使用更复杂的函数。</li>
+<li><strong>更新缓冲区</strong>：将每轮的结果累加到初始缓冲区变量。</li>
+<li><strong>输出哈希值</strong>：最终的缓冲区变量连接起来形成相应的哈希值。</li>
+</ul>
+<h3 id="SHA-3算法详解"><a href="#SHA-3算法详解" class="headerlink" title="SHA-3算法详解"></a>SHA-3算法详解</h3><ul>
+<li><strong>基于Keccak算法</strong>：SHA-3采用了一种称为海绵结构的设计。</li>
+<li><strong>初始化</strong>：初始化一个固定大小的状态数组。</li>
+<li><strong>吸收阶段</strong>：将输入消息分块，与状态的一部分进行异或操作，然后更新整个状态。</li>
+<li><strong>挤出阶段</strong>：从状态中提取输出哈希值。</li>
+<li><strong>Keccak置换函数</strong>：包括多个步骤，如θ（Theta）、ρ（Rho）、π（Pi）、χ（Chi）和ι（Iota），用于混合状态。</li>
+</ul>
+<h3 id="安全性-1"><a href="#安全性-1" class="headerlink" title="安全性"></a>安全性</h3><ul>
+<li><strong>SHA-1和SHA-0</strong>：已知存在安全漏洞，不建议用于安全性要求高的场合。</li>
+<li><strong>SHA-2</strong>：目前被认为安全，但建议使用SHA-256或更高版本的算法。</li>
+<li><strong>SHA-3</strong>：提供与SHA-2类似的安全级别，具有不同的结构，被认为是安全的。</li>
+</ul>
+<h3 id="结论-3"><a href="#结论-3" class="headerlink" title="结论"></a>结论</h3><p>SHA算法是密码学中重要的组成部分，用于确保数据的完整性和安全性。随着密码学技术的发展，新的SHA版本不断被开发以应对新的安全挑战。SHA-3作为最新的版本，提供了额外的结构和安全性优势。在选择SHA算法时，应考虑当前的安全需求和算法的成熟度。</p>
+<h2 id="Blake-和-Blake2-算法讲解"><a href="#Blake-和-Blake2-算法讲解" class="headerlink" title="Blake 和 Blake2 算法讲解"></a>Blake 和 Blake2 算法讲解</h2><h3 id="BLAKE算法"><a href="#BLAKE算法" class="headerlink" title="BLAKE算法"></a>BLAKE算法</h3><blockquote>
+<p><strong>BLAKE</strong>是一种密码散列函数，参与了NIST的SHA-3竞赛并成为最终的五个决赛选手之一。它由Jean-Philippe Aumasson等人设计，旨在提供高安全性和高性能。</p>
+</blockquote>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><ul>
+<li><strong>高安全性</strong>：BLAKE算法设计考虑了多种已知的密码学攻击，增强了对这些攻击的抵抗力。</li>
+<li><strong>高性能</strong>：BLAKE算法在多种平台上表现出了优秀的性能。</li>
+<li><strong>灵活性</strong>：BLAKE算法支持不同长度的输出，适用于不同的安全需求。</li>
+</ul>
+<h4 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h4><ul>
+<li><strong>BLAKE-224</strong>：输出长度为224位。</li>
+<li><strong>BLAKE-256</strong>：输出长度为256位。</li>
+<li><strong>BLAKE-384</strong>：输出长度为384位。</li>
+<li><strong>BLAKE-512</strong>：输出长度为512位。</li>
+</ul>
+<h4 id="算法流程"><a href="#算法流程" class="headerlink" title="算法流程"></a>算法流程</h4><ol>
+<li><strong>初始化</strong>：设置算法的参数和初始状态。</li>
+<li><strong>填充</strong>：对输入数据进行填充，使其长度满足算法的要求。</li>
+<li><strong>处理消息块</strong>：将填充后的数据分成多个块进行处理。</li>
+<li><strong>最终化</strong>：在所有数据块处理完毕后，进行最终化步骤，输出散列值。</li>
+</ol>
+<h3 id="BLAKE2算法详解"><a href="#BLAKE2算法详解" class="headerlink" title="BLAKE2算法详解"></a>BLAKE2算法详解</h3><blockquote>
+<p><strong>BLAKE2</strong>是基于BLAKE算法的改进版本，BLAKE2在安全性、性能和灵活性方面进行了优化。</p>
+</blockquote>
+<h4 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h4><ul>
+<li><strong>安全性</strong>：BLAKE2提供了与BLAKE相当的安全性。</li>
+<li><strong>高性能</strong>：BLAKE2在多种处理器架构上进行了优化，提供了更高的性能。</li>
+<li><strong>灵活性</strong>：BLAKE2支持多种配置选项，如密钥哈希、盐值哈希等。</li>
+</ul>
+<h4 id="版本-1"><a href="#版本-1" class="headerlink" title="版本"></a>版本</h4><ul>
+<li><strong>BLAKE2b</strong>：适用于64位平台，支持最长64字节的摘要。</li>
+<li><strong>BLAKE2s</strong>：适用于8到32位平台，支持最长32字节的摘要。</li>
+<li><strong>BLAKE2bp</strong> 和 <strong>BLAKE2sp</strong>：分别是BLAKE2b和BLAKE2s的并行版本。</li>
+</ul>
+<h4 id="算法流程-1"><a href="#算法流程-1" class="headerlink" title="算法流程"></a>算法流程</h4><ol>
+<li><strong>参数配置</strong>：根据应用需求配置算法参数。</li>
+<li><strong>初始化</strong>：设置算法的初始状态和参数。</li>
+<li><strong>填充</strong>：对输入数据进行填充，准备进行散列计算。</li>
+<li><strong>处理消息块</strong>：将填充后的数据分成多个块，并进行处理。</li>
+<li><strong>最终化</strong>：在所有数据块处理完毕后，进行最终化步骤，输出散列值。</li>
+</ol>
+<h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul>
+<li><strong>密码学应用</strong>：数字签名、消息认证码、随机数生成等。</li>
+<li><strong>数据完整性验证</strong>：文件校验、数据备份验证等。</li>
+<li><strong>区块链和加密货币</strong>：作为哈希函数，用于交易和区块的安全性保护。</li>
+</ul>
+<h2 id="Poseidon算法讲解"><a href="#Poseidon算法讲解" class="headerlink" title="Poseidon算法讲解"></a>Poseidon算法讲解</h2><blockquote>
+<p>Poseidon是一种密码学哈希函数，专为区块链和零知识证明（Zero-Knowledge Proofs, ZKPs）等应用设计。旨在提供高效率和高安全性，尤其适合于需要大量哈希计算的场景。</p>
+</blockquote>
+<h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><ol>
+<li><strong>针对零知识证明优化</strong>：Poseidon设计时考虑了在零知识证明系统中的应用，优化了哈希计算的效率。</li>
+<li><strong>基于加密结构</strong>：Poseidon采用Sponge结构，这种结构在密码学中广泛应用于构建哈希函数和伪随机数生成器。</li>
+<li><strong>高效性</strong>：Poseidon的设计特别注重计算效率，适合在资源受限的环境中运行，如智能合约。</li>
+<li><strong>灵活性</strong>：Poseidon可以根据不同的应用需求进行配置，支持不同的安全参数和性能优化。</li>
+<li><strong>安全性</strong>：Poseidon提供了较高的安全性，能够抵抗碰撞攻击、预映射攻击和第二预映射攻击。</li>
+</ol>
+<h3 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h3><ol>
+<li><strong>状态初始化</strong>：Poseidon初始化一个状态向量，状态的大小通常取决于安全参数和哈希输出的长度。</li>
+<li><strong>非线性层（S-Box）</strong>：Poseidon在状态向量的每个元素上应用一个非线性变换，这种变换称为S-Box。</li>
+<li><strong>线性层</strong>：Poseidon应用一个线性变换，将状态向量的元素混合。通常，这个线性变换是通过一个矩阵乘法实现的。</li>
+<li><strong>轮函数（Round Function）</strong>：非线性层和线性层组合成一个轮函数。Poseidon多次应用轮函数，将输入数据充分混合。</li>
+<li><strong>Sponge结构</strong>：Poseidon使用Sponge结构处理输入数据。首先在吸收阶段将输入数据分块处理并更新状态向量，然后在挤出阶段从状态向量中提取哈希值。</li>
+</ol>
+<h3 id="应用-3"><a href="#应用-3" class="headerlink" title="应用"></a>应用</h3><ol>
+<li><strong>区块链</strong>：因其高效性和安全性，被认为是区块链系统中实现零知识证明的理想哈希函数。</li>
+<li><strong>隐私保护</strong>：可以用于保护数据隐私，通过零知识证明确保数据的完整性和保密性而无需透露实际数据内容。</li>
+<li><strong>智能合约</strong>：可以集成到区块链智能合约中，提供高效的哈希计算和验证功能，增强智能合约的安全性和性能。</li>
+</ol>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                102-Schnorr和BLS与哈希算法讲解
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024/05/28/blockchain/01-wallet/102-Schnorr和BLS与哈希算法讲解/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-05-28 13:49</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/wallet/">wallet</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/cryptology/">cryptology</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2024/05/28/blockchain/01-wallet/103-%E5%85%B1%E4%BA%AB%E9%97%A8%E9%99%90%E7%A7%98%E5%AF%86%E7%AE%97%E6%B3%95/"
+                                   title="103-共享门限秘密算法"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">103-共享门限秘密算法</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2024/05/28/blockchain/01-wallet/101-%E5%AF%86%E7%A0%81%E5%AD%A6%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/"
+                                   title="101-密码学基础与常用算法"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">101-密码学基础与常用算法</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Schnorr%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Schnorr签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%89%E9%99%90%E5%8D%95%E7%BE%A4%E7%9A%84Schnorr%E5%A4%9A%E9%87%8D%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">基于有限单群的Schnorr多重数字签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">2.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-1"><span class="nav-number">2.2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-1"><span class="nav-number">2.3.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BLS%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">BLS签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">特点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLS%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.2.</span> <span class="nav-text">BLS签名算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.3.</span> <span class="nav-text">Go语言实现示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%90%91%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">单向散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MD5-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">MD5 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">5.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-number">5.2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">5.3.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-2"><span class="nav-number">5.4.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-2"><span class="nav-number">5.5.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">SHA 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="nav-number">6.1.</span> <span class="nav-text">SHA算法概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA%E7%AE%97%E6%B3%95%E5%AE%B6%E6%97%8F"><span class="nav-number">6.2.</span> <span class="nav-text">SHA算法家族</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-1%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.3.</span> <span class="nav-text">SHA-1算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-2%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.4.</span> <span class="nav-text">SHA-2算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-3%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.5.</span> <span class="nav-text">SHA-3算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7-1"><span class="nav-number">6.6.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-3"><span class="nav-number">6.7.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blake-%E5%92%8C-Blake2-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">Blake 和 Blake2 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BLAKE%E7%AE%97%E6%B3%95"><span class="nav-number">7.1.</span> <span class="nav-text">BLAKE算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-number">7.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC"><span class="nav-number">7.1.2.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">7.1.3.</span> <span class="nav-text">算法流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLAKE2%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">7.2.</span> <span class="nav-text">BLAKE2算法详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-2"><span class="nav-number">7.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC-1"><span class="nav-number">7.2.2.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B-1"><span class="nav-number">7.2.3.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">7.2.4.</span> <span class="nav-text">应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poseidon%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">8.</span> <span class="nav-text">Poseidon算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-3"><span class="nav-number">8.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">8.2.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-3"><span class="nav-number">8.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">36.7k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Schnorr%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">Schnorr签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%89%E9%99%90%E5%8D%95%E7%BE%A4%E7%9A%84Schnorr%E5%A4%9A%E9%87%8D%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">基于有限单群的Schnorr多重数字签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-1"><span class="nav-number">2.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-1"><span class="nav-number">2.2.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-1"><span class="nav-number">2.3.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BLS%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">BLS签名算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">特点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLS%E7%AD%BE%E5%90%8D%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-number">3.2.</span> <span class="nav-text">BLS签名算法步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go%E8%AF%AD%E8%A8%80%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.3.</span> <span class="nav-text">Go语言实现示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E5%90%91%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">单向散列函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MD5-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">MD5 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">5.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-number">5.2.</span> <span class="nav-text">流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">5.3.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-2"><span class="nav-number">5.4.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-2"><span class="nav-number">5.5.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SHA-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">6.</span> <span class="nav-text">SHA 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA%E7%AE%97%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="nav-number">6.1.</span> <span class="nav-text">SHA算法概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA%E7%AE%97%E6%B3%95%E5%AE%B6%E6%97%8F"><span class="nav-number">6.2.</span> <span class="nav-text">SHA算法家族</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-1%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.3.</span> <span class="nav-text">SHA-1算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-2%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.4.</span> <span class="nav-text">SHA-2算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-3%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">6.5.</span> <span class="nav-text">SHA-3算法详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7-1"><span class="nav-number">6.6.</span> <span class="nav-text">安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-3"><span class="nav-number">6.7.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blake-%E5%92%8C-Blake2-%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">7.</span> <span class="nav-text">Blake 和 Blake2 算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BLAKE%E7%AE%97%E6%B3%95"><span class="nav-number">7.1.</span> <span class="nav-text">BLAKE算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-number">7.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC"><span class="nav-number">7.1.2.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B"><span class="nav-number">7.1.3.</span> <span class="nav-text">算法流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLAKE2%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3"><span class="nav-number">7.2.</span> <span class="nav-text">BLAKE2算法详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-2"><span class="nav-number">7.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC-1"><span class="nav-number">7.2.2.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B-1"><span class="nav-number">7.2.3.</span> <span class="nav-text">算法流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">7.2.4.</span> <span class="nav-text">应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Poseidon%E7%AE%97%E6%B3%95%E8%AE%B2%E8%A7%A3"><span class="nav-number">8.</span> <span class="nav-text">Poseidon算法讲解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-3"><span class="nav-number">8.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">8.2.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-3"><span class="nav-number">8.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
