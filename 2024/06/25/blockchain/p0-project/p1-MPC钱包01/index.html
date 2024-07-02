@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Tue Jul 02 2024 20:15:12 GMT+0800">2024-07-02 20:15:12</span>
+                <span class="datetime" data-updated="Tue Jul 02 2024 20:26:16 GMT+0800">2024-07-02 20:26:16</span>
             </span>
         
 
@@ -275,7 +275,7 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.5k 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.4k 字</span>
             </span>
         
         
@@ -312,8 +312,7 @@
 <li><strong>适应性强</strong>：MPC钱包适用于需要高度安全性的场景，如大额资产存储和金融交易。</li>
 </ol>
 <h3 id="okx开源库"><a href="#okx开源库" class="headerlink" title="okx开源库"></a>okx开源库</h3><blockquote>
-<p>参考链接：[okx-threshold-lib] <a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib" >https://github.com/okx/threshold-lib<i class="fas fa-external-link-alt"></i></a> </p>
-<p>提供了基于阈值签名方案的多方计算（MPC）实现。这个库是用 Go 语言编写的，支持 ECDSA 和 Ed25519 签名算法的阈值签名。</p>
+<p>参考链接：<a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib" >okx-threshold-lib<i class="fas fa-external-link-alt"></i></a>,<br>提供了基于阈值签名方案的多方计算（MPC）实现。这个库是用 Go 语言编写的，支持 ECDSA 和 Ed25519 签名算法的阈值签名。</p>
 </blockquote>
 <h3 id="产品逻辑"><a href="#产品逻辑" class="headerlink" title="产品逻辑"></a>产品逻辑</h3><ol>
 <li>结合okx-MPC钱包，总体将私钥分为三方: 用户设备、用户云盘、交易所，其中任意两方即可完成消息签名</li>
@@ -328,19 +327,15 @@
 <h3 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h3><ol>
 <li><strong>初始化</strong>：设置阈值参数和参与方数量。</li>
 <li><strong>密钥生成</strong>：使用秘密共享算法生成私钥的多个份额，并分配给不同的参与方。</li>
-<li><strong>密钥派生</strong>：如果需要，使用Bip32算法进行密钥派生，生成新的密钥对或地址。</li>
-<li><strong>签名准备</strong>：参与方使用其持有的密钥份额进行计算，准备签名的中间值。</li>
+<li><strong>密钥份额刷新</strong>：在密钥份额丢失或有新参与方加入时，重新分配或生成新的密钥份额，并更新现有份额。</li>
 <li><strong>聚合签名</strong>：在达到预设的阈值数量后，聚合各参与方的中间值，生成最终的签名。</li>
 <li><strong>签名验证</strong>：使用相应的公钥验证生成的签名是否有效。</li>
-<li><strong>密钥份额刷新</strong>：在密钥份额丢失或有新参与方加入时，重新分配或生成新的密钥份额，并更新现有份额。</li>
 </ol>
 <h3 id="代码实践"><a href="#代码实践" class="headerlink" title="代码实践"></a>代码实践</h3><ol>
 <li><p><strong>初始化</strong>：设置加密类型、阈值参数和参与方数量。</p>
 <ul>
-<li><p>参考官方测试代码：<a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib/blob/80587666a1e688ddd946dd8692626378d619d6f9/tss/ecdsa/keygen/keygen_test.go#L19" >https://github.com/okx/threshold-lib/blob/80587666a1e688ddd946dd8692626378d619d6f9/tss/ecdsa/keygen/keygen_test.go#L19<i class="fas fa-external-link-alt"></i></a></p>
-</li>
-<li><p>支持的加密类型： <a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib/blob/main/crypto/curves/curve.go" >https://github.com/okx/threshold-lib/blob/main/crypto/curves/curve.go<i class="fas fa-external-link-alt"></i></a></p>
-</li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib/blob/80587666a1e688ddd946dd8692626378d619d6f9/tss/ecdsa/keygen/keygen_test.go#L19" >参考官方测试代码<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://github.com/okx/threshold-lib/blob/main/crypto/curves/curve.go" >支持的加密类型<i class="fas fa-external-link-alt"></i></a></li>
 </ul>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// curve 决定采用哪种椭圆曲线来生成对应密钥</span></span><br><span class="line">setUp1 := dkg.NewSetUp(<span class="number">1</span>, <span class="number">3</span>, curve)   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
@@ -554,7 +549,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">39.7k</span>
+                    <span class="item-value border-box word">39.6k</span>
                 </span>
             
 
