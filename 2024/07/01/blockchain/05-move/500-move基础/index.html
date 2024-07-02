@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Tue Jul 02 2024 21:04:01 GMT+0800">2024-07-02 21:04:01</span>
+                <span class="datetime" data-updated="Tue Jul 02 2024 21:56:30 GMT+0800">2024-07-02 21:56:30</span>
             </span>
         
 
@@ -272,12 +272,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>545 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>748 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>3 分钟</span>
             </span>
         
         
@@ -352,6 +352,19 @@
 <li><p>提交安装好浏览器钱包的截图到 images 目录下</p>
 </li>
 </ol>
+<h2 id="create-dapp"><a href="#create-dapp" class="headerlink" title="create-dapp"></a>create-dapp</h2><blockquote>
+<p>创建一个可以和合约交互的前端应用</p>
+</blockquote>
+<h3 id="通过手脚架生成项目结构"><a href="#通过手脚架生成项目结构" class="headerlink" title="通过手脚架生成项目结构"></a>通过手脚架生成项目结构</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">路径: 0x-wen/code/</span></span><br><span class="line">npm create @mysten/dapp</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">选择 e2e-counter</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建一个名称为 hello_dapp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更改相关配置后部署"><a href="#更改相关配置后部署" class="headerlink" title="更改相关配置后部署"></a>更改相关配置后部署</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新默认生成的toml文件</span></span><br><span class="line">vim 0x-wen/code/hello_dapp/move/counter/Move.toml</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将依赖分支更改为测试分支</span></span><br><span class="line">rev = &quot;framework/testnet&quot; </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行部署</span></span><br><span class="line">cd 0x-wen/code/hello_dapp/move/counter</span><br><span class="line">sui client publish</span><br></pre></td></tr></table></figure>
+
+<h3 id="替换部署成功后的package-id"><a href="#替换部署成功后的package-id" class="headerlink" title="替换部署成功后的package-id"></a>替换部署成功后的package-id</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0x-wen/code/hello_dapp/src/constants.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="variable constant_">TESTNET_COUNTER_PACKAGE_ID</span> = <span class="string">&quot;0x54fae9c956cc1a2ef3f1436e1fa008a7230d7f79070c58bfc070c5d893315483&quot;</span>;   <span class="comment">// 替换部署成功后的package</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="下载依赖并本地启动"><a href="#下载依赖并本地启动" class="headerlink" title="下载依赖并本地启动"></a>下载依赖并本地启动</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">路径：0x-wen/code/hello_dapp</span></span><br><span class="line">npm install </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">本地启动</span></span><br><span class="line">npm run dev</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先在sui-wallet中切换到测试网络，在打开本地页面选择连接wallet，然后使用页面完成交互和发送交易</span></span><br></pre></td></tr></table></figure>
+
+
+
 
                 </div>
                 
@@ -491,7 +504,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#move%E5%9F%BA%E7%A1%80%E8%AF%BE"><span class="nav-number">1.</span> <span class="nav-text">move基础课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task1"><span class="nav-number">2.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">任务概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.3.</span> <span class="nav-text">操作步骤</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#move%E5%9F%BA%E7%A1%80%E8%AF%BE"><span class="nav-number">1.</span> <span class="nav-text">move基础课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task1"><span class="nav-number">2.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">任务概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.3.</span> <span class="nav-text">操作步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#create-dapp"><span class="nav-number">3.</span> <span class="nav-text">create-dapp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%89%8B%E8%84%9A%E6%9E%B6%E7%94%9F%E6%88%90%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">通过手脚架生成项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E5%90%8E%E9%83%A8%E7%BD%B2"><span class="nav-number">3.2.</span> <span class="nav-text">更改相关配置后部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E9%83%A8%E7%BD%B2%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84package-id"><span class="nav-number">3.3.</span> <span class="nav-text">替换部署成功后的package-id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96%E5%B9%B6%E6%9C%AC%E5%9C%B0%E5%90%AF%E5%8A%A8"><span class="nav-number">3.4.</span> <span class="nav-text">下载依赖并本地启动</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -530,7 +543,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">39.6k</span>
+                    <span class="item-value border-box word">39.8k</span>
                 </span>
             
 
@@ -659,7 +672,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#move%E5%9F%BA%E7%A1%80%E8%AF%BE"><span class="nav-number">1.</span> <span class="nav-text">move基础课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task1"><span class="nav-number">2.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">任务概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.3.</span> <span class="nav-text">操作步骤</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#move%E5%9F%BA%E7%A1%80%E8%AF%BE"><span class="nav-number">1.</span> <span class="nav-text">move基础课</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task1"><span class="nav-number">2.</span> <span class="nav-text">Task1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">环境安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E6%A6%82%E8%A7%88"><span class="nav-number">2.2.</span> <span class="nav-text">任务概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.3.</span> <span class="nav-text">操作步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#create-dapp"><span class="nav-number">3.</span> <span class="nav-text">create-dapp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%89%8B%E8%84%9A%E6%9E%B6%E7%94%9F%E6%88%90%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">通过手脚架生成项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%E5%90%8E%E9%83%A8%E7%BD%B2"><span class="nav-number">3.2.</span> <span class="nav-text">更改相关配置后部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%BF%E6%8D%A2%E9%83%A8%E7%BD%B2%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84package-id"><span class="nav-number">3.3.</span> <span class="nav-text">替换部署成功后的package-id</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96%E5%B9%B6%E6%9C%AC%E5%9C%B0%E5%90%AF%E5%8A%A8"><span class="nav-number">3.4.</span> <span class="nav-text">下载依赖并本地启动</span></a></li></ol></li></ol>
     </div>
 </div>
 
