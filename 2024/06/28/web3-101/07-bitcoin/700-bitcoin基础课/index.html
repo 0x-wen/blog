@@ -9,7 +9,7 @@
     
     <title>
         
-            700-Bitcoin基础课 |
+            700-Bitcoin基础 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        700-Bitcoin基础课
+                        700-Bitcoin基础
                     </div>
                 
 
@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Thu Jul 11 2024 10:02:41 GMT+0800">2024-07-11 10:02:41</span>
+                <span class="datetime" data-updated="Wed Sep 11 2024 01:55:51 GMT+0800">2024-09-11 01:55:51</span>
             </span>
         
 
@@ -272,12 +272,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>25 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.9k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>11 分钟</span>
             </span>
         
         
@@ -294,13 +294,137 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="BTCstudy"><a href="#BTCstudy" class="headerlink" title="BTCstudy"></a>BTCstudy</h2><ul>
-<li><a class="link"   target="_blank" rel="noopener" href="https://www.btcstudy.org/2020/08/25/bitcoins-utxo-model-by-river-finance/" >1-比特币的UTXO模型<i class="fas fa-external-link-alt"></i></a></li>
+                    <h2 id="1-私钥生成规则"><a href="#1-私钥生成规则" class="headerlink" title="1.私钥生成规则"></a>1.私钥生成规则</h2><blockquote>
+<p>私钥由 24 组数字组成，每 11 个数字为一组，共计 264 个二进制数字（24×11&#x3D;264）</p>
+</blockquote>
+<ul>
+<li>私钥的组成 &#x3D; 随机二进制数 + 校验和</li>
+<li>私钥有一部分是随机生成的，</li>
+<li>最后 8 位叫作<strong>校验和（checksum）</strong>是以前面的随机部分作为输入通过一个公式计算得到</li>
 </ul>
-<p>要点总结：</p>
-<ol>
-<li>inputs 总额 - outputs 总额 &#x3D; 交易手续费</li>
+<p>会随机生成23组二进制数据，每11位一组，最后第24组只会生成3位</p>
+<p>23*11+3 &#x3D; 256 位随机数 + 8位校验和  &#x3D; 264位【最终私钥的二进制】</p>
+<p>在 BIP39 标准下，一个单词需要 11 位数字表达，这里有 264&#x2F;11 &#x3D; 24个单词</p>
+<p>生成的私钥组合后 就是一个 264位的二进制数据  【缺点是不方便人类记忆】</p>
+<h3 id="1-1校验和"><a href="#1-1校验和" class="headerlink" title="1.1校验和"></a>1.1校验和</h3><p>随机熵 256位 + 8位校验和  &#x3D;  264位二进制数  &#x2F; 11个二进制一组  &#x3D; 24组数字，对应24个单词【助记词】</p>
+<p>随机熵 224位 + 7位校验和  &#x3D; 231位二进制 &#x2F; 11个二进制一组 &#x3D; 21组数字，对应21个单词</p>
+<p>随机熵 192位 + 6位校验和  &#x3D; 198位二进制 &#x2F; 11个二进制一组 &#x3D; 18组数字，对应18个单词</p>
+<p>随机熵 160位 + 5位校验和  &#x3D; 165位二进制 &#x2F; 11个二进制一组 &#x3D; 15组数字，对应15个单词</p>
+<p>随机熵 128位 + 4位校验和  &#x3D; 132位二进制 &#x2F; 11个二进制一组 &#x3D; 12组数字，对应12个单词</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 校验随机熵，128， 160 ， 192， 224， 256</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">validateEntropyBitSize</span><span class="params">(bitSize <span class="type">int</span>)</span></span> <span class="type">error</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (bitSize%<span class="number">32</span>) != <span class="number">0</span> || bitSize &lt; <span class="number">128</span> || bitSize &gt; <span class="number">256</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> ErrEntropyLengthInvalid</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 256/8 = 32个 byte</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewEntropy</span><span class="params">(bitSize <span class="type">int</span>)</span></span> ([]<span class="type">byte</span>, <span class="type">error</span>) &#123;</span><br><span class="line">    err := validateEntropyBitSize(bitSize)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    entropy := <span class="built_in">make</span>([]<span class="type">byte</span>, bitSize/<span class="number">8</span>)</span><br><span class="line">    _, err = rand.Read(entropy)</span><br><span class="line">    <span class="keyword">return</span> entropy, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建助记词</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">case1:  随机熵256位二进制数据时，校验和为 256/32 = 8 </span></span><br><span class="line"><span class="comment">    entropyBitLength = 256</span></span><br><span class="line"><span class="comment">    checksumBitLength = 256/32  </span></span><br><span class="line"><span class="comment">case2:  随机熵128位二进制数据时，校验和为 128/32 = 4 </span></span><br><span class="line"><span class="comment">    entropyBitLength = 128</span></span><br><span class="line"><span class="comment">    checksumBitLength = 128/32  </span></span><br><span class="line"><span class="comment">case3:  随机熵224位二进制数据时，校验和为 224/32 = 7 </span></span><br><span class="line"><span class="comment">    entropyBitLength = 224</span></span><br><span class="line"><span class="comment">    checksumBitLength = 224/32  </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewMnemonic</span><span class="params">(entropy []<span class="type">byte</span>)</span></span> (<span class="type">string</span>, <span class="type">error</span>) &#123;</span><br><span class="line">    <span class="comment">// Compute some lengths for convenience.</span></span><br><span class="line">    entropyBitLength := <span class="built_in">len</span>(entropy) * <span class="number">8</span></span><br><span class="line">    checksumBitLength := entropyBitLength / <span class="number">32</span></span><br><span class="line">    sentenceLength := (entropyBitLength + checksumBitLength) / <span class="number">11</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2私钥转换"><a href="#1-2私钥转换" class="headerlink" title="1.2私钥转换"></a>1.2私钥转换</h3><p>每11个二进制数一组，一共24组。如果都用十进制来表示：可表示的十进制数范围是 “0” 至 “2047”，一组最多可以表示2048个十进制数,[ 00000000000 至 11111111111 ]</p>
+<p>转换为24组十进制的数据，每组取值范围都是 0~2047  【还是不利于记忆】</p>
+<p>BIP 39 单词表共包含 2048 个单词，按照字母顺序排列。</p>
+<p>每个单词都代表 “0” 至 “2047” 之间的某个数字。私钥中的每组十进制数都可以被写成一个单词。</p>
+<p>协议制定的，用这个单词就代表用了对应数字。</p>
+<p>十进制数 543 对应的是dumb，原因是github上是从1开始，所以行号为544</p>
+<p><a class="link"   target="_blank" rel="noopener" href="https://github.com/bitcoin/bips/blob/22660ad3078ee9bd106e64d44662a59a1967c4bd/bip-0039/english.txt#L544" >bips&#x2F;bip-0039&#x2F;english.txt at 22660ad3078ee9bd106e64d44662a59a1967c4bd · bitcoin&#x2F;bips<i class="fas fa-external-link-alt"></i></a></p>
+<h2 id="2-HD钱包"><a href="#2-HD钱包" class="headerlink" title="2.HD钱包"></a>2.HD钱包</h2><p>为什么要有一个规定？因为这是不同加密社区正式商定的推导路径。</p>
+<p>我可以按照我想要的任何制定标准创建自己的树，并从公钥&#x2F;私钥创建和签署有效交易。</p>
+<p>因为有了协议标准，其他钱包也能重现这种结构，不会导致用户的钱被锁定在完全任意的私钥&#x2F;公钥树中</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://z2mbcprur6a.larksuite.com/space/api/box/stream/download/asynccode/?code=OGY5YTk5NDMxODIyNjQ3NDk3OTAwMGQzOWQ2OTNiMWZfYk1WaXVGcFBIVG9PWkdQMHVaZ0EyZHkxN1FaZTgzdnFfVG9rZW46SXNwVmJUd2FWbzFXbWt4R3JOMXV4a1hzczIwXzE3MjU5OTA4ODY6MTcyNTk5NDQ4Nl9WNA"
+                        alt="img"
+                 ></p>
+<p>HD 钱包树由到第一个地址节点的派生路径表示。</p>
+<p>例如，以太坊的默认值是 m&#x2F;44’&#x2F;60’&#x2F;0’&#x2F;0。该路径中的每个数字代表上面树中的某个级别。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m / purpose<span class="string">&#x27; / coin_type&#x27;</span> / account<span class="string">&#x27; / chain / address_index</span></span><br></pre></td></tr></table></figure>
+
+<p>路径 <code>m/44&#39;/60&#39;/0&#39;/0</code> 解构</p>
+<ul>
+<li>44 标准协议</li>
+<li>60 以太坊 coin_type  解决兼容不同链的问题</li>
+<li>0 账户       account 解决不同身份地址管理，比如财务和人事部门 使用不同的Account</li>
+<li>0 链           chain  0 是外部地址，对于btc中 1 是内部地址或找零地址</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://z2mbcprur6a.larksuite.com/space/api/box/stream/download/asynccode/?code=ODg5N2RmNDNiZTM5NDA5NjAxOGI5MjA2OTJmYTRlNTZfU3AwMHBlOVFGSUZHU0syTEJ2UHJsM0I3RmxvSUdOb0RfVG9rZW46SGpJNmJnUkI1bzI1akN4dzJpRnVydExzc1NlXzE3MjU5OTA4ODY6MTcyNTk5NDQ4Nl9WNA"
+                        alt="img"
+                 ></p>
+<p>【扩展私钥无法签署交易，只能使用子地址中对应的私钥】</p>
+<p>注：钱包本身不保存资产，资产是在记录比特币网络账本中的（通常称为保存在链上），钱包实际是一个管理私钥（生成、存储、签名）的工具</p>
+<p>钱包为了显示你的比特币 “余额”，钱包软件必须在比特币区块链上查询所有由你的私钥控制的 UTXO，然后将这些 UTXO 的值相加，并显示最终余额。</p>
+<h2 id="3-地址生成逻辑"><a href="#3-地址生成逻辑" class="headerlink" title="3.地址生成逻辑"></a>3.地址生成逻辑</h2><ol>
+<li>首先生成一个随机数作为私钥</li>
+<li>然后根据椭圆曲线算法(ECDSA)计算出公钥</li>
+<li>然后在根据哈希运算及校验编码得到比特币地址</li>
 </ol>
+<p>公钥及地址是公开的，私钥这是保密的，私钥推导地址的过程也是单向的，无法通过地址反推到公钥及私钥。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="https://z2mbcprur6a.larksuite.com/space/api/box/stream/download/asynccode/?code=MjE0NDA1NzhiMjAwOTUwNWJmZDgwYmEyNmQ1YjE2YjJfSkVoUXZpdzNTR1pDQUdtaGpYMjNaWWkyQlRwMnN6dWZfVG9rZW46RGhxaWJGMUUwbzNvRTd4ZGd6bnVKZ0c0c25jXzE3MjU5OTA4ODY6MTcyNTk5NDQ4Nl9WNA"
+                        alt="img"
+                 ></p>
+<h2 id="4-地址类型"><a href="#4-地址类型" class="headerlink" title="4.地址类型"></a>4.地址类型</h2><h3 id="4-1-传统的-P2PKH-地址"><a href="#4-1-传统的-P2PKH-地址" class="headerlink" title="4.1 传统的 P2PKH 地址"></a>4.1 传统的 P2PKH 地址</h3><p>全称：支付到公钥哈希值（Pay-to-Public-Key-Hash）</p>
+<p>地址格式：以 1 开头</p>
+<p>字符长度：32 个字符</p>
+<p>说明：这种地址类型是比特币最早的地址格式，用户通过公钥哈希来接收比特币。它的安全性依赖于公钥的私钥。</p>
+<h3 id="4-2-兼容隔离见证-P2SH-P2WPKH-地址"><a href="#4-2-兼容隔离见证-P2SH-P2WPKH-地址" class="headerlink" title="4.2 兼容隔离见证 P2SH-P2WPKH 地址"></a>4.2 兼容隔离见证 P2SH-P2WPKH 地址</h3><p>全称：支付到脚本哈希值（Pay-to-Script-Hash）</p>
+<p>地址格式：以 3 开头</p>
+<p>字符长度：32 个字符</p>
+<p>说明：这种地址类型也称为嵌套隔离见证地址，允许用户在不完全支持隔离见证的环境中使用隔离见证的优势。它通过脚本哈希来接收比特币。</p>
+<h3 id="4-3-原生隔离见证-P2WPKH-地址"><a href="#4-3-原生隔离见证-P2WPKH-地址" class="headerlink" title="4.3 原生隔离见证 P2WPKH 地址"></a>4.3 原生隔离见证 P2WPKH 地址</h3><p>全称：支付到原生公钥哈希值（Pay-to-Witness-Public-Key-Hash）</p>
+<p>地址格式：以 bc1 开头</p>
+<p>字符长度：42 个字符</p>
+<p>说明：这种地址类型是比特币的原生隔离见证地址，使用 Bech32 编码，提供更高的交易效率和更低的手续费。</p>
+<h3 id="4-4-Taproot-地址-P2TR"><a href="#4-4-Taproot-地址-P2TR" class="headerlink" title="4.4 Taproot 地址 P2TR"></a>4.4 Taproot 地址 P2TR</h3><p>全称：支付到 Taproot 地址（Pay-to-Taproot）</p>
+<p>地址格式：以 bc 开头</p>
+<p>字符长度：62 个字符</p>
+<p>说明：Taproot 是比特币协议的一个重要升级，旨在提高隐私性和智能合约的灵活性。它允许更复杂的交易结构，同时保持简单的支付方式。</p>
+<h2 id="5-UTXO集"><a href="#5-UTXO集" class="headerlink" title="5.UTXO集"></a>5.UTXO集</h2><p>所有 UTXO 的集合被称为 UTXO 集。比特币节点会追踪 UTXO 集，确定哪些代币未被花费哪些可以花费。</p>
+<p>UTXO 其实是包含</p>
+<ul>
+<li>一定数量的比特币（以 “聪（satoshi）” 为单位）</li>
+<li>以及花费这些比特币时所需满足的条件 叫作 锁定脚本（locking script）</li>
+</ul>
+<p>当我们要使用一个 UTXO 时，就是用私钥对 UTXO 进行解锁（签名），以便使用其中的比特币。</p>
+<p>手续费： Input - out &#x3D; fee</p>
+<p>out中： PubKey Script 字段（简称为 “scriptPubKey”）就是我们所说的 “锁定脚本”， 别人的公钥锁定</p>
+<p>Input中：Signature Script 字段（简称为 “scriptSig”）也就是所谓的 “解锁脚本”，自己的私钥解锁</p>
+<h3 id="5-1-coinbase"><a href="#5-1-coinbase" class="headerlink" title="5.1 coinbase"></a>5.1 coinbase</h3><p><a class="link"   target="_blank" rel="noopener" href="https://river.com/learn/terms/c/coinbase/" >Coinbase<i class="fas fa-external-link-alt"></i></a> 交易是一种特殊类型的交易，通过创建新的比特币来奖励找到区块的矿工。</p>
+<p>由于创造了新的比特币，coinbase 交易没有输入，但是会产生一个或多个输出。</p>
+<p>就像所有正常输出一样，coinbase 交易的输出是新的 UTXO。</p>
+<h2 id="6-交易过程"><a href="#6-交易过程" class="headerlink" title="6.交易过程"></a>6.交易过程</h2><h3 id="6-1-发起交易及交易签名"><a href="#6-1-发起交易及交易签名" class="headerlink" title="6.1 发起交易及交易签名"></a>6.1 发起交易及交易签名</h3><ol>
+<li>交易输入： 他们指向之前的交易创建的 UTXO，通常钱包会收集当前可用的 UTXO 集合作为交易的输入；</li>
+<li>交易输出：表明多少比特币会锁定到哪些地址，即生成新的 UTXO 。</li>
+<li>签名： 用私钥来解锁交易输入的UTXO。</li>
+</ol>
+<p>创建比特币交易是在钱包内完成的，而不是在节点上，因此可以在离线的情况下创建交易，交易创建后，通过比特币节点发送到比特币网络中。</p>
+<h3 id="6-2-节点验证交易有效性"><a href="#6-2-节点验证交易有效性" class="headerlink" title="6.2 节点验证交易有效性"></a>6.2 节点验证交易有效性</h3><p>无论交易来自哪里，交易就得先被节点的交易池（mempool）接受。交易池就是未确认交易的缓存，以便矿工从中挑选出手续费率最高的交易、打包到区块中。</p>
+<p>当然矿工有首先检查交易是否有效，例如检查：</p>
+<ul>
+<li>交易输出是否 小于 0 或者大于 2100 万 BTC</li>
+<li>交易不是一笔 coinbase 交易 ，因为区块之外无法存在任何 coinbase 交易。</li>
+<li>交易的 “重量” 不超过 400000 单位 。这么大体积的交易可能在共识上是有效的，但会占据太多的交易池空间。防止攻击者尝试使用体积非常大但永远不会被挖出的交易来塞爆交易池。</li>
+<li>签名验证确定 UTXO 的有效性（UTXO 脚本检查）</li>
+</ul>
+<p>所有有效的交易会传播给网络中的所有节点。</p>
+<h3 id="6-3-使用工作量证明挖掘新区块"><a href="#6-3-使用工作量证明挖掘新区块" class="headerlink" title="6.3 使用工作量证明挖掘新区块"></a>6.3 使用工作量证明挖掘新区块</h3><p>矿工从从交易池中找出最优的一组交易（在一个区块限制下，手续费收益最大）</p>
+<p>给这组交易创建merkle树，然后不断的执行暴力哈希运算，以求解出满足一下 Hash 目标值的nonce值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHA256(SHA256(version + prev_hash + merkle_root + ntime + nbits + nonce )) &lt; HASH 目标值</span><br></pre></td></tr></table></figure>
+
+<p>version: block的版本 </p>
+<p>prev_hash: 上一个block的hash值 </p>
+<p>merkle_root: 需要写入的交易记录的hash树的值 </p>
+<p>ntime: 更新时间 </p>
+<p>nbits: 当前难度</p>
+<h2 id="7-隔离见证"><a href="#7-隔离见证" class="headerlink" title="7.隔离见证"></a>7.隔离见证</h2><p>隔离见证（SegWit）是一个由多个 BIP（141、142、143、144 和 145）描述的软分叉</p>
+<p>其主要用意是优化比特币交易和区块的结构，将交易的签名（也叫 “脚本签名（scriptSig）”、“witness” 或 “解锁脚本”）从交易中移到一个独立的结构中</p>
+<h3 id="SegWit解决了什么问题？"><a href="#SegWit解决了什么问题？" class="headerlink" title="SegWit解决了什么问题？"></a>SegWit解决了什么问题？</h3><p>SegWit 的首要目标不是节省区块空间，而是修复交易的不定形漏洞。</p>
+<p>在 SegWit 启用之前，尚未上链确认的<a class="link"   target="_blank" rel="noopener" href="https://wiki.trezor.io/Transaction_ID" >交易的 ID (txid)<i class="fas fa-external-link-alt"></i></a>可能会因为所纳入的脚本或者签名本身的变化而发生变化。</p>
+<p>SegWit 将脚本签名（ScriptSig）转移到了交易的一个新部分 “witness”（该部分不用来计算 txid）中，交易的不定形漏洞得以修复，交易 ID 也变成了未确认交易可以依赖的标识符。</p>
+<p>这一更改让交易的 ID 变成可以依赖的数据，但将脚本和签名数据移到 Witness 字段中使得开发者必须提出一种新的交易费计量方法，根据 “block weight”[不同类型的数据设计了数据量的乘数] 而非 “block size”[数据量的大小] 计算交易费</p>
+<p>在 SegWit 启用之前，区块大小是 100 万字节（约 1 MB）</p>
+<p>而在 SegWit 启用之后，区块大小上限变成了 400 万 weight，换算过来就是平均每区块 1.5 ~ 2.0 MB 左右（具体视区块中包含的交易量而定），但是最多可容纳 4 MB 的数据。</p>
+<p>这是因为 witness 数据和交易中其它数据的 weight 比是 1:4，区块中可以塞入更多交易，连带会让手续费水平降低。</p>
+<p>SegWit 升级见证了广泛的用户群体站出来与贪婪的矿工对抗，通过拒绝非 SegWit 的区块来迫使矿工升级。</p>
+<p>它利用了比特币的博弈经济学来降低矿工的动力 — 如果他们的区块会被拒绝，就不能从中收获区块奖励和手续费</p>
 
                 </div>
                 
@@ -309,7 +433,7 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                700-Bitcoin基础课
+                700-Bitcoin基础
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
@@ -456,7 +580,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BTCstudy"><span class="nav-number">1.</span> <span class="nav-text">BTCstudy</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%A7%81%E9%92%A5%E7%94%9F%E6%88%90%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">1.私钥生成规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="nav-number">1.1.</span> <span class="nav-text">1.1校验和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E7%A7%81%E9%92%A5%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">1.2私钥转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HD%E9%92%B1%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">2.HD钱包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E9%80%BB%E8%BE%91"><span class="nav-number">3.</span> <span class="nav-text">3.地址生成逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9C%B0%E5%9D%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">4.地址类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%BC%A0%E7%BB%9F%E7%9A%84-P2PKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 传统的 P2PKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%85%BC%E5%AE%B9%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81-P2SH-P2WPKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 兼容隔离见证 P2SH-P2WPKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%8E%9F%E7%94%9F%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81-P2WPKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 原生隔离见证 P2WPKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Taproot-%E5%9C%B0%E5%9D%80-P2TR"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Taproot 地址 P2TR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-UTXO%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">5.UTXO集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-coinbase"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 coinbase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BA%A4%E6%98%93%E8%BF%87%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">6.交易过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%8F%91%E8%B5%B7%E4%BA%A4%E6%98%93%E5%8F%8A%E4%BA%A4%E6%98%93%E7%AD%BE%E5%90%8D"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 发起交易及交易签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E8%8A%82%E7%82%B9%E9%AA%8C%E8%AF%81%E4%BA%A4%E6%98%93%E6%9C%89%E6%95%88%E6%80%A7"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 节点验证交易有效性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E4%BD%BF%E7%94%A8%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%8C%96%E6%8E%98%E6%96%B0%E5%8C%BA%E5%9D%97"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 使用工作量证明挖掘新区块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81"><span class="nav-number">7.</span> <span class="nav-text">7.隔离见证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SegWit%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">7.1.</span> <span class="nav-text">SegWit解决了什么问题？</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -495,7 +619,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">42.4k</span>
+                    <span class="item-value border-box word">45.3k</span>
                 </span>
             
 
@@ -624,7 +748,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BTCstudy"><span class="nav-number">1.</span> <span class="nav-text">BTCstudy</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%A7%81%E9%92%A5%E7%94%9F%E6%88%90%E8%A7%84%E5%88%99"><span class="nav-number">1.</span> <span class="nav-text">1.私钥生成规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="nav-number">1.1.</span> <span class="nav-text">1.1校验和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2%E7%A7%81%E9%92%A5%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.2.</span> <span class="nav-text">1.2私钥转换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-HD%E9%92%B1%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">2.HD钱包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9C%B0%E5%9D%80%E7%94%9F%E6%88%90%E9%80%BB%E8%BE%91"><span class="nav-number">3.</span> <span class="nav-text">3.地址生成逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%9C%B0%E5%9D%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">4.地址类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E4%BC%A0%E7%BB%9F%E7%9A%84-P2PKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 传统的 P2PKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%85%BC%E5%AE%B9%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81-P2SH-P2WPKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 兼容隔离见证 P2SH-P2WPKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%8E%9F%E7%94%9F%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81-P2WPKH-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 原生隔离见证 P2WPKH 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Taproot-%E5%9C%B0%E5%9D%80-P2TR"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Taproot 地址 P2TR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-UTXO%E9%9B%86"><span class="nav-number">5.</span> <span class="nav-text">5.UTXO集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-coinbase"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 coinbase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%BA%A4%E6%98%93%E8%BF%87%E7%A8%8B"><span class="nav-number">6.</span> <span class="nav-text">6.交易过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%8F%91%E8%B5%B7%E4%BA%A4%E6%98%93%E5%8F%8A%E4%BA%A4%E6%98%93%E7%AD%BE%E5%90%8D"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 发起交易及交易签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E8%8A%82%E7%82%B9%E9%AA%8C%E8%AF%81%E4%BA%A4%E6%98%93%E6%9C%89%E6%95%88%E6%80%A7"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 节点验证交易有效性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E4%BD%BF%E7%94%A8%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%E6%8C%96%E6%8E%98%E6%96%B0%E5%8C%BA%E5%9D%97"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 使用工作量证明挖掘新区块</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E9%9A%94%E7%A6%BB%E8%A7%81%E8%AF%81"><span class="nav-number">7.</span> <span class="nav-text">7.隔离见证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SegWit%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-number">7.1.</span> <span class="nav-text">SegWit解决了什么问题？</span></a></li></ol></li></ol>
     </div>
 </div>
 
