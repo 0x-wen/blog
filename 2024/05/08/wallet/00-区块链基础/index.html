@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            00-区块链基础 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"真正的大师永远怀着一颗学徒的心.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        00-区块链基础
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-05-08 18:01:37</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Wed Sep 25 2024 14:50:05 GMT+0800">2024-09-25 14:50:05</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/blog/categories/wallet/">wallet</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.2k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <blockquote>
+<p>文章将使用问答的形式进行区块链基础知识的讲解，同时满足学习和面试需求</p>
+</blockquote>
+<h2 id="1-什么是区块链？"><a href="#1-什么是区块链？" class="headerlink" title="1.什么是区块链？"></a>1.什么是区块链？</h2><p>区块链是一种<code>分布式</code>的、<code>去中心化</code>的数字账本技术，用于记录和验证交易与数据。<br>区块链的核心概念是将交易和数据记录在一个被称为”区块”的数据结构中，并通过<code>加密</code>和<code>共识算法</code>保证数据的<code>安全性</code>和<code>一致性</code>。<br>每个区块包含了一批交易的信息，以及与之前区块的链接，形成了一个链式结构。</p>
+<h2 id="2-区块链有什么特点？"><a href="#2-区块链有什么特点？" class="headerlink" title="2.区块链有什么特点？"></a>2.区块链有什么特点？</h2><p>在区块链中，参与者通过网络共享和维护这个账本的副本，而不是依赖于中央机构来验证交易。这种去中心化的特性使得区块链具有以下特点：</p>
+<ol>
+<li><code>透明性</code>：区块链中的交易和数据是公开可见的，任何人都可以查看账本的副本。这提供了一种透明的方式来验证交易和监督系统的运作。</li>
+<li><code>安全性</code>：区块链使用密码学技术对数据进行加密和验证，从而确保数据的安全性和完整性。由于数据存储在多个节点上，篡改数据变得非常困难。</li>
+<li><code>去中心化</code>：区块链没有中央机构或控制权，参与者通过共识算法来达成对账本的一致认可。这使得区块链具有更高的可信度和抗攻击能力。</li>
+<li><code>不可篡改性</code>：一旦数据被记录在区块链上，由于每个区块都包含了前一个区块的哈希值，任何对数据的篡改都将被其他节点检测到。</li>
+</ol>
+<h2 id="3-区块链的运作方式"><a href="#3-区块链的运作方式" class="headerlink" title="3.区块链的运作方式"></a>3.区块链的运作方式</h2><h3 id="3-1-哈希函数"><a href="#3-1-哈希函数" class="headerlink" title="3.1 哈希函数"></a>3.1 哈希函数</h3><p>理想的加密哈希函数具备5个主要属性：</p>
+<ol>
+<li><strong>确定性：</strong>相同的消息总是产生相同的哈希值。</li>
+<li><strong>快速：</strong>快速计算任何给定消息的哈希值。</li>
+<li><strong>抵抗性：</strong>除非尝试所有可能的消息，否则从其哈希值生成消息是不可行的。</li>
+<li><strong>不相关：</strong>对消息的微小更改会极大地改变哈希值，以至于新值与旧值没有关系。</li>
+<li><strong>抗碰撞：</strong>不可能找到具有相同哈希值的两个不同消息。</li>
+</ol>
+<h3 id="3-2-区块、链"><a href="#3-2-区块、链" class="headerlink" title="3.2 区块、链"></a>3.2 区块、链</h3><ul>
+<li>有效区块是一组有序的<strong>交易</strong>。</li>
+<li>每个块都包含前一个块的<strong>哈希值。</strong> </li>
+<li>区块的哈希值具有<strong>易证明难伪造。</strong></li>
+</ul>
+<p>区块链接方式如下图示例：</p>
+<img    
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/static/image-03.png"
+                         alt="image-03" style="zoom:120%;" 
+                 >
+
+<h2 id="4-交易的运作方式"><a href="#4-交易的运作方式" class="headerlink" title="4.交易的运作方式"></a>4.交易的运作方式</h2><h3 id="4-1-加密钱包"><a href="#4-1-加密钱包" class="headerlink" title="4.1 加密钱包"></a>4.1 加密钱包</h3><blockquote>
+<p>钱包并不存储加密资产，它们只存储私钥</p>
+</blockquote>
+<p>先理解三个重要概念：</p>
+<ul>
+<li>私钥、公钥、地址：公私钥通过<code>非对称加密</code>生成，公钥用于分发，私钥用于个人保留，地址通过公钥推导</li>
+<li>加密与解密：消息传递通过公钥加密、私钥解密</li>
+<li>签名与验证：交易信息通过私钥签名、公钥验证签名</li>
+</ul>
+<img    
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/static/image-0401.png"
+                         alt="image-0401" style="zoom:70%;" 
+                 >
+
+<h3 id="4-2-以BTC为例，讲解一笔交易流程"><a href="#4-2-以BTC为例，讲解一笔交易流程" class="headerlink" title="4.2 以BTC为例，讲解一笔交易流程"></a>4.2 以BTC为例，讲解一笔交易流程</h3><blockquote>
+<p>用户B转账 1 bitcoin 至用户A</p>
+</blockquote>
+<img    
+                       lazyload
+                       alt="image"
+                       data-src="/blog/images/static/image-0402.png"
+                         alt="image-0402" style="zoom:120%;" 
+                 >
+
+<ol>
+<li>用户B使用自己的私钥签名完成交易信息【确认用户B有足够的代币】</li>
+<li>将交易信息发送至节点，节点使用公钥验证交易信息，并存储在<code>内存池</code>中。</li>
+<li>节点将交易分组在区块中，并广播到其他节点。</li>
+<li>共识成功并出块后，用户A才能获取到1 bitcoin。</li>
+</ol>
+<h2 id="5-共识"><a href="#5-共识" class="headerlink" title="5.共识"></a>5.共识</h2><h3 id="5-1-工作量证明（PoW）"><a href="#5-1-工作量证明（PoW）" class="headerlink" title="5.1 工作量证明（PoW）"></a>5.1 工作量证明（PoW）</h3><blockquote>
+<p>去中心化程度高，消耗资源高<br>在 PoW 共识中，用户必须完成任意难度的任务，当与块中的有序交易结合时，会产生符合特定标准的哈希函数结果。</p>
+</blockquote>
+<ol>
+<li>称为“矿工”的节点通过暴力竞争来解决数学问题（找到特定规则的哈希值）</li>
+<li>第一个解决问题的矿工可以创建一个区块</li>
+<li>其他节点检查该块是否有效。如果是，矿工将获得加密货币奖励。如果不是，矿工就浪费了时间和精力。</li>
+<li>所有的节点都将新块添加到其区块链副本中。</li>
+</ol>
+<h3 id="5-2-股权证明-PoS"><a href="#5-2-股权证明-PoS" class="headerlink" title="5.2 股权证明 (PoS)"></a>5.2 股权证明 (PoS)</h3><blockquote>
+<p>去中心化的一种妥协方案，更像选择代表人参与网络，相比工作量证明大大降低资源消耗</p>
+</blockquote>
+<ol>
+<li>称为验证者节点会抵押一些加密货币。投入一定数量的加密货币来参与和分配出块奖励。</li>
+<li>验证者节点所占的权重越高更有可能被选择来处理交易并创建区块。</li>
+<li>其他验证者节点检查该块是否有效。如果是，所有参与的验证者都会赚取收益。如果不是，创建该块的验证者可能会失去其权益或者获得惩罚。</li>
+</ol>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                00-区块链基础
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024/05/08/wallet/00-区块链基础/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-05-08 18:01</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2024/05/13/wallet/01-%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA/"
+                                   title="01-分布式基础理论"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">01-分布式基础理论</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2023/08/21/tools/5-%E9%87%8D%E5%A4%8D%E9%80%BB%E8%BE%91%E4%BC%98%E5%8C%96/"
+                                   title="5-重复逻辑优化"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">5-重复逻辑优化</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1.什么是区块链？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2.区块链有什么特点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3.区块链的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 哈希函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8C%BA%E5%9D%97%E3%80%81%E9%93%BE"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 区块、链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BA%A4%E6%98%93%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4.交易的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8A%A0%E5%AF%86%E9%92%B1%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 加密钱包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BB%A5BTC%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%B2%E8%A7%A3%E4%B8%80%E7%AC%94%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 以BTC为例，讲解一笔交易流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%B1%E8%AF%86"><span class="nav-number">5.</span> <span class="nav-text">5.共识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%EF%BC%88PoW%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 工作量证明（PoW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%82%A1%E6%9D%83%E8%AF%81%E6%98%8E-PoS"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 股权证明 (PoS)</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">42.8k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%8C%BA%E5%9D%97%E9%93%BE%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">1.什么是区块链？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E6%9C%89%E4%BB%80%E4%B9%88%E7%89%B9%E7%82%B9%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">2.区块链有什么特点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%8C%BA%E5%9D%97%E9%93%BE%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">3.区块链的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%93%88%E5%B8%8C%E5%87%BD%E6%95%B0"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 哈希函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%8C%BA%E5%9D%97%E3%80%81%E9%93%BE"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 区块、链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BA%A4%E6%98%93%E7%9A%84%E8%BF%90%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">4.交易的运作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%8A%A0%E5%AF%86%E9%92%B1%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 加密钱包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E4%BB%A5BTC%E4%B8%BA%E4%BE%8B%EF%BC%8C%E8%AE%B2%E8%A7%A3%E4%B8%80%E7%AC%94%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 以BTC为例，讲解一笔交易流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%85%B1%E8%AF%86"><span class="nav-number">5.</span> <span class="nav-text">5.共识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%B7%A5%E4%BD%9C%E9%87%8F%E8%AF%81%E6%98%8E%EF%BC%88PoW%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 工作量证明（PoW）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E8%82%A1%E6%9D%83%E8%AF%81%E6%98%8E-PoS"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 股权证明 (PoS)</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>

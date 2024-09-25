@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            501-move入门与交互 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"真正的大师永远怀着一颗学徒的心.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        501-move入门与交互
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-07-03 09:57:46</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Wed Sep 25 2024 14:48:40 GMT+0800">2024-09-25 14:48:40</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/blog/categories/contract/">contract</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/move/">move</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.5k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>6 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h3 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sui move new my_project</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译项目"><a href="#编译项目" class="headerlink" title="编译项目"></a>编译项目</h3><p>Move 是一种编译语言，需要将源文件编译为 Move Bytecode，它仅包含有关模块、其成员和类型的必要信息，不包括注释和一些标识符(例如常量)。</p>
+<p>Move Compiler 会创建一个文件夹，其中放置所有获取和编译的依赖项以及当前包模块的字节码。<br>生成的文件应该被添加到.gitignore</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sui move build </span><br></pre></td></tr></table></figure>
+
+<h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sui move test</span><br><span class="line">sui move test test_hello # 指定运行某个或多个测试</span><br></pre></td></tr></table></figure>
+
+<h3 id="部署脚本"><a href="#部署脚本" class="headerlink" title="部署脚本"></a>部署脚本</h3><p><a class="link"   target="_blank" rel="noopener" href="https://move-book.com/your-first-move/hello-sui.html" >todo-list<i class="fas fa-external-link-alt"></i></a> 复制链接中的代码，并按操作部署到测试网</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sui client publish --json</span><br></pre></td></tr></table></figure>
+
+<h3 id="合约交互"><a href="#合约交互" class="headerlink" title="合约交互"></a>合约交互</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">找到合约部署后packageId</span></span><br><span class="line">&quot;type&quot;: &quot;published&quot;,</span><br><span class="line">&quot;packageId&quot;: &quot;0x102f24e8218fa6fb837137ada5a0ba30bac96e30b085bd6de99a11727b794a79&quot;,</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">准备变量</span></span><br><span class="line">export PACKAGE_ID=0x102f24e8218fa6fb837137ada5a0ba30bac96e30b085bd6de99a11727b794a79</span><br><span class="line">export MY_ADDRESS=$(sui client active-address)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">调用合约</span></span><br><span class="line">sui client ptb \</span><br><span class="line">--gas-budget 100000000 \</span><br><span class="line">--assign sender @$MY_ADDRESS \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::new \</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将new函数的返回值存储至 list 中</span></span><br><span class="line">--assign list \</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将 list 对象传输给 sender</span></span><br><span class="line">--transfer-objects &quot;[list]&quot; sender</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">执行成功后得到交互的响应信息，ObjectID类似一个TodoList的实例，拥有其所有权并可以调用其相关方法</span></span><br><span class="line">Created Objects:    </span><br><span class="line">    ObjectID: 0x3ac554c410b36c309313eced79e6d86e251637b80ab54180c4d44b86c0538064     </span><br><span class="line">    Sender: 0x7074c1cfb8327dcefcf6f44d14d1747bd24859df02a8ba2f31eaf6504385cf79     </span><br><span class="line">    Owner: Account Address ( 0x7074c1cfb8327dcefcf6f44d14d1747bd24859df02a8ba2f31eaf6504385cf79 ) </span><br><span class="line">    ObjectType: 0x102f24e8218fa6fb837137ada5a0ba30bac96e30b085bd6de99a11727b794a79::todo_list::TodoList </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置LIST_ID</span></span><br><span class="line">export LIST_ID=0x3ac554c410b36c309313eced79e6d86e251637b80ab54180c4d44b86c0538064</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加一个任务</span></span><br><span class="line">sui client ptb \</span><br><span class="line">--gas-budget 100000000 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::add @$LIST_ID &quot;&#x27;0&#x27;&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看</span></span><br><span class="line">sui client object $LIST_ID</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加三个并删除两个, 验证同一个事务按下标删除</span></span><br><span class="line">sui client ptb \</span><br><span class="line">--gas-budget 100000000 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::add @$LIST_ID &quot;&#x27;1&#x27;&quot; \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::add @$LIST_ID &quot;&#x27;2&#x27;&quot; \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::add @$LIST_ID &quot;&#x27;3&#x27;&quot; \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 0 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 0   </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除多个的场景下会有错误，目前还没有找到啥原因</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">复现步骤：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1.单独添加0  2.单独添加1  3.合并 删除0和1</span></span><br><span class="line">sui client ptb \</span><br><span class="line">--gas-budget 100000000 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 0 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 1 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 2 \</span><br><span class="line">--move-call $PACKAGE_ID::todo_list::remove @$LIST_ID 3 </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Error executing transaction: Failure</span> </span><br><span class="line">error: &quot;MoveAbort(MoveLocation &#123; module: ModuleId &#123; address: 0000000000000000000000000000000000000000000000000000000000000001, name: Identifier(\&quot;vector\&quot;) &#125;, function: 14, instruction: 11, function_name: Some(\&quot;remove\&quot;) &#125;, 131072) in command 1&quot;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h2><h3 id="包"><a href="#包" class="headerlink" title="包"></a>包</h3><p>包由模块组成，包发布到区块链上并由<code>地址</code>标识。</p>
+<ul>
+<li>调用其函数的事务来与已发包的包交互</li>
+<li>可以作为其他包的依赖，例如:自己编写的包可以依赖官方包</li>
+</ul>
+<h3 id="已发布的包"><a href="#已发布的包" class="headerlink" title="已发布的包"></a>已发布的包</h3><ul>
+<li>开发过程中包没有地址，一般需要设置为 0x0 </li>
+<li>已发布的包会有一个链上唯一地址，其中包含其模块的字节码，已发布的包不可变，并且可以通过发送交易与其交互</li>
+</ul>
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><ul>
+<li>模块包含函数、类型、常量、变量等</li>
+<li>模块可以引入其他依赖包, 以todolist为例:</li>
+</ul>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module   todo_list    ::   todo_list</span><br><span class="line">定义模块   包/address   ::   模块名称</span><br><span class="line"></span><br><span class="line"># 引入其他依赖包, std包/string模块/<span class="type">String</span>类型 </span><br><span class="line"><span class="keyword">use</span> std::string::<span class="type">String</span>;</span><br><span class="line"></span><br><span class="line"># 定义结构体</span><br><span class="line">public <span class="keyword">struct</span> <span class="title class_">TodoList</span> has key, store &#123;</span><br><span class="line">    id: UID,</span><br><span class="line">    items: vector&lt;<span class="type">String</span>&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"># 定义函数</span><br><span class="line">public fun <span class="title function_ invoke__">new</span>(ctx: &amp;<span class="keyword">mut</span> TxContext): TodoList</span><br></pre></td></tr></table></figure>
+
+<h3 id="Move-toml"><a href="#Move-toml" class="headerlink" title="Move.toml"></a>Move.toml</h3><ol>
+<li><code>[package]</code>: 包信息<ul>
+<li>name: 导入时的包名称</li>
+<li>version: 包的版本号</li>
+<li>edition: Move的版本</li>
+</ul>
+</li>
+<li><code>[dependencies]</code>: 依赖包<ul>
+<li>override &#x3D; true, 解决版本冲突问题</li>
+<li>git 指定github仓库地址， local &#x3D; path 指定本地路径</li>
+<li>subdir &#x3D; “remote&#x2F;path”</li>
+<li>rev &#x3D; “main”  指定分支</li>
+</ul>
+</li>
+<li><code>[addresses]</code>: 地址<ul>
+<li>部分用于添加地址的别名,可以在此指定任意地址，然后在代码中用作别名</li>
+</ul>
+</li>
+</ol>
+<h3 id="Address"><a href="#Address" class="headerlink" title="Address"></a>Address</h3><blockquote>
+<p>地址是区块链上位置的唯一标识符。<code>它用于识别包、帐户和对象</code>, 地址的固定大小为32字节，通常使用16进制表示</p>
+</blockquote>
+<p><code>长度为 64 个字符（32 个字节），并以 0x 为前缀</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(<span class="string">&quot;0x04bde040cca2b5fec3c47a30cdeb3e11f011395c49886c91629b7dbd4713b319&quot;</span>)</span><br><span class="line"><span class="number">66</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">len</span>(<span class="string">&quot;04bde040cca2b5fec3c47a30cdeb3e11f011395c49886c91629b7dbd4713b319&quot;</span>)</span><br><span class="line"><span class="number">64</span>  </span><br></pre></td></tr></table></figure>
+
+<p>标准库的地址是 0x1 。小于 32 字节的地址在左侧用零填充。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0x1 = 0x0000000000000000000000000000000000000000000000000000000000000001   # Sui 标准库的地址（别名 std ）</span><br><span class="line">0x2 - Sui 框架的地址（别名 sui ）</span><br><span class="line">0x5 - Sui System 对象的地址</span><br><span class="line">0x6 - 系统 Clock 对象的地址</span><br><span class="line">0x8 - 系统 Random 对象的地址</span><br><span class="line">0x403 - DenyList 系统对象的地址</span><br></pre></td></tr></table></figure>
+
+<h3 id="Account"><a href="#Account" class="headerlink" title="Account"></a>Account</h3><ul>
+<li>账户是识别用户的一种方式，账户由私钥生成并由地址标识。</li>
+<li>账户可以拥有对象，并且可以发送交易，每笔交易都有一个发送者(地址)</li>
+<li>Sui支持多种密码算法生成账户，ed25519, secp256k1, zklogin</li>
+</ul>
+<h3 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h3><blockquote>
+<p>与链交互的唯一方式，发起交易用于改变区块链的状态。</p>
+</blockquote>
+<ol>
+<li><p>交易结构</p>
+<ul>
+<li>sender: 交互的操作者是谁</li>
+<li>list (or a chain) of commands: 要执行的操作</li>
+<li>command inputs: 简单类型值也可以是object</li>
+<li>gas object: 用于支付gas费用对象</li>
+<li>gas price and budget: 预估交易成本</li>
+</ul>
+</li>
+<li><p>commands</p>
+<ul>
+<li>交易由多个命令组成，并按照它们列出的顺序执行。并且可以使用之前命令的结果</li>
+<li>交易整体作为一个事务，要么全部成功，要么失败 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Inputs:</span><br><span class="line">- sender = 0xa11ce</span><br><span class="line"></span><br><span class="line">Commands:</span><br><span class="line">- payment = SplitCoins(Gas, [ 1000 ])</span><br><span class="line">- item = MoveCall(0xAAA::market::purchase, [ payment ])</span><br><span class="line">- TransferObjects(item, sender)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li>SplitCoins - 一个内置命令，用于从传递的对象（在本例中为 Gas 对象）中分离出新硬币</li>
+<li>MoveCall - 使用给定参数调用包 0xAAA 、模块 market 中的函数 purchase 的命令 - 给定参数 payment object</li>
+<li>TransferObjects - 将对象传输给接收者的内置命令</li>
+</ol>
+</li>
+<li><p>交易结果</p>
+</li>
+</ol>
+<p>交易对区块链状态的改变，可以通过以下方式更改状态：</p>
+<ul>
+<li>使用 gas object 来支付交易</li>
+<li>创建、更新和删除对象</li>
+<li>记录事件</li>
+</ul>
+<p>交易结果的组成：</p>
+<ul>
+<li>Transaction Digest: 交易摘要 - 交易的哈希值，用于识别交易</li>
+<li>Transaction Data: 交易数据 - 交易中使用的输入、命令和气体对象</li>
+<li>Transaction Effects: 交易效果 - 交易的状态和“效果”，更具体地说：交易的状态、对象及其新版本的更新、使用的气体对象、交易的气体成本以及交易发出的事件</li>
+<li>Events: 事件 - 交易发出的自定义事件</li>
+<li>Object Changes: 对象更改 - 对对象所做的更改，包括所有权的更改</li>
+<li>Balance Changes: 余额变化 - 交易涉及的账户总余额的变化</li>
+</ul>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                501-move入门与交互
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024/07/03/contract/3-move/301-move入门与交互/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-07-03 09:57</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/move/">move</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2024/07/11/contract/3-move/302-move%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+                                   title="502-move数据类型"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">502-move数据类型</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2024/07/01/contract/3-move/300-move%E5%AD%A6%E4%B9%A0%E5%A5%96%E5%8A%B1/"
+                                   title="300-move学习奖励"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">300-move学习奖励</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">编译项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">4.</span> <span class="nav-text">部署脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E7%BA%A6%E4%BA%A4%E4%BA%92"><span class="nav-number">5.</span> <span class="nav-text">合约交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number"></span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">已发布的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Move-toml"><span class="nav-number">4.</span> <span class="nav-text">Move.toml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Address"><span class="nav-number">5.</span> <span class="nav-text">Address</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Account"><span class="nav-number">6.</span> <span class="nav-text">Account</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transaction"><span class="nav-number">7.</span> <span class="nav-text">Transaction</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">42.8k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.</span> <span class="nav-text">新建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.</span> <span class="nav-text">编译项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">3.</span> <span class="nav-text">运行测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%84%9A%E6%9C%AC"><span class="nav-number">4.</span> <span class="nav-text">部署脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%88%E7%BA%A6%E4%BA%A4%E4%BA%92"><span class="nav-number">5.</span> <span class="nav-text">合约交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number"></span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%B2%E5%8F%91%E5%B8%83%E7%9A%84%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">已发布的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Move-toml"><span class="nav-number">4.</span> <span class="nav-text">Move.toml</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Address"><span class="nav-number">5.</span> <span class="nav-text">Address</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Account"><span class="nav-number">6.</span> <span class="nav-text">Account</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transaction"><span class="nav-number">7.</span> <span class="nav-text">Transaction</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
