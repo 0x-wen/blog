@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            Layer2 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"纵横千里独行客,何惧前路雨潇潇.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Layer2
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-11-18 20:17:49</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Mon Nov 25 2024 13:45:35 GMT+0800">2024-11-25 13:45:35</span>
+            </span>
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>4.2k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>14 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>提升底层网络(L1)的扩展性，并利用L1的安全性，其交易数据必须以某种形式被底层区块链网络验证并确认。<br>侧链就不属于Layer2，因为侧链通常会拥有自己的共识机制和验证节点，因此拥有独立于底层区块链的安全机制。<br>无需牺牲去中心化水平或安全性就能快速执行交易并实现可扩展性。</p>
+<h2 id="诞生的背景"><a href="#诞生的背景" class="headerlink" title="诞生的背景"></a>诞生的背景</h2><p>区块链存在不可能三角,无法同时兼顾可扩展性、安全性和去中心化三个维度<br>当前区块链三个核心功能: 执行交易，数据可用性以及达成共识</p>
+<ul>
+<li>执行交易: 处理并完成交易。衡量指标是区块链每秒可以完成的计算次数（其中包含交易数量）。 </li>
+<li>数据可用性: 网络中的节点和验证者需要储存交易、状态以及其他数据。衡量指标是标准存储单位，比如MB和GB等。</li>
+<li>达成共识: 节点和验证者需要针对网络状态和交易排序达成共识。衡量指标是去中心化水平和终局速度，或所有节点针对某一状态变更达成一致意见所需的时间。</li>
+</ul>
+<p>L2在结算时向底层提交某种可验证的加密证明，以证明状态变更的真实性。<br>L1需要智能合约支持用于验证L2证明</p>
+<ul>
+<li>保存并释放资金转账至L2</li>
+<li>收到L2提交的证明，进行验证并解决分歧，最终确认交易有效</li>
+</ul>
+<h2 id="支付通道"><a href="#支付通道" class="headerlink" title="支付通道"></a>支付通道</h2><p>两个或以上用户可以预先向通道中充值资金，然后在链下进行通证转账。<br>链下记账的方式，只需要在通道开启时约定使用资金，后续交易都不会将记录发送至链上，而是在双方都决定关闭通道时，将最终交易结果发送至链上结算。</p>
+<h2 id="Rollups"><a href="#Rollups" class="headerlink" title="Rollups"></a>Rollups</h2><p>Optimistic rollups和zk-rollups可以在链下执行智能合约状态变更，并在链上进行验证，以此提升区块链的吞吐量并降低成本。<br>1.Rollups在链下执行交易，底层区块链只需计算轻量化的交易证明，验证网络活动并储存原始交易数据。 <br>2.Rollups将交易数据打包，并提交至区块链，链上gas费可以分摊到各个交易中。 <br>3.Rollups最少只需要一个诚实的验证节点，就可以向底层区块链证明交易的有效性，因此对验证节点的数量要求较低，而对节点硬件要求较高，同时不会对安全性有很大影响。</p>
+<h3 id="链下执行"><a href="#链下执行" class="headerlink" title="链下执行"></a>链下执行</h3><p>L2网络可以代替底层区块链处理与其他用户或智能合约的交易。L1只需要计算提交至智能合约的证明，就可以验证L2网络中的活动(op-rollup的话，只有在有分歧时才需要验证)，并将未执行的原始交易数据作为calldata储存起来。</p>
+<h3 id="打包交易"><a href="#打包交易" class="headerlink" title="打包交易"></a>打包交易</h3><p>rollups将原始交易数据打包成calldata,Rollup交易的验证方式与链上交易不同，交易数据被打包只是为了将数据储存在底层区块链上，验证节点或rollup参与者如果有需要的话随时可以重建L2网络的状态。<br>主链上的一个打包交易中存储了多笔rollup交易。可以有效降低交易成本,将数据压缩还能进一步降低交易执行成本。</p>
+<h3 id="验证网络"><a href="#验证网络" class="headerlink" title="验证网络"></a>验证网络</h3><ul>
+<li>单验证者:L2利用L1来保证安全性和去中心化，L2必须向L1提交证明，来证明其发起的状态变更是有效的。</li>
+<li>多验证者:L2打包完数据后需要自己先达成共识，在往L1提交验证，L1上的智能合约验证提交证明有效性</li>
+</ul>
+<h2 id="L2的证明类型"><a href="#L2的证明类型" class="headerlink" title="L2的证明类型"></a>L2的证明类型</h2><ul>
+<li>错误性证明（fault proof）, op-rollups</li>
+<li>有效性证明（validity proof，也称“零知识证明”）, zk-rollups</li>
+</ul>
+<h3 id="支付通道签名消息"><a href="#支付通道签名消息" class="headerlink" title="支付通道签名消息"></a>支付通道签名消息</h3><p>支付通道创建后，双方都必须对他们发起的每一笔交易附上签名，并存储一份对方的签名。提交账本至L1执行判决结果并将正确的金额打到各自L1的钱包中进行结算。<br>若出现作恶场景，可以对结算交易发起挑战并提交最新的账本副本，智能合约判断，作恶方将受到惩罚。</p>
+<h3 id="op-rollups的错误性证明"><a href="#op-rollups的错误性证明" class="headerlink" title="op-rollups的错误性证明"></a>op-rollups的错误性证明</h3><p>采用这种证明方式的Layer2网络会默认所有交易都是有效的。然而，网络会设置一个挑战期，任何参与者都可以发起挑战，并向智能合约提交证明，表明交易数据或状态变更是错误的。<br>当错误性证明发布后，rollup交易会部分或全部在链上重新计算一遍，最终的状态变更会跟原来的结果进行比较。如果重新计算的结果不一样，原来的结果将被认为是无效的，并被撤回。一旦证明无误，验证节点的行为就会作废。</p>
+<h3 id="zk-rollups的有效性证明"><a href="#zk-rollups的有效性证明" class="headerlink" title="zk-rollups的有效性证明"></a>zk-rollups的有效性证明</h3><p>证明L2网络中的交易和计算，L1上的智能合约可以验证L2网络提交的有效证明，以批准状态变更，功能完备的zk-rollup将不允许任何错误的交易在底层区块链上结算，因为每一批交易都必须附上相应的有效性证明。</p>
+<h2 id="扩容方案分类"><a href="#扩容方案分类" class="headerlink" title="扩容方案分类"></a>扩容方案分类</h2><h3 id="执行层扩容"><a href="#执行层扩容" class="headerlink" title="执行层扩容"></a>执行层扩容</h3><p>执行层指执行交易和状态变更的计算层。交易执行包含验证交易有效性，执行链上逻辑并计算状态变更。<br>执行层扩容通常指每秒处理的交易量，主要问题是如何在每秒处理更多计算量，并同时无需大幅提高对全节点验证区块链交易的依赖。</p>
+<h3 id="存储层"><a href="#存储层" class="headerlink" title="存储层"></a>存储层</h3><p>节点维持和储存账本副本的存储层。按存储功能通常分为两类:</p>
+<ul>
+<li>历史数据: 包含所有的原始交易和区块数据，交易数据包含from，to，amount以及每笔交易的签名。区块数据包含某一个区块哦的交易列表和元数据，比如根哈希值，nonce以及前一个区块的哈希值等。历史数据通常无需快速访问，只需要至少有一个诚实节点就可以下载。</li>
+<li>全局状态: 全部数据的快照，智能合约可以对其进行读写，比如所有智能合约的账户余额以及变量。全局状态可以看作是区块链的数据库，需要对输入的交易进行验证。状态通常存储在树形结构中，节点可以轻松快速的访问并更改。</li>
+</ul>
+<p>节点需要访问历史数据，用于与区块链同步，也需要访问全局状态以验证新区块并执行新的状态变更，随着账本和相关存储数据量不断变大，状态计算会越来越慢，需要花更多的时间并执行更多的计算才能对状态读写。如果出现了状态膨胀就得升级硬件。</p>
+<p>如何让区块链既能处理并验证更多数据，又不用提高对节点的存储要求呢？本质就是数据能不能换个地方存？</p>
+<h3 id="共识层扩容"><a href="#共识层扩容" class="headerlink" title="共识层扩容"></a>共识层扩容</h3><p>区块链共识层指去中心化网络中的节点对区块链当前状态达成一致协议的地方。<br>区块链共识层的设计原则通常是在最大程度上降低通信成本，以提升去中心化水平的上限，实现更强大的拜占庭容错机制，并缩短终局时间。</p>
+<p>保证可预测性、稳定性以及准确性的前提下，如何提高速度并降低成本，进一步实现信任最小化。</p>
+<h2 id="执行层扩容-1"><a href="#执行层扩容-1" class="headerlink" title="执行层扩容"></a>执行层扩容</h2><h3 id="提升验证节点的硬件，纵向扩容"><a href="#提升验证节点的硬件，纵向扩容" class="headerlink" title="提升验证节点的硬件，纵向扩容"></a>提升验证节点的硬件，纵向扩容</h3><p>硬件要求越高，意味着每个验证节点的计算能力越强，在每秒中能执行更多的计算。</p>
+<h3 id="打造多链生态，横向扩容"><a href="#打造多链生态，横向扩容" class="headerlink" title="打造多链生态，横向扩容"></a>打造多链生态，横向扩容</h3><p>多个独立的区块链或某一区块链生态的侧链来进行横向扩容。将某一生态中的交易计算量分散到多个独立的链上，每条链都有自己的区块生产者和执行能力。</p>
+<p><strong>优点</strong>: 每条链都可以实现特定需求，或者实现 Dapp-chain, 拥有自我主权还可以隔离安全风险<br><strong>缺点</strong>: 多链生态需要每条链都不断发行原生通证来建立自己的安全机制，用户交互往往会分散在各个不同的区块链上，难以实现规模效应</p>
+<h3 id="执行层分片，实现横向扩容"><a href="#执行层分片，实现横向扩容" class="headerlink" title="执行层分片，实现横向扩容"></a>执行层分片，实现横向扩容</h3><p>每个分片其实就是一个区块链，分片并行执行，会有一条主链来保证所有分片同步。<br>在执行分片时，验证者池也会分散到各个分片上去执行交易。节点会定期随机轮转，因此不会总是执行&#x2F;验证同一个分片上的交易。</p>
+<p><strong>优点</strong>: 执行层的分片会从同一个节点池抽取节点，因此无需在新的分片上建立安全机制。如果节点池规模够大，每个执行环境都可以达到同样的安全水平，节点一次只需要执行一个分片上的计算任务，无需提高节点硬件要求</p>
+<p><strong>缺点</strong>: 分片之间存在数据依赖，需要将数据同步到各个分片，在分片灵活性上有一定限制。<br>主链计算需求越来越大，每个分片上分配的节点数量存在上限。<br>分片之间共享安全模式，所有分片都可能会出现同样的安全漏铜。</p>
+<h3 id="通过模块化实现横向扩容"><a href="#通过模块化实现横向扩容" class="headerlink" title="通过模块化实现横向扩容"></a>通过模块化实现横向扩容</h3><p>将区块链的基础架构划分成执行层、数据可用性层（DA）以及共识层。最主流的区块链模块化机制就是rollup。<br>rollup 负责将计算和状态变更转移到链下网络，并在链上存储交易数据，然后使用zk-rollup 或 op-rollup对链下计算的状态变更结果进行链上验证</p>
+<p><strong>优点</strong>: rollup 在链下执行计算和状态变更能更高效的同时并保留底层L1的安全性，共识层在验证执行层链下计算时任然基于原有的L1达成共识。节点只需要验证简洁证明并存储少部分交易数据即可。<br>rollup还可以设置熔断机制，以实现信任最小化。如果rollup网络无法正常运行，用户可以提取自己的加密资产并提交至底层区块链。<br>模块化网络可以分摊用户成本，L1验证zk-rollup证明需要一定固定支出，更多的用户共同分摊会较少每个用户的共识成本。<br>rollup还具有1&#x2F;n的信任模式，即使只有一个诚实节点也能保障计算的准确性和稳健性。</p>
+<p><strong>缺点</strong>: 模块化其复杂度相比单独运行的区块链更复杂,升级风险需要来自rollup以外的治理干预,因此无法保障不可篡改性。</p>
+<h3 id="支付和状态通道"><a href="#支付和状态通道" class="headerlink" title="支付和状态通道"></a>支付和状态通道</h3><p>用户将加密资产锁定在一个多签智能合约中，在链上交换签过名的消息，消息代表了资产的所有权转让或状态变更。整个过程无需发起任何链上交易，只有在创建通道和关闭通道时才需要支付费用。</p>
+<p>用户可以通过多签合约对每笔交易进行加密签名，以此来保障通道中的结算正确无误，每个签名都会有一个nonce智能合约通过nonce来验证交易顺序正确性</p>
+<p><strong>优点</strong>: 支付和状态通道可以实现实时且零成本的转账，几乎不存在延迟，并且还能实现小额付款。<br><strong>缺点</strong>: 每个参与方都保持联网状态,以确保交易对手不会使用旧消息在链上进行结算。也就是表明watchtower要持续对通道进行监控并保证用户资金安全，支付通道还需要预先充值，大额支付会很麻烦并且资金效率会很低。<br>支付通道中很难明确物品的所有权问题，比如在dex的流动性池。</p>
+<h2 id="数据存储层扩容"><a href="#数据存储层扩容" class="headerlink" title="数据存储层扩容"></a>数据存储层扩容</h2><p>以下是扩容区块链存储层常用的几种方案，有些方案会合并在一起，以更好的提供存储能力</p>
+<h3 id="区块链节点纵向扩容"><a href="#区块链节点纵向扩容" class="headerlink" title="区块链节点纵向扩容"></a>区块链节点纵向扩容</h3><p>与纵向扩容区块链执行层一样，纵向扩容区块链存储层也需要升级全节点的硬件。 </p>
+<h3 id="底层区块链上进行数据分片"><a href="#底层区块链上进行数据分片" class="headerlink" title="底层区块链上进行数据分片"></a>底层区块链上进行数据分片</h3><p>数据分片将账本数据或重建账本所使用的数据分成不同分片，降低对每个节点的存储要求。</p>
+<h3 id="模块化区块链压缩数据链上存储"><a href="#模块化区块链压缩数据链上存储" class="headerlink" title="模块化区块链压缩数据链上存储"></a>模块化区块链压缩数据链上存储</h3><p>模块化区块链在链下执行计算任务，然后将交易数据和状态变更储存在链上,其他节点可以用这些数据来重建账本的当前或历史状态。<br>rollup将数据存储在链上之前会先在链下进行数据压缩。</p>
+<p><strong>优点</strong>: 将数据存储在其他网络上，可以减少对L1的数据存储成本，并且存储也是去中心化的,随着使用量增加而更好地实现扩容<br><strong>缺点</strong>: 链上存储的成本远高于链下存储，模块化区块链在可扩展性方便不如中心化的存储方案。<br>压缩数据会损失一些对验证性不是至关重要的数据，用户可能无法基于剩余的数据对链上活动进行更加细致的分析</p>
+<h3 id="数据修剪"><a href="#数据修剪" class="headerlink" title="数据修剪"></a>数据修剪</h3><p>数据修剪可以允许区块链节点删除某个区块高度之前的历史数据，数据修剪通常与PoS检查点(checkpoint)同时使用，超过某个检查点的区块中的交易会被认定终局。</p>
+<p><strong>优点</strong>: 数据修剪会减少节点参与共识时需要存储或参考的数据量。由于历史数据已经得到了验证，因此可以被修剪，已缩小账本规模。<br><strong>缺点</strong>: 数据修剪需要依赖交易平台或区块浏览器等来永久存储历史数据，以一直追溯到创世区块，至少需要有一个第三方存储数据帮助节点重建所有的历史状态。</p>
+<h2 id="共识层扩容-1"><a href="#共识层扩容-1" class="headerlink" title="共识层扩容"></a>共识层扩容</h2><p>共识层扩容主要涉及出块速度、终局速度以及节点下线或恶意攻击的稳健性。不仅是为了提高速度，还为了提升准确性、稳定性以及安全性</p>
+<h3 id="提高执行和存储能力"><a href="#提高执行和存储能力" class="headerlink" title="提高执行和存储能力"></a>提高执行和存储能力</h3><p>在账本不断扩大的过程中让更多的节点能参与共识，防止现有节点离开网络从而产生影响。<br>执行能力和存储能力得到提升同时不会对全节点产生太大的影响，那么区块链就可以实现更高的出块速度和更大的区块空间，并且无需牺牲去中心特质</p>
+<h3 id="减少网络带宽使用"><a href="#减少网络带宽使用" class="headerlink" title="减少网络带宽使用"></a>减少网络带宽使用</h3><p>降低节点达成共识所需的通信成本(收发消息的成本)。<br>无需与所有节点通信(all-to-all投票)，而是在任意时间与部分节点通信(重复抽样投票)即可，通过多轮投票或通行机制及降低成本。</p>
+<h3 id="降低网络延迟"><a href="#降低网络延迟" class="headerlink" title="降低网络延迟"></a>降低网络延迟</h3><p>区块链共识机制通过多轮重复抽样或all-to-all投票来实现即时终局。<br>也有部分区块链则设置了检查点，并由验证者在一段时间后达成共识来保障安全。这意味着区块在通过检查点后即被认为终局，之后再也无法在协议内展开区块重组。<br>网络延迟和网络带宽之间必须要做出一定权衡</p>
+<h3 id="提高安全预算"><a href="#提高安全预算" class="headerlink" title="提高安全预算"></a>提高安全预算</h3><p>通过提供流动性，发放通证奖励或由于区块空间供不应求而提高交易费收入。提高安全预算会为参与者带来更多的潜在收入，这会提升网络的去中心化水平。</p>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                Layer2
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024/11/18/0-base/08-Layer2/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-11-18 20:17</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2024/11/21/1-bitcoin/02-btc%E6%89%A9%E5%AE%B9%E6%96%B9%E6%A1%88/"
+                                   title="btc扩容方案"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">btc扩容方案</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2024/07/01/5-sui/01-move%E5%85%A5%E9%97%A8%E4%B8%8E%E4%BA%A4%E4%BA%92/"
+                                   title="move入门与交互"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">move入门与交互</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%9E%E7%94%9F%E7%9A%84%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">诞生的背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93"><span class="nav-number">3.</span> <span class="nav-text">支付通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rollups"><span class="nav-number">4.</span> <span class="nav-text">Rollups</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E4%B8%8B%E6%89%A7%E8%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">链下执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E4%BA%A4%E6%98%93"><span class="nav-number">4.2.</span> <span class="nav-text">打包交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%BD%91%E7%BB%9C"><span class="nav-number">4.3.</span> <span class="nav-text">验证网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%E7%9A%84%E8%AF%81%E6%98%8E%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">L2的证明类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93%E7%AD%BE%E5%90%8D%E6%B6%88%E6%81%AF"><span class="nav-number">5.1.</span> <span class="nav-text">支付通道签名消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#op-rollups%E7%9A%84%E9%94%99%E8%AF%AF%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">5.2.</span> <span class="nav-text">op-rollups的错误性证明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zk-rollups%E7%9A%84%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">5.3.</span> <span class="nav-text">zk-rollups的有效性证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%AE%B9%E6%96%B9%E6%A1%88%E5%88%86%E7%B1%BB"><span class="nav-number">6.</span> <span class="nav-text">扩容方案分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">6.1.</span> <span class="nav-text">执行层扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%B1%82"><span class="nav-number">6.2.</span> <span class="nav-text">存储层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E8%AF%86%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">6.3.</span> <span class="nav-text">共识层扩容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E6%89%A9%E5%AE%B9-1"><span class="nav-number">7.</span> <span class="nav-text">执行层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E9%AA%8C%E8%AF%81%E8%8A%82%E7%82%B9%E7%9A%84%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%BA%B5%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.1.</span> <span class="nav-text">提升验证节点的硬件，纵向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E9%80%A0%E5%A4%9A%E9%93%BE%E7%94%9F%E6%80%81%EF%BC%8C%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.2.</span> <span class="nav-text">打造多链生态，横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E5%88%86%E7%89%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.3.</span> <span class="nav-text">执行层分片，实现横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AE%9E%E7%8E%B0%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.4.</span> <span class="nav-text">通过模块化实现横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E5%92%8C%E7%8A%B6%E6%80%81%E9%80%9A%E9%81%93"><span class="nav-number">7.5.</span> <span class="nav-text">支付和状态通道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">8.</span> <span class="nav-text">数据存储层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E8%8A%82%E7%82%B9%E7%BA%B5%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">8.1.</span> <span class="nav-text">区块链节点纵向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%95%E5%B1%82%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8A%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E7%89%87"><span class="nav-number">8.2.</span> <span class="nav-text">底层区块链上进行数据分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8C%BA%E5%9D%97%E9%93%BE%E5%8E%8B%E7%BC%A9%E6%95%B0%E6%8D%AE%E9%93%BE%E4%B8%8A%E5%AD%98%E5%82%A8"><span class="nav-number">8.3.</span> <span class="nav-text">模块化区块链压缩数据链上存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%AE%E5%89%AA"><span class="nav-number">8.4.</span> <span class="nav-text">数据修剪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E8%AF%86%E5%B1%82%E6%89%A9%E5%AE%B9-1"><span class="nav-number">9.</span> <span class="nav-text">共识层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E5%92%8C%E5%AD%98%E5%82%A8%E8%83%BD%E5%8A%9B"><span class="nav-number">9.1.</span> <span class="nav-text">提高执行和存储能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E5%B8%A6%E5%AE%BD%E4%BD%BF%E7%94%A8"><span class="nav-number">9.2.</span> <span class="nav-text">减少网络带宽使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%8D%E4%BD%8E%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F"><span class="nav-number">9.3.</span> <span class="nav-text">降低网络延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E5%AE%89%E5%85%A8%E9%A2%84%E7%AE%97"><span class="nav-number">9.4.</span> <span class="nav-text">提高安全预算</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">48.4k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%9E%E7%94%9F%E7%9A%84%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">诞生的背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93"><span class="nav-number">3.</span> <span class="nav-text">支付通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rollups"><span class="nav-number">4.</span> <span class="nav-text">Rollups</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E4%B8%8B%E6%89%A7%E8%A1%8C"><span class="nav-number">4.1.</span> <span class="nav-text">链下执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E4%BA%A4%E6%98%93"><span class="nav-number">4.2.</span> <span class="nav-text">打包交易</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E7%BD%91%E7%BB%9C"><span class="nav-number">4.3.</span> <span class="nav-text">验证网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%E7%9A%84%E8%AF%81%E6%98%8E%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text">L2的证明类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93%E7%AD%BE%E5%90%8D%E6%B6%88%E6%81%AF"><span class="nav-number">5.1.</span> <span class="nav-text">支付通道签名消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#op-rollups%E7%9A%84%E9%94%99%E8%AF%AF%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">5.2.</span> <span class="nav-text">op-rollups的错误性证明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zk-rollups%E7%9A%84%E6%9C%89%E6%95%88%E6%80%A7%E8%AF%81%E6%98%8E"><span class="nav-number">5.3.</span> <span class="nav-text">zk-rollups的有效性证明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%AE%B9%E6%96%B9%E6%A1%88%E5%88%86%E7%B1%BB"><span class="nav-number">6.</span> <span class="nav-text">扩容方案分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">6.1.</span> <span class="nav-text">执行层扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%B1%82"><span class="nav-number">6.2.</span> <span class="nav-text">存储层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E8%AF%86%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">6.3.</span> <span class="nav-text">共识层扩容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E6%89%A9%E5%AE%B9-1"><span class="nav-number">7.</span> <span class="nav-text">执行层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E9%AA%8C%E8%AF%81%E8%8A%82%E7%82%B9%E7%9A%84%E7%A1%AC%E4%BB%B6%EF%BC%8C%E7%BA%B5%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.1.</span> <span class="nav-text">提升验证节点的硬件，纵向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E9%80%A0%E5%A4%9A%E9%93%BE%E7%94%9F%E6%80%81%EF%BC%8C%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.2.</span> <span class="nav-text">打造多链生态，横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%B1%82%E5%88%86%E7%89%87%EF%BC%8C%E5%AE%9E%E7%8E%B0%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.3.</span> <span class="nav-text">执行层分片，实现横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A8%A1%E5%9D%97%E5%8C%96%E5%AE%9E%E7%8E%B0%E6%A8%AA%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">7.4.</span> <span class="nav-text">通过模块化实现横向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E4%BB%98%E5%92%8C%E7%8A%B6%E6%80%81%E9%80%9A%E9%81%93"><span class="nav-number">7.5.</span> <span class="nav-text">支付和状态通道</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%B1%82%E6%89%A9%E5%AE%B9"><span class="nav-number">8.</span> <span class="nav-text">数据存储层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BA%E5%9D%97%E9%93%BE%E8%8A%82%E7%82%B9%E7%BA%B5%E5%90%91%E6%89%A9%E5%AE%B9"><span class="nav-number">8.1.</span> <span class="nav-text">区块链节点纵向扩容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%95%E5%B1%82%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8A%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%88%86%E7%89%87"><span class="nav-number">8.2.</span> <span class="nav-text">底层区块链上进行数据分片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E5%8C%BA%E5%9D%97%E9%93%BE%E5%8E%8B%E7%BC%A9%E6%95%B0%E6%8D%AE%E9%93%BE%E4%B8%8A%E5%AD%98%E5%82%A8"><span class="nav-number">8.3.</span> <span class="nav-text">模块化区块链压缩数据链上存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BF%AE%E5%89%AA"><span class="nav-number">8.4.</span> <span class="nav-text">数据修剪</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E8%AF%86%E5%B1%82%E6%89%A9%E5%AE%B9-1"><span class="nav-number">9.</span> <span class="nav-text">共识层扩容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E6%89%A7%E8%A1%8C%E5%92%8C%E5%AD%98%E5%82%A8%E8%83%BD%E5%8A%9B"><span class="nav-number">9.1.</span> <span class="nav-text">提高执行和存储能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E7%BD%91%E7%BB%9C%E5%B8%A6%E5%AE%BD%E4%BD%BF%E7%94%A8"><span class="nav-number">9.2.</span> <span class="nav-text">减少网络带宽使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%8D%E4%BD%8E%E7%BD%91%E7%BB%9C%E5%BB%B6%E8%BF%9F"><span class="nav-number">9.3.</span> <span class="nav-text">降低网络延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E9%AB%98%E5%AE%89%E5%85%A8%E9%A2%84%E7%AE%97"><span class="nav-number">9.4.</span> <span class="nav-text">提高安全预算</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
