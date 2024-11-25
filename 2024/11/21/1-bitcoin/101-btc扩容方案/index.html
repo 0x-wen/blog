@@ -9,7 +9,7 @@
     
     <title>
         
-            归档: 2024/7 |
+            btc扩容方案 |
         
         Blog
     </title>
@@ -86,7 +86,7 @@
                     
                         
                         <li class="menu-item">
-                            <a class="active"
+                            <a class=""
                                href="/blog/archives"
                             >
                                 
@@ -162,7 +162,7 @@
             
                 
                 <li class="drawer-menu-item flex-center">
-                    <a class="active"
+                    <a class=""
                        href="/blog/archives"
                     >归档</a>
                 </li>
@@ -203,43 +203,229 @@
             <div class="main-content border-box">
                 
 
-                    <div class="fade-in-down-animation">
-    <div class="archives-container">
-        <div class="archives-timeline border-box">
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
             
-<div class="archive-list-container border-box">
-    
-        <section class="archive-item border-box">
-            <div class="archive-item-header border-box">
-                <span class="archive-year">2024</span>
-            </div>
-            <ul class="archive-item-body border-box">
+
+            <div class="post-content-bottom border-box">
                 
-                    <li class="post-item border-box">
-                        <span class="post-date border-box">07-01</span>
-                        <a class="post-title border-box text-ellipsis"
-                           href="/blog/2024/07/01/5-sui/500-move%E5%85%A5%E9%97%A8%E4%B8%8E%E4%BA%A4%E4%BA%92/"
-                        >move入门与交互</a>
-                    </li>
+                    <div class="post-title">
+                        btc扩容方案
+                    </div>
                 
-                    <li class="post-item border-box">
-                        <span class="post-date border-box">07-01</span>
-                        <a class="post-title border-box text-ellipsis"
-                           href="/blog/2024/07/01/0-wallet/04-%E4%BD%8D%E3%80%81%E5%AD%97%E8%8A%82%E3%80%81%E5%AD%97%E7%AC%A6%E4%B8%8E%E7%BC%96%E7%A0%81/"
-                        >位、字节、字符与编码</a>
-                    </li>
+
                 
-            </ul>
-        </section>
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-11-21 20:52:00</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Mon Nov 25 2024 10:03:03 GMT+0800">2024-11-25 10:03:03</span>
+            </span>
+        
+
+        
+
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>854 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+            </span>
+        
+        
+    </div>
+
     
 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h2 id="网络传播方式"><a href="#网络传播方式" class="headerlink" title="网络传播方式"></a>网络传播方式</h2><p>1）广播（broadcast）交易：所有人通过 gossip 网络发给所有人。所有的 L1 交易都是这种类型，受制于可扩展性三难问题<br>2）单播（unicast）交易：一对一的直接通信，仅在两个对等节点间发生（闪电网络）<br>3）多播（multicast）交易：一对多的通信，在对等节点的一个子集中发生（rollup、侧链）</p>
+<p>比特币和以太坊的 L1 都使用广播通信，因为比特币使用 UTXO 模式而以太坊使用账户模式。<br>所以比特币会优先尝试通过单播交易（闪电网络）来扩展，而以太坊对单播交易失去了兴趣转向了多播交易。</p>
+<h2 id="闪电网络"><a href="#闪电网络" class="headerlink" title="闪电网络"></a>闪电网络</h2><p><a class="link"   target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/roWA-DlD0H-wlvmyaY9vgA" >Nervos 为区块链镶上璀璨明珠——Fiber Network 轻皮书解读<i class="fas fa-external-link-alt"></i></a></p>
+<p>主网上交易慢、交易贵。无法实现大规模应用<br>交易慢：区块大小限制和打包区块确认时间限制，目前每秒7笔交易，支付宝双十一tps为50w+,这种效率是无法满足大规模应用<br>交易贵：链上打铭文或者热门项目上线，都会导致gas费用激增，带来对应成本上涨</p>
+<p>闪电网络通过三种方式解决这个问题：<br>1、记账（AKA “支付通道”）：闪电网络通过创建 “支付通道” 的方式，允许交易在不做链上结算的情况下完成，在通道关闭时一次性结算。类似于生活中的 “记账” 或 “赊账” 方式。为了解决单笔手续费高、结算慢的问题，商家可以为你开设一本账本，记下你们的每一笔交易，一个月进行一次结算。在闪电网络中，“支付通道” 扮演账本的角色，而为了避免出现逃单的情况，当建立通道时，需要双方各自锁定一部分资金（商家确认你卡里有钱不会跑路，你确认商家店里有货不会倒闭）。</p>
+<p>2、中间人（AKA “多跳路由”）：在上述例子中，假如你外地的朋友来做客，也想去同一家店买一瓶水，让超市为他这一次交易单独开设创建一本账本显然不划算。如果你们二人经济往来较多，也有自己的账本，就可以通过你作为中间人向超市购买一瓶水。在闪电网络中，“路由” 扮演中间人，而 “多跳路由” 意味着可以有多个中间人完成一笔交易。</p>
+<p>3、货到付款（AKA “哈希时间锁合约（HTLC）”）：在多人交易中，闪电网络通过 HTLC 保证交易的安全，这可以理解为一个网购中 “三方托管，货到付款” 的过程。当买家下单时，钱被锁定在支付宝中，并创建了一个 “X 日内物流显示货物送到收货地址” 的要求，商家必须满足这一要求才能获得货款，否则买家可以要求退款。在闪电网络中，智能合约扮演支付宝的角色，而 “物流信息” 即为 HTLC 的内容。</p>
+<ol>
+<li>通过记账方式，闪电网络解决了交易慢、交易贵的问题；</li>
+<li>通过中间人，闪电网络避免了成本高的问题；</li>
+<li>通过货到付款，闪电网络保障了交易的安全性。</li>
+</ol>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                btc扩容方案
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2024/11/21/1-bitcoin/101-btc扩容方案/
+            </div>
         </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2024-11-21 20:52</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
     </div>
-    
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2024/11/18/0-wallet/08-Layer2/"
+                                   title="Layer2"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">Layer2</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
 
 
 
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">网络传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E7%94%B5%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">闪电网络</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
 </div>
 
 
@@ -288,6 +474,28 @@
 
     <!-- post tools -->
     
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
 
     <!-- side tools -->
     <div class="side-tools">
@@ -314,6 +522,10 @@
     </ul>
 
     <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
         
 
         
@@ -371,6 +583,17 @@
 
     <!-- tablet toc -->
     
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E4%BC%A0%E6%92%AD%E6%96%B9%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">网络传播方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E7%94%B5%E7%BD%91%E7%BB%9C"><span class="nav-number">2.</span> <span class="nav-text">闪电网络</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
 </main>
 
 
@@ -389,6 +612,24 @@
 
 
 <div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
     
 
     <!-- categories page -->
