@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Thu Feb 13 2025 21:26:09 GMT+0800">2025-02-13 21:26:09</span>
+                <span class="datetime" data-updated="Thu Feb 13 2025 21:35:21 GMT+0800">2025-02-13 21:35:21</span>
             </span>
         
 
@@ -294,7 +294,7 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="一、核心架构设计"><a href="#一、核心架构设计" class="headerlink" title="一、核心架构设计"></a>一、核心架构设计</h2><ol>
+                    <h1 id="一、核心架构设计"><a href="#一、核心架构设计" class="headerlink" title="一、核心架构设计"></a>一、核心架构设计</h1><ol>
 <li><p>模块化框架<br>Cosmos SDK采用模块化设计，开发者可复用预置模块（如质押、治理、跨链通信）或自定义模块。<br>模块间通过Keeper对象实现安全交互，每个模块仅暴露授权接口。</p>
 </li>
 <li><p>状态机与存储</p>
@@ -313,7 +313,7 @@
 <li>DeliverTx：交易正式执行(当CometBft收到有效的块时，该块中的每个事务都通过Delivertx传递给应用程序以处理，AnteHandler再次执行，并为交易中的每个消息执行实际的MSG服务RPC。)</li>
 <li>BeginBlock&#x2F;EndBlock：区块前后触发逻辑,开头和末尾都执行，无论该块是否包含交易。触发自动执行逻辑很有用。请谨慎行事，因为计算昂贵的环路可能会减慢区块链的速度，甚至在循环是无限的情况下将其冻结。</li>
 </ul>
-<h2 id="二、关键组件"><a href="#二、关键组件" class="headerlink" title="二、关键组件"></a>二、关键组件</h2><ol>
+<h1 id="二、关键组件"><a href="#二、关键组件" class="headerlink" title="二、关键组件"></a>二、关键组件</h1><ol>
 <li><p>BaseApp<br>SDK提供的ABCI实现基类，处理消息路由、交易解码、gas计量等基础逻辑，开发者通过继承实现定制应用。</p>
 </li>
 <li><p>交易处理流程</p>
@@ -404,12 +404,7 @@
 <li>Commit：将缓存状态写入持久化存储，生成Merkle根</li>
 </ul>
 <ol start="4">
-<li>每个模块都定义了状态的子集并包含其自己的消息&#x2F;事务处理器，而Cosmos SDK负责将每个消息路由到其各自的模块。<br><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/./images/image.png"
-                        alt="modules"
-                 ></li>
+<li>每个模块都定义了状态的子集并包含其自己的消息&#x2F;事务处理器，而Cosmos SDK负责将每个消息路由到其各自的模块。</li>
 </ol>
 <h3 id="状态管理机制"><a href="#状态管理机制" class="headerlink" title="状态管理机制"></a>状态管理机制</h3><ol>
 <li>存储结构<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Multistore</span><br><span class="line"> ├── <span class="title function_ invoke__">root</span> (IAVL树)</span><br><span class="line"> │   ├── <span class="title function_ invoke__">acc</span> (账户模块数据)</span><br><span class="line"> │   ├── <span class="title function_ invoke__">staking</span> (质押模块数据)</span><br><span class="line"> │   └── ...</span><br><span class="line"> ├── <span class="title function_ invoke__">transient</span> (临时存储)</span><br><span class="line"> └── <span class="title function_ invoke__">flat</span> (平面文件存储)</span><br></pre></td></tr></table></figure></li>
@@ -595,7 +590,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">3.0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">3.0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">3.0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">3.0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
@@ -763,7 +758,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">3.0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">3.0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">3.0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">3.0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol></li></ol>
     </div>
 </div>
 
