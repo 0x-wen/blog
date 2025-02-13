@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Sat Dec 28 2024 16:56:11 GMT+0800">2024-12-28 16:56:11</span>
+                <span class="datetime" data-updated="Mon Dec 30 2024 13:51:50 GMT+0800">2024-12-30 13:51:50</span>
             </span>
         
 
@@ -272,12 +272,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>904 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>5 分钟</span>
             </span>
         
         
@@ -314,6 +314,12 @@
 </ul>
 <h2 id="手动下载后放入proto2文件夹"><a href="#手动下载后放入proto2文件夹" class="headerlink" title="手动下载后放入proto2文件夹"></a>手动下载后放入proto2文件夹</h2><p>  如何确定依赖文件的版本和代码路径<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go list -m all | grep gogoproto </span><br><span class="line">github.com/cosmos/gogoproto v1.4.10</span><br></pre></td></tr></table></figure><br>  找到仓库cosmos&#x2F;gogoproto 并下载 gogoproto&#x2F;gogo.proto 文件</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看proto文件存在如何依赖</span></span><br><span class="line">import &quot;gogoproto/gogo.proto&quot;;</span><br><span class="line">import &quot;ibc/core/channel/v1/channel.proto&quot;; </span><br><span class="line">import &quot;dymensionxyz/dymension/common/status.proto&quot;;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查找ibc 版本</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">go list -m all | grep ibc</span> </span><br><span class="line">github.com/cosmos/ibc-apps/middleware/packet-forward-middleware/v7 v7.1.3</span><br><span class="line">github.com/cosmos/ibc-go/v7 v7.5.1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查找文件本地路径</span></span><br><span class="line">go list -m -f &#x27;&#123;&#123;.Dir&#125;&#125;&#x27; github.com/cosmos/ibc-go/v7</span><br><span class="line"></span><br><span class="line">/Users/xxx/go/pkg/mod/github.com/cosmos/ibc-go/v7@v7.5.1</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">提示解决错误</span></span><br><span class="line">Generating Python proto code</span><br><span class="line">Generating Python proto code for ./proto/dymensionxyz/dymension/common/rollapp_packet.proto</span><br><span class="line">cosmos/upgrade/v1beta1/upgrade.proto: File not found.  -&gt; github.com/!xxx!network/cosmos-sdk@v0.47.14-0.20241223125953-f121ef799aa9 这个在本地路径进中，因为项目go.mod中有replace</span><br><span class="line">cosmos_proto/cosmos.proto: File not found.     -&gt;  https://github.com/cosmos/cosmos-proto</span><br><span class="line">google/api/annotations.proto: File not found.  -&gt;  https://github.com/gogo/googleapis</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">解决这两个文件找不到的问题</span></span><br><span class="line">go list -m -f &#x27;&#123;&#123;.Dir&#125;&#125;&#x27; github.com/regen-network/cosmos-proto </span><br><span class="line">go list -m -f &#x27;&#123;&#123;.Dir&#125;&#125;&#x27; github.com/cosmos/cosmos-sdk</span><br><span class="line">go list -m all | grep github.com/gogo/googleapis </span><br><span class="line">go list -m -f &#x27;&#123;&#123;.Dir&#125;&#125;&#x27; github.com/gogo/googleapis </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="解决cosmos-sdk的项目依赖"><a href="#解决cosmos-sdk的项目依赖" class="headerlink" title="解决cosmos-sdk的项目依赖"></a>解决cosmos-sdk的项目依赖</h3><ul>
+<li>找到项目中对应的proto项目与文件</li>
+<li>将对应的依赖文件放置在项目上层proto_depend文件夹中</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Generating cosmos-sdk Python proto code&quot;</span><br><span class="line">mkdir -p python_proto_out</span><br><span class="line">proto_dirs=$(find ../cosmos-sdk/proto -name &#x27;*.proto&#x27; -print0 | xargs -0 -n1 dirname | sort | uniq)</span><br><span class="line">for dir in $proto_dirs; do</span><br><span class="line">  for file in $(find &quot;$&#123;dir&#125;&quot; -maxdepth 1 -name &#x27;*.proto&#x27;); do</span><br><span class="line">    if grep go_package $file &amp;&gt;/dev/null; then</span><br><span class="line">      echo &quot;Generating Python proto code for $file&quot;</span><br><span class="line">      python3 -m grpc_tools.protoc -I ../cosmos-sdk/proto -I ../proto-depend --python_out=python_proto_out --grpc_python_out=python_proto_out $file</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
 <h2 id="解决rust相关proto文件生成"><a href="#解决rust相关proto文件生成" class="headerlink" title="解决rust相关proto文件生成"></a>解决rust相关proto文件生成</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cargo install protoc-gen-prost</span><br><span class="line">cargo install protoc-gen-tonic   # （支持 gRPC）</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;Generating Rust proto code&quot;</span><br><span class="line">mkdir -p rust_proto_out</span><br><span class="line">proto_dirs=$(find ./proto -name &#x27;*.proto&#x27; -print0 | xargs -0 -n1 dirname | sort | uniq)</span><br><span class="line">for dir in $proto_dirs; do</span><br><span class="line">  for file in $(find &quot;$&#123;dir&#125;&quot; -maxdepth 1 -name &#x27;*.proto&#x27;); do</span><br><span class="line">    if grep go_package $file &amp;&gt;/dev/null; then</span><br><span class="line">      echo &quot;Generating Rust proto code for $file&quot;</span><br><span class="line">      protoc --proto_path=./proto --proto_path=../proto-depend \</span><br><span class="line">        --proto_path=../proto-depend \</span><br><span class="line">        --plugin=protoc-gen-prost=$(which protoc-gen-prost) \</span><br><span class="line">        --plugin=protoc-gen-tonic=$(which protoc-gen-tonic) \</span><br><span class="line">        --prost_out=rust_proto_out \</span><br><span class="line">        --tonic_out=rust_proto_out \</span><br><span class="line">        $file</span><br><span class="line">    fi</span><br><span class="line">  done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 
@@ -421,6 +427,22 @@
                 
                     <div class="post-nav border-box">
                         
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2025/02/13/3-cosmos/03-%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/"
+                                   title="03-架构解析.md"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">03-架构解析.md</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
                         
                             <div class="next-post">
                                 <a class="next"
@@ -457,7 +479,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cosmos-sdk-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">cosmos-sdk 编译proto文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%89%BE%E5%88%B0%E8%BF%99%E4%B8%AAprotoCosmosImage%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">先找到这个protoCosmosImage的版本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E6%9C%AC%E6%9C%BA%E7%BC%96%E8%AF%91go%E7%9A%84proto%E6%96%87%E4%BB%B6%E5%95%A6"><span class="nav-number">3.</span> <span class="nav-text">安装完成后即可使用本机编译go的proto文件啦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-protocgen-sh-%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E6%BB%A1%E8%B6%B3Python%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">更改 protocgen.sh 文件，让其满足Python文件的生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%90%8E%E6%94%BE%E5%85%A5proto2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">手动下载后放入proto2文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3rust%E7%9B%B8%E5%85%B3proto%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">解决rust相关proto文件生成</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cosmos-sdk-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">cosmos-sdk 编译proto文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%89%BE%E5%88%B0%E8%BF%99%E4%B8%AAprotoCosmosImage%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">先找到这个protoCosmosImage的版本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E6%9C%AC%E6%9C%BA%E7%BC%96%E8%AF%91go%E7%9A%84proto%E6%96%87%E4%BB%B6%E5%95%A6"><span class="nav-number">3.</span> <span class="nav-text">安装完成后即可使用本机编译go的proto文件啦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-protocgen-sh-%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E6%BB%A1%E8%B6%B3Python%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">更改 protocgen.sh 文件，让其满足Python文件的生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%90%8E%E6%94%BE%E5%85%A5proto2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">手动下载后放入proto2文件夹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3cosmos-sdk%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96"><span class="nav-number">5.1.</span> <span class="nav-text">解决cosmos-sdk的项目依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3rust%E7%9B%B8%E5%85%B3proto%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">解决rust相关proto文件生成</span></a></li></ol>
     </div>
 </div>
 
@@ -477,7 +499,7 @@
     <div class="border-box website-info-box default">
         
             <div class="copyright-info info-item default">
-                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2025
                 
                     &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
                 
@@ -496,7 +518,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">49.3k</span>
+                    <span class="item-value border-box word">51.3k</span>
                 </span>
             
 
@@ -625,7 +647,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cosmos-sdk-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">cosmos-sdk 编译proto文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%89%BE%E5%88%B0%E8%BF%99%E4%B8%AAprotoCosmosImage%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">先找到这个protoCosmosImage的版本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E6%9C%AC%E6%9C%BA%E7%BC%96%E8%AF%91go%E7%9A%84proto%E6%96%87%E4%BB%B6%E5%95%A6"><span class="nav-number">3.</span> <span class="nav-text">安装完成后即可使用本机编译go的proto文件啦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-protocgen-sh-%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E6%BB%A1%E8%B6%B3Python%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">更改 protocgen.sh 文件，让其满足Python文件的生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%90%8E%E6%94%BE%E5%85%A5proto2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">手动下载后放入proto2文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3rust%E7%9B%B8%E5%85%B3proto%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">解决rust相关proto文件生成</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#cosmos-sdk-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">cosmos-sdk 编译proto文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E6%89%BE%E5%88%B0%E8%BF%99%E4%B8%AAprotoCosmosImage%E7%9A%84%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">先找到这个protoCosmosImage的版本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90%E5%90%8E%E5%8D%B3%E5%8F%AF%E4%BD%BF%E7%94%A8%E6%9C%AC%E6%9C%BA%E7%BC%96%E8%AF%91go%E7%9A%84proto%E6%96%87%E4%BB%B6%E5%95%A6"><span class="nav-number">3.</span> <span class="nav-text">安装完成后即可使用本机编译go的proto文件啦</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9-protocgen-sh-%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AE%A9%E5%85%B6%E6%BB%A1%E8%B6%B3Python%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">更改 protocgen.sh 文件，让其满足Python文件的生成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%90%8E%E6%94%BE%E5%85%A5proto2%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">5.</span> <span class="nav-text">手动下载后放入proto2文件夹</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3cosmos-sdk%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96"><span class="nav-number">5.1.</span> <span class="nav-text">解决cosmos-sdk的项目依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3rust%E7%9B%B8%E5%85%B3proto%E6%96%87%E4%BB%B6%E7%94%9F%E6%88%90"><span class="nav-number">6.</span> <span class="nav-text">解决rust相关proto文件生成</span></a></li></ol>
     </div>
 </div>
 

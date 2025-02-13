@@ -9,7 +9,7 @@
     
     <title>
         
-            分布式基础理论 |
+            03-架构解析.md |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        分布式基础理论
+                        03-架构解析.md
                     </div>
                 
 
@@ -238,15 +238,24 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-05-13 21:59:14</span>
+                <span class="datetime">2025-02-13 21:25:31</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Mon Nov 25 2024 13:50:27 GMT+0800">2024-11-25 13:50:27</span>
+                <span class="datetime" data-updated="Thu Feb 13 2025 21:26:09 GMT+0800">2025-02-13 21:26:09</span>
             </span>
         
 
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/blog/categories/cosmos/">cosmos</a></li>
+                        
+                    
+                </ul>
+            </span>
         
 
         
@@ -263,12 +272,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.5k 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.9k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>7 分钟</span>
             </span>
         
         
@@ -285,37 +294,168 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="1-分布式基础理论"><a href="#1-分布式基础理论" class="headerlink" title="1.分布式基础理论"></a>1.分布式基础理论</h2><h3 id="1-1-CAP理论是分布式系统的基石"><a href="#1-1-CAP理论是分布式系统的基石" class="headerlink" title="1.1 CAP理论是分布式系统的基石"></a>1.1 CAP理论是分布式系统的基石</h3><p><strong>Consistency (一致性)：</strong></p>
-<p>“all nodes see the same data at the same time”，即更新操作成功并返回客户端，所有节点在同一时间的数据完全一致，一致性的问题在并发系统中不可避免。</p>
-<p>对于客户端，一致性指的是并发访问时更新过的数据如何获取。</p>
-<p>对于服务端，则是更新如何复制分布到整个系统，以保证数据一致。</p>
-<p><strong>Availability (可用性):</strong></p>
-<p>“Reads and writes always succeed”，即服务一直可用，而且是正常响应时间。良好的可用性是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。</p>
-<p><strong>Partition Tolerance (分区容错性):</strong></p>
-<p>即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性和可用性的服务。</p>
-<p>比如现在的分布式系统中有某一个或者几个机器宕掉了，其他剩下的机器还能够正常运转满足系统需求，对于用户而言并没有什么体验上的影响。</p>
-<h3 id="1-2-三者只能取其二"><a href="#1-2-三者只能取其二" class="headerlink" title="1.2 三者只能取其二"></a>1.2 三者只能取其二</h3><ul>
-<li><strong>CA without P：</strong> 如果不要求P（不允许分区），则保留C（强一致性）和A（可用性），但放弃P的同时也就意味着放弃了系统的扩展性，也就是分布式节点受限，这是有违背分布式系统的设计初衷。</li>
-<li><strong>CP without A：</strong> 如果不要求A（可用），强调各服务之间数据<code>强一致性</code>，而P（分区）会导致同步时间无限延长(等待数据同步完才能正常访问服务)，一旦发生网络故障或者消息丢失等情况，就要牺牲用户的体验。</li>
-<li><strong>AP wihtout C：</strong> 要高可用并允许分区，则需放弃一致性。一旦分区发生，节点之间可能会失去联系，为了高可用，每个节点只能用本地数据提供服务，这样会导致全局数据的不一致性。</li>
-</ul>
-<h3 id="1-3-Base理论"><a href="#1-3-Base理论" class="headerlink" title="1.3 Base理论"></a>1.3 Base理论</h3><p>BASE是Basically Available（基本可用）、Soft state（软状态）和Eventually consistent（最终一致性）三个短语的缩写</p>
-<p>BASE是对CAP中一致性和可用性权衡的结果，核心思想是：即使无法做到强一致性，采用适当的方式使系统达到最终一致性。</p>
-<p><strong>Basically Available:</strong> 基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性，但不等价于系统不可用。</p>
+                    <h2 id="一、核心架构设计"><a href="#一、核心架构设计" class="headerlink" title="一、核心架构设计"></a>一、核心架构设计</h2><ol>
+<li><p>模块化框架<br>Cosmos SDK采用模块化设计，开发者可复用预置模块（如质押、治理、跨链通信）或自定义模块。<br>模块间通过Keeper对象实现安全交互，每个模块仅暴露授权接口。</p>
+</li>
+<li><p>状态机与存储</p>
+</li>
+</ol>
 <ul>
-<li>秒杀的场景下用户数量暴增，为保护系统稳定性，有部分用户可能被引导至一个降级页面</li>
+<li>区块链本质是确定性状态机，通过交易触发状态转换</li>
+<li>使用multistore实现多层级KV存储，支持模块独立管理数据空间</li>
+<li>数据序列化采用确定性编解码器（默认Amino）</li>
 </ul>
-<p><strong>Soft state:</strong> 允许系统中的数据存在中间状态，并认为中间状态不会影响系统整体可用性，即允许系统在不用节点之间数据同步存在延时</p>
-<p><strong>Eventually consistent:</strong> 强调所有的数据副本在经过一段时间同步后，最终能够达成一致的状态。最终保证一致，而不是实时保证系统一致性。</p>
-<p>BASE理论面向的是大型高可用可扩展的分布式系统，和传统的事物ACID特性是相反的，它完全不同于ACID的强一致性模型，而是通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性和BASE理论往往又会结合在一起。</p>
-<h2 id="2-区块链不可能三角"><a href="#2-区块链不可能三角" class="headerlink" title="2.区块链不可能三角"></a>2.区块链不可能三角</h2><p>区块链通常在<code>安全性</code>、<code>去中心化</code>和<code>可扩展性</code>之间进行权衡：</p>
+<ol start="3">
+<li>ABCI接口集成<br>Tendermint通过ABCI协议与应用层交互，关键消息包括：</li>
+</ol>
 <ul>
-<li>比特币：重点放在<code>安全性</code>和<code>去中心化</code>上，因此导致比特币的<code>可扩展性</code>受限，因为比特币的区块大小和区块时间设定限制了它的交易处理能力。在需求高的时候就会导致交易延迟和手续费上涨。</li>
-<li>以太坊：重点也放在<code>安全性</code>和<code>去中心化</code>上，并作为智能合约平台，它需要确保用户的资产和协议是安全的。因此以太坊的可扩展性较差，尤其当DeFi和NFT的应用量增大时，交易延迟与费用上涨的问题尤其突出。</li>
-<li>Solana：主要关注<code>可扩展性</code>因此在处理速度和吞吐量上都非常高效，为了达到这样的性能，在网络的中心化程度作出了一些妥协，例如限制验证者的数量。</li>
+<li>CheckTx：交易预验证（防垃圾交易,保护Mempool免受垃圾邮件交易,AnteHandler处理程序用于执行一系列验证步骤</li>
+<li>DeliverTx：交易正式执行(当CometBft收到有效的块时，该块中的每个事务都通过Delivertx传递给应用程序以处理，AnteHandler再次执行，并为交易中的每个消息执行实际的MSG服务RPC。)</li>
+<li>BeginBlock&#x2F;EndBlock：区块前后触发逻辑,开头和末尾都执行，无论该块是否包含交易。触发自动执行逻辑很有用。请谨慎行事，因为计算昂贵的环路可能会减慢区块链的速度，甚至在循环是无限的情况下将其冻结。</li>
 </ul>
-<h2 id="3-概率最终性和逐块最终性"><a href="#3-概率最终性和逐块最终性" class="headerlink" title="3.概率最终性和逐块最终性"></a>3.概率最终性和逐块最终性</h2><p><code>概率最终性：</code>在比特币网络中，由于采用了Proof-of-Work的共识算法。尽管一个区块被添加到区块链上，但仍然存在一定的概率（尽管很小），在后续的区块中被另一个竞争者的区块所取代。因此，对于比特币网络来说，一个最新的区块在一段时间后可以被认为具有<code>概率最终性</code>，即随着更多的区块被添加到区块链上，该区块被替代的概率会逐渐减小。</p>
-<p><code>逐块最终性：</code>对于Cosmos网络，它采用了Tendermint共识算法，该算法通过验证人的投票来确定下一个区块的生成者。一旦在Cosmos网络中的一个区块被验证人成功生成并广播出去，它被认为是最终的结果，不会被后续的区块替代。因此，可以说Cosmos网络具有逐块最终性，即一旦一个区块在网络中被验证人确认，它就成为最终的结果。</p>
+<h2 id="二、关键组件"><a href="#二、关键组件" class="headerlink" title="二、关键组件"></a>二、关键组件</h2><ol>
+<li><p>BaseApp<br>SDK提供的ABCI实现基类，处理消息路由、交易解码、gas计量等基础逻辑，开发者通过继承实现定制应用。</p>
+</li>
+<li><p>交易处理流程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">A[Tendermint接收交易] --&gt; B[ABCI解码]</span><br><span class="line">B --&gt; C&#123;CheckTx阶段&#125;</span><br><span class="line">C --&gt; D[AnteHandler验证签名/费用]</span><br><span class="line">D --&gt; E[加入内存池]</span><br><span class="line">E --&gt; F&#123;区块确认&#125;</span><br><span class="line">F --&gt; G[DeliverTx执行]</span><br><span class="line">G --&gt; H[模块Handler处理消息]</span><br><span class="line">H --&gt; I[状态变更提交]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跨链通信（IBC）<br>通过轻客户端验证和中继器实现链间资产&#x2F;数据转移，支持构建多链生态</p>
+</li>
+<li><p>数据可用性层</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">A[用户发起交易] --&gt; B[轻节点传播至Rollup网络]</span><br><span class="line">B --&gt; C&#123;全节点验证交易有效性&#125;</span><br><span class="line">C --&gt;|有效| D[排序器聚合交易生成区块]</span><br><span class="line">C --&gt;|无效| X[丢弃交易]</span><br><span class="line">D --&gt; E[区块发布至数据可用性层&lt;br/&gt;（如Celestia）]</span><br><span class="line">E --&gt; F[Rollup轻节点验证数据可用性&lt;br/&gt;及排序正确性]</span><br><span class="line">F --&gt; G[全节点验证区块内容]</span><br><span class="line">G --&gt; H&#123;选择Rollup类型&#125;</span><br><span class="line">H --&gt;|Optimistic Rollup| I[生成欺诈证明]</span><br><span class="line">H --&gt;|ZK-Rollup| J[生成zk-SNARKs/STARKs]</span><br><span class="line">I/J --&gt; K[全网广播证明]</span><br><span class="line">K --&gt; L&#123;其他节点验证证明&#125;</span><br><span class="line">L --&gt;|验证通过| M[更新Rollup状态完成最终确认]</span><br><span class="line">L --&gt;|验证失败| N[触发状态回滚/挑战机制]</span><br></pre></td></tr></table></figure>
+<p>流程解析：</p>
+<ol>
+<li><p>交易传播阶段</p>
+<ul>
+<li>用户交易首先通过轻节点广播到Rollup网络</li>
+<li>全节点执行第一层验证（签名有效性、格式合规性等）</li>
+</ul>
+</li>
+<li><p>区块生产阶段</p>
+<ul>
+<li>排序器对有效交易进行排序打包，利用DA层（如Celestia）实现：</li>
+<li>数据持久化存储</li>
+<li>全局排序共识</li>
+<li>抗审查保障</li>
+</ul>
+</li>
+<li><p>数据验证阶段</p>
+<ul>
+<li>轻节点通过采样验证确保：<ul>
+<li>区块数据完整可获取（Data Availability）</li>
+<li>交易顺序与DA层记录一致（Correct Ordering）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>证明生成阶段</p>
+<ul>
+<li>乐观Rollup：全节点生成欺诈证明，需配合挑战期机制</li>
+<li>ZK-Rollup：生成零知识证明（zk-SNARKs&#x2F;STARKs），实现即时最终性</li>
+</ul>
+</li>
+<li><p>状态确认阶段</p>
+<ul>
+<li>网络节点对证明进行双重验证：<ul>
+<li>验证DA层数据与本地执行结果的一致性</li>
+<li>检查证明的数学有效性（针对ZK-Rollup）</li>
+</ul>
+</li>
+<li>失败时触发回滚机制（乐观方案）或证明重构（ZK方案）</li>
+</ul>
+</li>
+</ol>
+<p>核心设计特点：</p>
+<ol>
+<li>分层验证机制：轻节点负责数据可用性验证，全节点承担计算完整性验证</li>
+<li>模块化架构：DA层与执行层解耦，支持灵活更换底层组件</li>
+<li>终局性差异：乐观方案依赖挑战期（通常7天），ZK方案通过数学证明实现即时终局</li>
+<li>抗审查保障：通过DA层确保区块数据不可篡改且永久可查</li>
+</ol>
+<h1 id="三、交易流程分析"><a href="#三、交易流程分析" class="headerlink" title="三、交易流程分析"></a>三、交易流程分析</h1><h3 id="架构概览"><a href="#架构概览" class="headerlink" title="架构概览"></a>架构概览</h3><p>Cosmos SDK采用模块化状态机设计，通过ABCI接口与Tendermint共识引擎协同工作。核心组件包括：</p>
+<p>BaseApp：处理ABCI消息路由、交易解码、Gas计量<br>Multistore：分片化KV存储系统，支持模块独立数据空间<br>Modules：功能单元（如Bank, Staking, Governance），通过Keeper控制状态访问<br>IBC：跨链通信协议</p>
+<h3 id="交易处理流程"><a href="#交易处理流程" class="headerlink" title="交易处理流程"></a>交易处理流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant User</span><br><span class="line">    participant Tendermint</span><br><span class="line">    participant BaseApp</span><br><span class="line">    participant Module</span><br><span class="line"></span><br><span class="line">    User-&gt;&gt;Tendermint: 提交签名交易</span><br><span class="line">    Tendermint-&gt;&gt;BaseApp: CheckTx请求</span><br><span class="line">    BaseApp-&gt;&gt;AnteHandler: 验证签名/Gas费用</span><br><span class="line">    AnteHandler--&gt;&gt;BaseApp: 验证结果</span><br><span class="line">    BaseApp--&gt;&gt;Tendermint: 接受/拒绝交易</span><br><span class="line">    Tendermint-&gt;&gt;Tendermint: 交易进入内存池</span><br><span class="line"></span><br><span class="line">    loop 区块生成</span><br><span class="line">        Tendermint-&gt;&gt;BaseApp: BeginBlock</span><br><span class="line">        BaseApp-&gt;&gt;Module: 触发BeginBlock逻辑</span><br><span class="line">        Tendermint-&gt;&gt;BaseApp: DeliverTx(打包交易)</span><br><span class="line">        BaseApp-&gt;&gt;Router: 路由到对应模块</span><br><span class="line">        Router-&gt;&gt;Module Handler: 解析Msg</span><br><span class="line">        Module Handler-&gt;&gt;Keeper: 执行状态变更</span><br><span class="line">        Keeper-&gt;&gt;Multistore: 写入数据</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    Tendermint-&gt;&gt;BaseApp: EndBlock</span><br><span class="line">    BaseApp-&gt;&gt;Module: 触发EndBlock逻辑</span><br><span class="line">    Tendermint-&gt;&gt;BaseApp: Commit</span><br><span class="line">    BaseApp-&gt;&gt;Multistore: 提交状态根</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>交易验证阶段（CheckTx）</li>
+</ol>
+<ul>
+<li>验证数字签名有效性</li>
+<li>检查账户余额是否足够支付Gas费</li>
+<li>执行AnteHandler链（可自定义预处理逻辑）</li>
+</ul>
+<ol start="2">
+<li>交易执行阶段（DeliverTx）</li>
+</ol>
+<ul>
+<li>解码交易获取Msg对象</li>
+<li>通过Router将Msg路由到注册模块</li>
+<li>模块的Handler调用Keeper方法修改状态</li>
+<li>状态变更暂存于缓存，直到区块提交</li>
+</ul>
+<ol start="3">
+<li>区块生命周期</li>
+</ol>
+<ul>
+<li>BeginBlock：触发质押奖励发放等周期性逻辑</li>
+<li>EndBlock：执行治理提案生效、验证人集更新</li>
+<li>Commit：将缓存状态写入持久化存储，生成Merkle根</li>
+</ul>
+<ol start="4">
+<li>每个模块都定义了状态的子集并包含其自己的消息&#x2F;事务处理器，而Cosmos SDK负责将每个消息路由到其各自的模块。<br><img  
+                       lazyload
+                       alt="image"
+                       data-src="/blog/./images/image.png"
+                        alt="modules"
+                 ></li>
+</ol>
+<h3 id="状态管理机制"><a href="#状态管理机制" class="headerlink" title="状态管理机制"></a>状态管理机制</h3><ol>
+<li>存储结构<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Multistore</span><br><span class="line"> ├── <span class="title function_ invoke__">root</span> (IAVL树)</span><br><span class="line"> │   ├── <span class="title function_ invoke__">acc</span> (账户模块数据)</span><br><span class="line"> │   ├── <span class="title function_ invoke__">staking</span> (质押模块数据)</span><br><span class="line"> │   └── ...</span><br><span class="line"> ├── <span class="title function_ invoke__">transient</span> (临时存储)</span><br><span class="line"> └── <span class="title function_ invoke__">flat</span> (平面文件存储)</span><br></pre></td></tr></table></figure></li>
+<li>读写操作<ul>
+<li>Keeper通过StoreKey访问特定子存储</li>
+<li>写操作使用CacheWrapper实现原子性</li>
+<li>支持历史版本查询（通过高度参数）</li>
+</ul>
+</li>
+</ol>
+<h3 id="安全机制设计"><a href="#安全机制设计" class="headerlink" title="安全机制设计"></a>安全机制设计</h3><ol>
+<li><p>能力约束模型</p>
+<ul>
+<li>Keeper通过capabilityKey控制模块访问权限</li>
+<li>模块需显式声明依赖的其他模块能力</li>
+</ul>
+</li>
+<li><p>Gas计量体系</p>
+<ul>
+<li>每笔交易预扣Gas费：GasLimit × GasPrice</li>
+<li>操作消耗Gas示例： <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.GasMeter().ConsumeGas(<span class="number">10</span>, <span class="string">&quot;transfer coins&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>治理防护</p>
+<ul>
+<li>参数变更需通过提案投票</li>
+<li>模块可注册ParamChangeProposalHandler</li>
+</ul>
+</li>
+</ol>
+<h3 id="模块开发规范"><a href="#模块开发规范" class="headerlink" title="模块开发规范"></a>模块开发规范</h3><ol>
+<li><p>定义Protobuf消息</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message </span><span class="title class_">MsgSend</span> &#123;</span><br><span class="line">  <span class="type">string</span> from = <span class="number">1</span>;</span><br><span class="line">  <span class="type">string</span> to = <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">repeated</span> Coin amount = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现Handler接口</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">handleMsgSend</span><span class="params">(ctx sdk.Context, k Keeper, msg MsgSend)</span></span> (*sdk.Result, <span class="type">error</span>) &#123;</span><br><span class="line">  err := k.SendCoins(ctx, msg.From, msg.To, msg.Amount)</span><br><span class="line">  <span class="keyword">return</span> &amp;sdk.Result&#123;Events: ctx.EventManager().Events()&#125;, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册ABCI生命周期钩子</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.mm.SetBeginBlocker(<span class="function"><span class="keyword">func</span><span class="params">(ctx sdk.Context, req abci.RequestBeginBlock)</span></span> abci.ResponseBeginBlock &#123;</span><br><span class="line">  module.BeginBlock(ctx, req)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="典型异常处理"><a href="#典型异常处理" class="headerlink" title="典型异常处理"></a>典型异常处理</h3><ul>
+<li>Gas耗尽 -&gt;	回滚当前交易操作，扣除已消耗Gas</li>
+<li>无效签名 -&gt;    拒绝交易并记录日志</li>
+<li>跨链超时 -&gt;    触发重试机制或回滚状态回滚资产</li>
+<li>共识节点拜占庭故障 -&gt; Tendermint惩罚质押代币</li>
+</ul>
 
                 </div>
                 
@@ -324,11 +464,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                分布式基础理论
+                03-架构解析.md
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/05/13/0-base/01-分布式系统基础理论/
+                2025/02/13/3-cosmos/03-架构解析/
             </div>
         </div>
 
@@ -344,7 +484,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-05-13 21:59</div>
+                <div class="content">2025-02-13 21:25</div>
             </div>
 
 
@@ -419,31 +559,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/blog/2024/05/16/0-base/02-%E6%8E%A2%E8%AE%A8%E4%BA%8B%E5%8A%A1%E4%B8%80%E8%87%B4%E6%80%A7/"
-                                   title="探讨事务一致性"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">探讨事务一致性</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2024/05/08/0-base/00-%E5%8C%BA%E5%9D%97%E9%93%BE%E5%9F%BA%E7%A1%80/"
-                                   title="区块链基础"
+                                   href="/blog/2024/12/27/3-cosmos/02-cosmos-proto%E7%BC%96%E8%AF%91%E6%96%87%E4%BB%B6/"
+                                   title="02-cosmos-proto编译文件"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">区块链基础</span>
+                                        <span class="post-nav-title-item text-ellipsis">02-cosmos-proto编译文件</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -471,7 +595,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">1.分布式基础理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-CAP%E7%90%86%E8%AE%BA%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 CAP理论是分布式系统的基石</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%89%E8%80%85%E5%8F%AA%E8%83%BD%E5%8F%96%E5%85%B6%E4%BA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 三者只能取其二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Base%E7%90%86%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Base理论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8D%E5%8F%AF%E8%83%BD%E4%B8%89%E8%A7%92"><span class="nav-number">2.</span> <span class="nav-text">2.区块链不可能三角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A6%82%E7%8E%87%E6%9C%80%E7%BB%88%E6%80%A7%E5%92%8C%E9%80%90%E5%9D%97%E6%9C%80%E7%BB%88%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">3.概率最终性和逐块最终性</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -639,7 +763,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">1.分布式基础理论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-CAP%E7%90%86%E8%AE%BA%E6%98%AF%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%9F%BA%E7%9F%B3"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 CAP理论是分布式系统的基石</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%89%E8%80%85%E5%8F%AA%E8%83%BD%E5%8F%96%E5%85%B6%E4%BA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 三者只能取其二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Base%E7%90%86%E8%AE%BA"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 Base理论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8C%BA%E5%9D%97%E9%93%BE%E4%B8%8D%E5%8F%AF%E8%83%BD%E4%B8%89%E8%A7%92"><span class="nav-number">2.</span> <span class="nav-text">2.区块链不可能三角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A6%82%E7%8E%87%E6%9C%80%E7%BB%88%E6%80%A7%E5%92%8C%E9%80%90%E5%9D%97%E6%9C%80%E7%BB%88%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">3.概率最终性和逐块最终性</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">一、核心架构设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E9%94%AE%E7%BB%84%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">二、关键组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BA%A4%E6%98%93%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="nav-number"></span> <span class="nav-text">三、交易流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E6%A6%82%E8%A7%88"><span class="nav-number">0.1.</span> <span class="nav-text">架构概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="nav-number">0.2.</span> <span class="nav-text">交易处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">0.3.</span> <span class="nav-text">状态管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E8%AE%BE%E8%AE%A1"><span class="nav-number">0.4.</span> <span class="nav-text">安全机制设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">0.5.</span> <span class="nav-text">模块开发规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="nav-number">0.6.</span> <span class="nav-text">典型异常处理</span></a></li></ol></li></ol>
     </div>
 </div>
 
