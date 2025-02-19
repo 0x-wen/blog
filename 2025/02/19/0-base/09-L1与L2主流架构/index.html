@@ -243,7 +243,7 @@
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Wed Feb 19 2025 15:35:49 GMT+0800">2025-02-19 15:35:49</span>
+                <span class="datetime" data-updated="Wed Feb 19 2025 15:53:37 GMT+0800">2025-02-19 15:53:37</span>
             </span>
         
 
@@ -263,12 +263,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>3k 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.7k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>9 分钟</span>
             </span>
         
         
@@ -294,45 +294,99 @@
 <li>侧链：独立运行但通过跨链桥与L1交互。</li>
 </ul>
 <h2 id="Layer-3（应用层）"><a href="#Layer-3（应用层）" class="headerlink" title="Layer 3（应用层）"></a>Layer 3（应用层）</h2><p><strong>功能</strong>：支持DApp开发，提供用户交互界面（如DeFi、NFT平台）。<br><strong>关键技术</strong>：智能合约、跨链互操作性协议。</p>
-<h1 id="L2如何利用L1的安全性？"><a href="#L2如何利用L1的安全性？" class="headerlink" title="L2如何利用L1的安全性？"></a>L2如何利用L1的安全性？</h1><p>数据锚定（Data Availability）</p>
-<p>L2将交易数据压缩后提交至L1存储，确保数据不可篡改。例如，ZK-Rollups生成零知识证明（ZKP）并上传至L1，L1验证证明后确认交易有效性<br>。<br>欺诈证明（Optimistic Rollups）</p>
-<p>L2默认交易有效，但允许用户在挑战期内提交欺诈证明。若发现无效交易，L1执行验证并回滚状态，惩罚作恶节点<br>。<br>状态根同步</p>
-<p>L2定期将状态根（Merkle根）提交至L1合约。L1通过验证状态根确保L2状态与主链一致<br>。<br>经济激励与质押</p>
-<p>L2节点需质押资产于L1，若作恶则罚没质押金。例如，Optimism的序列器节点需抵押ETH，确保其诚实执行交易<br>。</p>
-<p>Optimism（OP Mainnet）：采用Optimistic Rollups，依赖L1的欺诈证明机制，7天挑战期内用户可质疑交易<br>。<br>zkSync：基于ZK-Rollups，通过零知识证明即时验证交易，数据压缩后提交至以太坊主网<br>。<br>安网SAFE：通过跨链协议将L2交易数据锚定至多条L1公链（如比特币、以太坊），利用多链共识增强安全性</p>
-<p>L2通过将关键数据（交易批次、状态根）和验证逻辑（欺诈证明&#x2F;ZKP）绑定至L1，继承其去中心化与抗攻击能力，同时通过链下计算提升性能。这种分层架构有效缓解了“区块链不可能三角”的挑战</p>
-<p>具体细节如下：</p>
-<p>核心参与方与定序器部署<br>定序器（Sequencer）</p>
-<p>角色：负责接收用户交易、排序并打包成批次提交至L1。<br>部署方式：当前主流L2（如Optimism、Arbitrum）采用单点中心化定序器<br>，但未来计划通过共享定序器网络（如Espresso、Astria）实现去中心化<br>。<br>质押要求：定序器需在L1质押资产（如Optimism要求抵押ETH），若作恶则罚没质押金<br>。<br>证明者（Prover）</p>
-<p>角色：在ZK-Rollup中生成零知识证明（ZKP），验证交易有效性（如zkSync的证明节点）<br>。<br>生成流程：证明者接收定序器的交易批次，通过ZK-SNARK&#x2F;STARK算法生成压缩证明<br>。<br>验证者（Verifier）</p>
-<p>角色：在L1通过智能合约验证ZKP或欺诈证明（如Optimism的挑战期机制）</p>
-<p>执行流程与L1验证<br>ZK-Rollup流程</p>
-<p>步骤：<br>用户提交交易至L2定序器；<br>定序器打包交易并生成状态根；<br>证明者生成ZKP并提交至L1验证合约；<br>L1合约验证ZKP有效性后更新状态<br>。<br>验证依赖：L1的验证合约（如zkSync的Verifier.sol）通过数学算法验证ZKP，无需重放交易<br>。<br>Optimistic Rollup流程</p>
-<p>步骤：<br>定序器提交交易批次至L1；<br>默认交易有效，进入7天挑战期；<br>验证者可提交欺诈证明，触发L1合约重放交易验证；<br>若验证失败，回滚状态并罚没定序器质押金</p>
-<p>关键合约与参数<br>L1智能合约类型</p>
-<p>主合约（Main Contract）：管理存款、提款及状态根提交（如Optimism的OVM_ChainStorageContainer）<br>。<br>验证合约（Verifier Contract）：验证ZKP或欺诈证明（如zkSync的ZkSync.sol）<br>。<br>状态合约（State Contract）：存储L2的Merkle根（如Arbitrum的Rollup.sol）<br>。<br>合约参数示例</p>
-<p>挑战期：Optimism设为7天，Arbitrum为1周<br>。<br>质押金额：定序器需质押ETH（如Optimism要求至少1 ETH）<br>。<br>数据压缩率：ZK-Rollup将交易压缩至约1%大小（如zkSync每批次处理数千笔交易）<br>。<br>安全性保障<br>数据锚定：L2交易数据压缩后存储于L1（如以太坊的Calldata），确保不可篡改<br>。<br>状态同步：L2定期提交Merkle根至L1合约，L1通过比对根哈希验证一致性<br>。<br>经济博弈：定序器质押资产与欺诈惩罚机制形成博弈平衡，确保诚实行为<br>。</p>
-<p>在Optimistic Rollup（OP）中，普通用户可以直接发起欺诈挑战，无需成为特定验证者角色。根据OP的机制设计，任何运行完整节点的用户（包括普通用户）均可对无效交易提出质疑<br>。</p>
-<p>当挑战在7天挑战期的最后一天成功时：</p>
-<p>挑战者奖励：成功挑战者将获得作恶定序器质押的ETH的一部分（例如，若质押金为X ETH，挑战者可获得X×(1−α)，其中α为销毁比例，通常设置为50%）<br>。<br>状态回滚范围：仅回滚被挑战的特定交易批次，而非7天内所有交易。例如，若欺诈发生在第n个批次，则仅该批次的状态被撤销，其他批次保持有效<br>。<br>交易不确定性处理：<br>L2用户默认以最新提交至L1的状态为准，但可通过快速取款服务（如做市商）提前锁定资金。做市商在验证交易有效性后即时支付，若后续挑战成功则损失由做市商承担<br>。<br>L2链下状态在挑战期内仍可继续使用，但提现至L1需等待挑战期结束或依赖第三方桥接服务<br>。<br>关键合约与参数：</p>
-<p>FraudVerifier.sol：处理欺诈证明验证，触发状态回滚<br>。<br>挑战期固定为50400个以太坊区块（约7天），质押金额由协议设定（如Optimism要求定序器至少质押1 ETH）<br>。<br>综上，OP通过局部回滚和经济博弈机制，在保障安全性的同时最小化对用户体验的影响。</p>
-<p>在Optimistic Rollup中，局部回滚通过智能合约的欺诈证明机制实现，具体流程如下：</p>
-<p>回滚范围控制<br>当某个交易批次被证明存在欺诈时，L1的FraudVerifier合约仅回滚该特定批次及其后续所有区块，使其成为孤块<br>。例如，若第n个批次被回滚，则第n+1、n+2等依赖该批次哈希的后续区块均失效。</p>
-<p>交易数据的存在性</p>
-<p>数据存储：被回滚的批次交易数据仍永久存储在L1的Calldata或Blob中<br>，但对应的状态变更（如余额更新）会被撤销。<br>状态有效性：L2链的最终有效状态以未被挑战成功的批次为准，因此被回滚的交易在状态树中不再生效，但原始数据仍可追溯<br>。<br>依赖关系的处理</p>
-<p>哈希链断裂：后续区块的哈希因依赖被回滚的批次而失效，需重新从第n−1个有效批次开始构建新链<br>。<br>用户影响：依赖L2状态的DApp需监听L1合约的最终状态根，并基于最新有效状态重新处理后续交易<br>。<br>技术实现示例：</p>
-<p>Optimism：单轮欺诈证明触发整批次回滚，后续区块需重新打包<br>。<br>Arbitrum：多轮欺诈证明允许仅回滚争议交易，减少影响范围<br>。<br>综上，局部回滚通过智能合约强制状态回退和哈希链断裂机制实现，被回滚交易数据仍存于L1但状态无效，依赖L2的应用需同步最新有效状态<br>。</p>
-<p>在Optimistic Rollup（如Optimism、Arbitrum）中，用户于L2的交易无需等待L1确认即可立即可用，但提现至L1需等待挑战期（通常7天）。具体机制如下：</p>
-<p>L2交易即时生效的原理<br>Sequencer的预确认（Pre-Confirmation）</p>
-<p>L2的定序器（Sequencer）在收到用户交易后，立即在链下执行并更新本地状态，向用户返回交易收据（Transaction Receipt）<br>。<br>用户看到的余额变化和交易结果基于Sequencer的链下状态，无需等待L1确认<br>。<br>链下状态与L1的异步同步</p>
-<p>Sequencer定期将交易批次压缩后提交至L1（如通过Calldata或EIP-4844 Blob），但L2的本地状态独立更新，用户可即时交互<br>。<br>L2的DApp默认以Sequencer的链下状态为准，仅在提现至L1时依赖L1的最终确认<br>。<br>L1安全性与挑战期的作用<br>欺诈证明与挑战期</p>
-<p>L2提交至L1的交易数据需经过挑战期（如7天），期间任何人可提交欺诈证明质疑无效交易<br>。<br>仅提现至L1需要等待挑战期结束，L2内部交易不受此限制<br>。<br>快速取款服务（Fast Withdrawal）</p>
-<p>第三方做市商提供即时提现服务：用户将L2资产转给做市商，做市商垫付L1资产，承担挑战期风险并收取手续费<br>。<br>技术实现细节<br>状态根提交：L2的op-proposer组件定期将状态根（Merkle根）提交至L1的DisputeGameFactory合约，L1通过验证状态根确保L2状态一致性<br>。<br>数据压缩：通过EIP-4844 Blob或第三方DA层（如Celestia）降低L1存储成本，同时保证数据可恢复性<br>。<br>欺诈证明流程：若挑战成功，仅回滚争议批次及其后续区块，不影响其他交易<br>。<br>总结<br>L2内部交易：依赖Sequencer的即时预确认，用户立即可用<br>。<br>L1最终性：提现至L1需等待挑战期，但L2内部状态通过欺诈证明和状态根同步继承L1安全性<br>。<br>快速提现：通过第三方服务绕过等待期，但需支付额外成本<br>。<br>通过链下执行与链上验证的解耦，Optimistic Rollup在保证安全性的同时实现了用户体验的即时性<br>。</p>
-<p>L2在L1上提现指的是用户将资产从Layer 2网络转移回Layer 1主链的过程。具体来说，这通常涉及以下两种方式：</p>
-<p>跨链桥直接提现<br>用户通过跨链桥将L2资产发送至L1地址，例如在zkSync中点击Withdraw按钮后，资产会经过以太坊主网验证后到达目标地址<br>。此过程需要等待L1区块确认，并支付Gas费。</p>
-<p>快速取款服务<br>第三方做市商（如流动性提供者）提供即时到账服务：用户将L2资产转给做市商，做市商垫付L1资产并收取手续费，后续通过L1合约完成清算<br>。这种方式无需等待挑战期（如Optimistic Rollup的7天），但需信任第三方。</p>
-<p>技术实现差异：</p>
-<p>ZK-Rollup（如zkSync）：提现需等待有效性证明在L1验证完成<br>。<br>Optimistic Rollup（如Optimism）：提现需经过挑战期（通常7天），期间可被质疑欺诈<br>。<br>比特币L2（如Goat网络）：通过BitVM2协议和运营商锁定机制实现提现，挑战期设为2周<br>。<br>因此，L2提现到L1既可通过跨链桥直接完成，也可依赖第三方服务加速，具体取决于底层协议设计。 </p>
+<h1 id="L2如何利用L1的安全性？"><a href="#L2如何利用L1的安全性？" class="headerlink" title="L2如何利用L1的安全性？"></a>L2如何利用L1的安全性？</h1><h2 id="数据锚定（Data-Availability）"><a href="#数据锚定（Data-Availability）" class="headerlink" title="数据锚定（Data Availability）"></a>数据锚定（Data Availability）</h2><p>L2将交易数据压缩后提交至L1存储，确保数据不可篡改。例如，ZK-Rollups生成零知识证明（ZKP）并上传至L1，L1验证证明后确认交易有效性。</p>
+<h2 id="欺诈证明（Optimistic-Rollups）"><a href="#欺诈证明（Optimistic-Rollups）" class="headerlink" title="欺诈证明（Optimistic Rollups）"></a>欺诈证明（Optimistic Rollups）</h2><p>L2默认交易有效，但允许用户在挑战期内提交欺诈证明。若发现无效交易，L1执行验证并回滚状态，惩罚作恶节点。</p>
+<h2 id="状态根同步"><a href="#状态根同步" class="headerlink" title="状态根同步"></a>状态根同步</h2><p>L2定期将状态根（Merkle根）提交至L1合约。L1通过验证状态根确保L2状态与主链一致。</p>
+<h2 id="经济激励与质押"><a href="#经济激励与质押" class="headerlink" title="经济激励与质押"></a>经济激励与质押</h2><p>L2节点需质押资产于L1，若作恶则罚没质押金。例如，Optimism的序列器节点需抵押ETH，确保其诚实执行交易。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
+<li><strong>Optimism（OP Mainnet）</strong>：采用Optimistic Rollups，依赖L1的欺诈证明机制，7天挑战期内用户可质疑交易。</li>
+<li><strong>zkSync</strong>：基于ZK-Rollups，通过零知识证明即时验证交易，数据压缩后提交至以太坊主网。</li>
+<li><strong>安网SAFE</strong>：通过跨链协议将L2交易数据锚定至多条L1公链（如比特币、以太坊），利用多链共识增强安全性。</li>
+</ul>
+<p>L2通过将关键数据（交易批次、状态根）和验证逻辑（欺诈证明&#x2F;ZKP）绑定至L1，继承其去中心化与抗攻击能力，同时通过链下计算提升性能。这种分层架构有效缓解了“区块链不可能三角”的挑战。</p>
+<h1 id="核心参与方与定序器部署"><a href="#核心参与方与定序器部署" class="headerlink" title="核心参与方与定序器部署"></a>核心参与方与定序器部署</h1><h2 id="定序器（Sequencer）"><a href="#定序器（Sequencer）" class="headerlink" title="定序器（Sequencer）"></a>定序器（Sequencer）</h2><ul>
+<li><strong>角色</strong>：负责接收用户交易、排序并打包成批次提交至L1。</li>
+<li><strong>部署方式</strong>：当前主流L2（如Optimism、Arbitrum）采用单点中心化定序器，但未来计划通过共享定序器网络（如Espresso、Astria）实现去中心化。</li>
+<li><strong>质押要求</strong>：定序器需在L1质押资产（如Optimism要求抵押ETH），若作恶则罚没质押金。</li>
+</ul>
+<h2 id="证明者（Prover）"><a href="#证明者（Prover）" class="headerlink" title="证明者（Prover）"></a>证明者（Prover）</h2><ul>
+<li><strong>角色</strong>：在ZK-Rollup中生成零知识证明（ZKP），验证交易有效性（如zkSync的证明节点）。</li>
+<li><strong>生成流程</strong>：证明者接收定序器的交易批次，通过ZK-SNARK&#x2F;STARK算法生成压缩证明。</li>
+</ul>
+<h2 id="验证者（Verifier）"><a href="#验证者（Verifier）" class="headerlink" title="验证者（Verifier）"></a>验证者（Verifier）</h2><ul>
+<li><strong>角色</strong>：在L1通过智能合约验证ZKP或欺诈证明（如Optimism的挑战期机制）。</li>
+</ul>
+<h1 id="执行流程与L1验证"><a href="#执行流程与L1验证" class="headerlink" title="执行流程与L1验证"></a>执行流程与L1验证</h1><h2 id="ZK-Rollup流程"><a href="#ZK-Rollup流程" class="headerlink" title="ZK-Rollup流程"></a>ZK-Rollup流程</h2><ol>
+<li>用户提交交易至L2定序器；</li>
+<li>定序器打包交易并生成状态根；</li>
+<li>证明者生成ZKP并提交至L1验证合约；</li>
+<li>L1合约验证ZKP有效性后更新状态。</li>
+</ol>
+<h2 id="Optimistic-Rollup流程"><a href="#Optimistic-Rollup流程" class="headerlink" title="Optimistic Rollup流程"></a>Optimistic Rollup流程</h2><ol>
+<li>定序器提交交易批次至L1；</li>
+<li>默认交易有效，进入7天挑战期；</li>
+<li>验证者可提交欺诈证明，触发L1合约重放交易验证；</li>
+<li>若验证失败，回滚状态并罚没定序器质押金。</li>
+</ol>
+<h1 id="关键合约与参数"><a href="#关键合约与参数" class="headerlink" title="关键合约与参数"></a>关键合约与参数</h1><h2 id="L1智能合约类型"><a href="#L1智能合约类型" class="headerlink" title="L1智能合约类型"></a>L1智能合约类型</h2><ul>
+<li><strong>主合约（Main Contract）</strong>：管理存款、提款及状态根提交（如Optimism的OVM_ChainStorageContainer）。</li>
+<li><strong>验证合约（Verifier Contract）</strong>：验证ZKP或欺诈证明（如zkSync的ZkSync.sol）。</li>
+<li><strong>状态合约（State Contract）</strong>：存储L2的Merkle根（如Arbitrum的Rollup.sol）。</li>
+</ul>
+<h2 id="合约参数示例"><a href="#合约参数示例" class="headerlink" title="合约参数示例"></a>合约参数示例</h2><ul>
+<li><strong>挑战期</strong>：Optimism设为7天，Arbitrum为1周。</li>
+<li><strong>质押金额</strong>：定序器需质押ETH（如Optimism要求至少1 ETH）。</li>
+<li><strong>数据压缩率</strong>：ZK-Rollup将交易压缩至约1%大小（如zkSync每批次处理数千笔交易）。</li>
+</ul>
+<h1 id="安全性保障"><a href="#安全性保障" class="headerlink" title="安全性保障"></a>安全性保障</h1><h2 id="数据锚定"><a href="#数据锚定" class="headerlink" title="数据锚定"></a>数据锚定</h2><p>L2交易数据压缩后存储于L1（如以太坊的Calldata），确保不可篡改。</p>
+<h2 id="状态同步"><a href="#状态同步" class="headerlink" title="状态同步"></a>状态同步</h2><p>L2定期提交Merkle根至L1合约，L1通过比对根哈希验证一致性。</p>
+<h2 id="经济博弈"><a href="#经济博弈" class="headerlink" title="经济博弈"></a>经济博弈</h2><p>定序器质押资产与欺诈惩罚机制形成博弈平衡，确保诚实行为。</p>
+<h1 id="在Optimistic-Rollup（OP）中的挑战机制"><a href="#在Optimistic-Rollup（OP）中的挑战机制" class="headerlink" title="在Optimistic Rollup（OP）中的挑战机制"></a>在Optimistic Rollup（OP）中的挑战机制</h1><h2 id="挑战者奖励"><a href="#挑战者奖励" class="headerlink" title="挑战者奖励"></a>挑战者奖励</h2><p>成功挑战者将获得作恶定序器质押的ETH的一部分（例如，若质押金为X ETH，挑战者可获得X×(1−α)，其中α为销毁比例，通常设置为50%）。</p>
+<h2 id="状态回滚范围"><a href="#状态回滚范围" class="headerlink" title="状态回滚范围"></a>状态回滚范围</h2><p>仅回滚被挑战的特定交易批次，而非7天内所有交易。例如，若欺诈发生在第n个批次，则仅该批次的状态被撤销，其他批次保持有效。</p>
+<h2 id="交易不确定性处理"><a href="#交易不确定性处理" class="headerlink" title="交易不确定性处理"></a>交易不确定性处理</h2><ul>
+<li><strong>L2用户</strong>：默认以最新提交至L1的状态为准，但可通过快速取款服务（如做市商）提前锁定资金。做市商在验证交易有效性后即时支付，若后续挑战成功则损失由做市商承担。</li>
+<li><strong>L2链下状态</strong>：在挑战期内仍可继续使用，但提现至L1需等待挑战期结束或依赖第三方桥接服务。</li>
+</ul>
+<h2 id="关键合约与参数-1"><a href="#关键合约与参数-1" class="headerlink" title="关键合约与参数"></a>关键合约与参数</h2><ul>
+<li><strong>FraudVerifier.sol</strong>：处理欺诈证明验证，触发状态回滚。</li>
+<li><strong>挑战期</strong>：固定为50400个以太坊区块（约7天），质押金额由协议设定（如Optimism要求定序器至少质押1 ETH）。</li>
+</ul>
+<h1 id="局部回滚机制"><a href="#局部回滚机制" class="headerlink" title="局部回滚机制"></a>局部回滚机制</h1><h2 id="回滚范围控制"><a href="#回滚范围控制" class="headerlink" title="回滚范围控制"></a>回滚范围控制</h2><p>当某个交易批次被证明存在欺诈时，L1的FraudVerifier合约仅回滚该特定批次及其后续所有区块，使其成为孤块。例如，若第n个批次被回滚，则第n+1、n+2等依赖该批次哈希的后续区块均失效。</p>
+<h2 id="交易数据的存在性"><a href="#交易数据的存在性" class="headerlink" title="交易数据的存在性"></a>交易数据的存在性</h2><ul>
+<li><strong>数据存储</strong>：被回滚的批次交易数据仍永久存储在L1的Calldata或Blob中，但对应的状态变更（如余额更新）会被撤销。</li>
+<li><strong>状态有效性</strong>：L2链的最终有效状态以未被挑战成功的批次为准，因此被回滚的交易在状态树中不再生效，但原始数据仍可追溯。</li>
+</ul>
+<h2 id="依赖关系的处理"><a href="#依赖关系的处理" class="headerlink" title="依赖关系的处理"></a>依赖关系的处理</h2><ul>
+<li><strong>哈希链断裂</strong>：后续区块的哈希因依赖被回滚的批次而失效，需重新从第n−1个有效批次开始构建新链。</li>
+<li><strong>用户影响</strong>：依赖L2状态的DApp需监听L1合约的最终状态根，并基于最新有效状态重新处理后续交易。</li>
+</ul>
+<h2 id="技术实现示例"><a href="#技术实现示例" class="headerlink" title="技术实现示例"></a>技术实现示例</h2><ul>
+<li><strong>Optimism</strong>：单轮欺诈证明触发整批次回滚，后续区块需重新打包。</li>
+<li><strong>Arbitrum</strong>：多轮欺诈证明允许仅回滚争议交易，减少影响范围。</li>
+</ul>
+<h1 id="L2交易即时生效与提现机制"><a href="#L2交易即时生效与提现机制" class="headerlink" title="L2交易即时生效与提现机制"></a>L2交易即时生效与提现机制</h1><h2 id="L2交易即时生效的原理"><a href="#L2交易即时生效的原理" class="headerlink" title="L2交易即时生效的原理"></a>L2交易即时生效的原理</h2><h3 id="Sequencer的预确认（Pre-Confirmation）"><a href="#Sequencer的预确认（Pre-Confirmation）" class="headerlink" title="Sequencer的预确认（Pre-Confirmation）"></a>Sequencer的预确认（Pre-Confirmation）</h3><p>L2的定序器（Sequencer）在收到用户交易后，立即在链下执行并更新本地状态，向用户返回交易收据（Transaction Receipt）。用户看到的余额变化和交易结果基于Sequencer的链下状态，无需等待L1确认。</p>
+<h3 id="链下状态与L1的异步同步"><a href="#链下状态与L1的异步同步" class="headerlink" title="链下状态与L1的异步同步"></a>链下状态与L1的异步同步</h3><p>Sequencer定期将交易批次压缩后提交至L1（如通过Calldata或EIP-4844 Blob），但L2的本地状态独立更新，用户可即时交互。L2的DApp默认以Sequencer的链下状态为准，仅在提现至L1时依赖L1的最终确认。</p>
+<h2 id="欺诈证明与挑战期"><a href="#欺诈证明与挑战期" class="headerlink" title="欺诈证明与挑战期"></a>欺诈证明与挑战期</h2><p>L2提交至L1的交易数据需经过挑战期（如7天），期间任何人可提交欺诈证明质疑无效交易。仅提现至L1需要等待挑战期结束，L2内部交易不受此限制。</p>
+<h2 id="快速取款服务（Fast-Withdrawal）"><a href="#快速取款服务（Fast-Withdrawal）" class="headerlink" title="快速取款服务（Fast Withdrawal）"></a>快速取款服务（Fast Withdrawal）</h2><p>第三方做市商提供即时提现服务：用户将L2资产转给做市商，做市商垫付L1资产，承担挑战期风险并收取手续费。</p>
+<h2 id="技术实现细节"><a href="#技术实现细节" class="headerlink" title="技术实现细节"></a>技术实现细节</h2><ul>
+<li><strong>状态根提交</strong>：L2的op-proposer组件定期将状态根（Merkle根）提交至L1的DisputeGameFactory合约，L1通过验证状态根确保L2状态一致性。</li>
+<li><strong>数据压缩</strong>：通过EIP-4844 Blob或第三方DA层（如Celestia）降低L1存储成本，同时保证数据可恢复性。</li>
+<li><strong>欺诈证明流程</strong>：若挑战成功，仅回滚争议批次及其后续区块，不影响其他交易。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>L2内部交易</strong>：依赖Sequencer的即时预确认，用户立即可用。</li>
+<li><strong>L1最终性</strong>：提现至L1需等待挑战期，但L2内部状态通过欺诈证明和状态根同步继承L1安全性。</li>
+<li><strong>快速提现</strong>：通过第三方服务绕过等待期，但需支付额外成本。</li>
+</ul>
+<p>通过链下执行与链上验证的解耦，Optimistic Rollup在保证安全性的同时实现了用户体验的即时性。</p>
+<h1 id="L2在L1上提现机制"><a href="#L2在L1上提现机制" class="headerlink" title="L2在L1上提现机制"></a>L2在L1上提现机制</h1><h2 id="跨链桥直接提现"><a href="#跨链桥直接提现" class="headerlink" title="跨链桥直接提现"></a>跨链桥直接提现</h2><p>用户通过跨链桥将L2资产发送至L1地址，例如在zkSync中点击Withdraw按钮后，资产会经过以太坊主网验证后到达目标地址。此过程需要等待L1区块确认，并支付Gas费。</p>
+<h2 id="快速取款服务"><a href="#快速取款服务" class="headerlink" title="快速取款服务"></a>快速取款服务</h2><p>第三方做市商（如流动性提供者）提供即时到账服务：用户将L2资产转给做市商，做市商垫付L1资产并收取手续费，后续通过L1合约完成清算。这种方式无需等待挑战期（如Optimistic Rollup的7天），但需信任第三方。</p>
+<h2 id="技术实现差异"><a href="#技术实现差异" class="headerlink" title="技术实现差异"></a>技术实现差异</h2><ul>
+<li><strong>ZK-Rollup（如zkSync）</strong>：提现需等待有效性证明在L1验证完成。</li>
+<li><strong>Optimistic Rollup（如Optimism）</strong>：提现需经过挑战期（通常7天），期间可被质疑欺诈。</li>
+<li><strong>比特币L2（如Goat网络）</strong>：通过BitVM2协议和运营商锁定机制实现提现，挑战期设为2周。</li>
+</ul>
+<p>因此，L2提现到L1既可通过跨链桥直接完成，也可依赖第三方服务加速，具体取决于底层协议设计。</p>
 
                 </div>
                 
@@ -441,10 +495,10 @@
                                 <a class="next"
                                    rel="next"
                                    href="/blog/2025/02/13/3-cosmos/03-%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/"
-                                   title="架构解析.md"
+                                   title="cosmos架构解析"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">架构解析.md</span>
+                                        <span class="post-nav-title-item text-ellipsis">cosmos架构解析</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -472,7 +526,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%94%9A%E5%AE%9A%EF%BC%88Data-Availability%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">数据锚定（Data Availability）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%EF%BC%88Optimistic-Rollups%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">欺诈证明（Optimistic Rollups）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A0%B9%E5%90%8C%E6%AD%A5"><span class="nav-number">2.3.</span> <span class="nav-text">状态根同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E6%BF%80%E5%8A%B1%E4%B8%8E%E8%B4%A8%E6%8A%BC"><span class="nav-number">2.4.</span> <span class="nav-text">经济激励与质押</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8F%82%E4%B8%8E%E6%96%B9%E4%B8%8E%E5%AE%9A%E5%BA%8F%E5%99%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">核心参与方与定序器部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%BA%8F%E5%99%A8%EF%BC%88Sequencer%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">定序器（Sequencer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E8%80%85%EF%BC%88Prover%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">证明者（Prover）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E8%80%85%EF%BC%88Verifier%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">验证者（Verifier）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E4%B8%8EL1%E9%AA%8C%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">执行流程与L1验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZK-Rollup%E6%B5%81%E7%A8%8B"><span class="nav-number">4.1.</span> <span class="nav-text">ZK-Rollup流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimistic-Rollup%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">Optimistic Rollup流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%90%88%E7%BA%A6%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">关键合约与参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">L1智能合约类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E7%BA%A6%E5%8F%82%E6%95%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.2.</span> <span class="nav-text">合约参数示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E4%BF%9D%E9%9A%9C"><span class="nav-number">6.</span> <span class="nav-text">安全性保障</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%94%9A%E5%AE%9A"><span class="nav-number">6.1.</span> <span class="nav-text">数据锚定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="nav-number">6.2.</span> <span class="nav-text">状态同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E5%8D%9A%E5%BC%88"><span class="nav-number">6.3.</span> <span class="nav-text">经济博弈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8Optimistic-Rollup%EF%BC%88OP%EF%BC%89%E4%B8%AD%E7%9A%84%E6%8C%91%E6%88%98%E6%9C%BA%E5%88%B6"><span class="nav-number">7.</span> <span class="nav-text">在Optimistic Rollup（OP）中的挑战机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%E8%80%85%E5%A5%96%E5%8A%B1"><span class="nav-number">7.1.</span> <span class="nav-text">挑战者奖励</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%9B%9E%E6%BB%9A%E8%8C%83%E5%9B%B4"><span class="nav-number">7.2.</span> <span class="nav-text">状态回滚范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%A4%84%E7%90%86"><span class="nav-number">7.3.</span> <span class="nav-text">交易不确定性处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%90%88%E7%BA%A6%E4%B8%8E%E5%8F%82%E6%95%B0-1"><span class="nav-number">7.4.</span> <span class="nav-text">关键合约与参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%9B%9E%E6%BB%9A%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">局部回滚机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%BB%9A%E8%8C%83%E5%9B%B4%E6%8E%A7%E5%88%B6"><span class="nav-number">8.1.</span> <span class="nav-text">回滚范围控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%9C%A8%E6%80%A7"><span class="nav-number">8.2.</span> <span class="nav-text">交易数据的存在性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">8.3.</span> <span class="nav-text">依赖关系的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.4.</span> <span class="nav-text">技术实现示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E4%BA%A4%E6%98%93%E5%8D%B3%E6%97%B6%E7%94%9F%E6%95%88%E4%B8%8E%E6%8F%90%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">9.</span> <span class="nav-text">L2交易即时生效与提现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%E4%BA%A4%E6%98%93%E5%8D%B3%E6%97%B6%E7%94%9F%E6%95%88%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">9.1.</span> <span class="nav-text">L2交易即时生效的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequencer%E7%9A%84%E9%A2%84%E7%A1%AE%E8%AE%A4%EF%BC%88Pre-Confirmation%EF%BC%89"><span class="nav-number">9.1.1.</span> <span class="nav-text">Sequencer的预确认（Pre-Confirmation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E4%B8%8B%E7%8A%B6%E6%80%81%E4%B8%8EL1%E7%9A%84%E5%BC%82%E6%AD%A5%E5%90%8C%E6%AD%A5"><span class="nav-number">9.1.2.</span> <span class="nav-text">链下状态与L1的异步同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E4%B8%8E%E6%8C%91%E6%88%98%E6%9C%9F"><span class="nav-number">9.2.</span> <span class="nav-text">欺诈证明与挑战期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%96%E6%AC%BE%E6%9C%8D%E5%8A%A1%EF%BC%88Fast-Withdrawal%EF%BC%89"><span class="nav-number">9.3.</span> <span class="nav-text">快速取款服务（Fast Withdrawal）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">9.4.</span> <span class="nav-text">技术实现细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%9C%A8L1%E4%B8%8A%E6%8F%90%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">10.</span> <span class="nav-text">L2在L1上提现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E9%93%BE%E6%A1%A5%E7%9B%B4%E6%8E%A5%E6%8F%90%E7%8E%B0"><span class="nav-number">10.1.</span> <span class="nav-text">跨链桥直接提现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%96%E6%AC%BE%E6%9C%8D%E5%8A%A1"><span class="nav-number">10.2.</span> <span class="nav-text">快速取款服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82"><span class="nav-number">10.3.</span> <span class="nav-text">技术实现差异</span></a></li></ol></li></ol>
     </div>
 </div>
 
@@ -511,7 +565,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">54.3k</span>
+                    <span class="item-value border-box word">54k</span>
                 </span>
             
 
@@ -640,7 +694,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%94%9A%E5%AE%9A%EF%BC%88Data-Availability%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">数据锚定（Data Availability）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%EF%BC%88Optimistic-Rollups%EF%BC%89"><span class="nav-number">2.2.</span> <span class="nav-text">欺诈证明（Optimistic Rollups）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%A0%B9%E5%90%8C%E6%AD%A5"><span class="nav-number">2.3.</span> <span class="nav-text">状态根同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E6%BF%80%E5%8A%B1%E4%B8%8E%E8%B4%A8%E6%8A%BC"><span class="nav-number">2.4.</span> <span class="nav-text">经济激励与质押</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.5.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8F%82%E4%B8%8E%E6%96%B9%E4%B8%8E%E5%AE%9A%E5%BA%8F%E5%99%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">核心参与方与定序器部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E5%BA%8F%E5%99%A8%EF%BC%88Sequencer%EF%BC%89"><span class="nav-number">3.1.</span> <span class="nav-text">定序器（Sequencer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E8%80%85%EF%BC%88Prover%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">证明者（Prover）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E8%80%85%EF%BC%88Verifier%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">验证者（Verifier）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E4%B8%8EL1%E9%AA%8C%E8%AF%81"><span class="nav-number">4.</span> <span class="nav-text">执行流程与L1验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZK-Rollup%E6%B5%81%E7%A8%8B"><span class="nav-number">4.1.</span> <span class="nav-text">ZK-Rollup流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimistic-Rollup%E6%B5%81%E7%A8%8B"><span class="nav-number">4.2.</span> <span class="nav-text">Optimistic Rollup流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%90%88%E7%BA%A6%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="nav-number">5.</span> <span class="nav-text">关键合约与参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L1%E6%99%BA%E8%83%BD%E5%90%88%E7%BA%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">L1智能合约类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E7%BA%A6%E5%8F%82%E6%95%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">5.2.</span> <span class="nav-text">合约参数示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%80%A7%E4%BF%9D%E9%9A%9C"><span class="nav-number">6.</span> <span class="nav-text">安全性保障</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%94%9A%E5%AE%9A"><span class="nav-number">6.1.</span> <span class="nav-text">数据锚定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%90%8C%E6%AD%A5"><span class="nav-number">6.2.</span> <span class="nav-text">状态同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E5%8D%9A%E5%BC%88"><span class="nav-number">6.3.</span> <span class="nav-text">经济博弈</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8Optimistic-Rollup%EF%BC%88OP%EF%BC%89%E4%B8%AD%E7%9A%84%E6%8C%91%E6%88%98%E6%9C%BA%E5%88%B6"><span class="nav-number">7.</span> <span class="nav-text">在Optimistic Rollup（OP）中的挑战机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%91%E6%88%98%E8%80%85%E5%A5%96%E5%8A%B1"><span class="nav-number">7.1.</span> <span class="nav-text">挑战者奖励</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%9B%9E%E6%BB%9A%E8%8C%83%E5%9B%B4"><span class="nav-number">7.2.</span> <span class="nav-text">状态回滚范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7%E5%A4%84%E7%90%86"><span class="nav-number">7.3.</span> <span class="nav-text">交易不确定性处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%90%88%E7%BA%A6%E4%B8%8E%E5%8F%82%E6%95%B0-1"><span class="nav-number">7.4.</span> <span class="nav-text">关键合约与参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%9B%9E%E6%BB%9A%E6%9C%BA%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">局部回滚机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%BB%9A%E8%8C%83%E5%9B%B4%E6%8E%A7%E5%88%B6"><span class="nav-number">8.1.</span> <span class="nav-text">回滚范围控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%98%93%E6%95%B0%E6%8D%AE%E7%9A%84%E5%AD%98%E5%9C%A8%E6%80%A7"><span class="nav-number">8.2.</span> <span class="nav-text">交易数据的存在性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">8.3.</span> <span class="nav-text">依赖关系的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="nav-number">8.4.</span> <span class="nav-text">技术实现示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E4%BA%A4%E6%98%93%E5%8D%B3%E6%97%B6%E7%94%9F%E6%95%88%E4%B8%8E%E6%8F%90%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">9.</span> <span class="nav-text">L2交易即时生效与提现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#L2%E4%BA%A4%E6%98%93%E5%8D%B3%E6%97%B6%E7%94%9F%E6%95%88%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">9.1.</span> <span class="nav-text">L2交易即时生效的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequencer%E7%9A%84%E9%A2%84%E7%A1%AE%E8%AE%A4%EF%BC%88Pre-Confirmation%EF%BC%89"><span class="nav-number">9.1.1.</span> <span class="nav-text">Sequencer的预确认（Pre-Confirmation）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E4%B8%8B%E7%8A%B6%E6%80%81%E4%B8%8EL1%E7%9A%84%E5%BC%82%E6%AD%A5%E5%90%8C%E6%AD%A5"><span class="nav-number">9.1.2.</span> <span class="nav-text">链下状态与L1的异步同步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E4%B8%8E%E6%8C%91%E6%88%98%E6%9C%9F"><span class="nav-number">9.2.</span> <span class="nav-text">欺诈证明与挑战期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%96%E6%AC%BE%E6%9C%8D%E5%8A%A1%EF%BC%88Fast-Withdrawal%EF%BC%89"><span class="nav-number">9.3.</span> <span class="nav-text">快速取款服务（Fast Withdrawal）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">9.4.</span> <span class="nav-text">技术实现细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%9C%A8L1%E4%B8%8A%E6%8F%90%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">10.</span> <span class="nav-text">L2在L1上提现机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E9%93%BE%E6%A1%A5%E7%9B%B4%E6%8E%A5%E6%8F%90%E7%8E%B0"><span class="nav-number">10.1.</span> <span class="nav-text">跨链桥直接提现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%8F%96%E6%AC%BE%E6%9C%8D%E5%8A%A1"><span class="nav-number">10.2.</span> <span class="nav-text">快速取款服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82"><span class="nav-number">10.3.</span> <span class="nav-text">技术实现差异</span></a></li></ol></li></ol>
     </div>
 </div>
 
