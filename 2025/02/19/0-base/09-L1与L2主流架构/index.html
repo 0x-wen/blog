@@ -9,7 +9,7 @@
     
     <title>
         
-            cosmpy-sdk |
+            分层架构解析 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        cosmpy-sdk
+                        分层架构解析
                     </div>
                 
 
@@ -238,24 +238,15 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-05-19 14:26:13</span>
+                <span class="datetime">2025-02-19 15:27:56</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Mon Nov 25 2024 13:52:38 GMT+0800">2024-11-25 13:52:38</span>
+                <span class="datetime" data-updated="Wed Feb 19 2025 15:35:49 GMT+0800">2025-02-19 15:35:49</span>
             </span>
         
 
-        
-            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
-                <ul class="post-category-ul">
-                    
-                            <li class="category-item"><a href="/blog/categories/cosmos/">cosmos</a></li>
-                        
-                    
-                </ul>
-            </span>
         
 
         
@@ -272,12 +263,12 @@
         
         
             <span class="meta-info-item post-wordcount">
-                <i class="icon fas fa-file-word"></i>&nbsp;<span>667 字</span>
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>3k 字</span>
             </span>
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>2 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>10 分钟</span>
             </span>
         
         
@@ -294,75 +285,54 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="1-cosmpy源码解读"><a href="#1-cosmpy源码解读" class="headerlink" title="1.cosmpy源码解读"></a>1.cosmpy源码解读</h2><h3 id="1-1-项目简介"><a href="#1-1-项目简介" class="headerlink" title="1.1 项目简介"></a>1.1 项目简介</h3><p>基于 Cosmos-SDK 用于与区块链交互的 Python 客户端库  <a class="link"   target="_blank" rel="noopener" href="https://github.com/fetchai/cosmpy" >cosmpy-项目地址<i class="fas fa-external-link-alt"></i></a></p>
-<p>官方下也有一些示例文档和教程 可参考：<a class="link"   target="_blank" rel="noopener" href="https://fetch.ai/docs" >https://fetch.ai/docs<i class="fas fa-external-link-alt"></i></a></p>
-<h3 id="1-2-下载源码并安装依赖"><a href="#1-2-下载源码并安装依赖" class="headerlink" title="1.2 下载源码并安装依赖"></a>1.2 下载源码并安装依赖</h3><ul>
-<li><p>poetry 的使用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">brew install poetry    # 这里是mac电脑下安装方式，win可自行查找</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入项目目录下执行下面命令</span></span><br><span class="line">poetry install </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将根据项目根目录中的pyproject.toml文件中定义的依赖项列表，下载并安装所有必需的依赖项</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="1-3-调试代码和模块解析"><a href="#1-3-调试代码和模块解析" class="headerlink" title="1.3 调试代码和模块解析"></a>1.3 调试代码和模块解析</h3><p><code>aerial模块</code></p>
+                    <h1 id="分层架构解析"><a href="#分层架构解析" class="headerlink" title="分层架构解析"></a>分层架构解析</h1><h2 id="Layer-0（底层协议层）"><a href="#Layer-0（底层协议层）" class="headerlink" title="Layer 0（底层协议层）"></a>Layer 0（底层协议层）</h2><p><strong>功能</strong>：优化节点间通信协议（如P2P网络），提升数据传输效率，为上层提供基础网络支持。<br><strong>关键技术</strong>：跨链协议、分片技术底层支持。<br><strong>安全性</strong>：通过去中心化网络结构和加密通信保障底层安全。</p>
+<h2 id="Layer-1（主链层）"><a href="#Layer-1（主链层）" class="headerlink" title="Layer 1（主链层）"></a>Layer 1（主链层）</h2><p><strong>功能</strong>：处理核心交易验证与共识（如PoW、PoS），存储链上数据，确保全局一致性。<br><strong>关键技术</strong>：以太坊、比特币等公链的共识机制（PoW&#x2F;PoS）、数据存储结构（Merkle树、链式区块）。<br><strong>安全性</strong>：依赖算力或质押机制防止攻击（如51%攻击）。</p>
+<h2 id="Layer-2（扩展层）"><a href="#Layer-2（扩展层）" class="headerlink" title="Layer 2（扩展层）"></a>Layer 2（扩展层）</h2><p><strong>功能</strong>：在L1外处理高频交易，通过链下计算降低主链负载，提升吞吐量。<br><strong>关键技术</strong>：  </p>
 <ul>
-<li>config.py:</li>
+<li>Rollups（Optimistic&#x2F;ZK-Rollups）：批量压缩交易后提交至L1验证。  </li>
+<li>状态通道（如闪电网络）：双方链下交互，最终结果上链。  </li>
+<li>侧链：独立运行但通过跨链桥与L1交互。</li>
 </ul>
-<p>​		核心逻辑是NetworkConfig 和 NetworkConfigError 两个类</p>
-<p>​		NetworkConfig 主要配置 不同网络环境对应的成员数据</p>
-<p>​		validator函数主要检查classdata对象成员是否符合规范</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/config.png"
-                        alt="config"
-                 ></p>
-<ul>
-<li><p>aerial&#x2F;<strong>init</strong>.py</p>
-<p>LedgerClient 根据config中的URL类型建立一个客户端</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/init.png"
-                       
-                 ></p>
-</li>
-</ul>
-<h3 id="1-4-更改配置后调试测试用例"><a href="#1-4-更改配置后调试测试用例" class="headerlink" title="1.4 更改配置后调试测试用例"></a>1.4 更改配置后调试测试用例</h3><p>项目测试用例中有一个简单示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cosmospy/tests/integration/test_tx.py::test_faucet_transaction_balance</span><br></pre></td></tr></table></figure>
-
-<p>更改相关配置主要是代币名称，节点地址等，先保证此用例通过</p>
-<h2 id="2-cosmpy实践"><a href="#2-cosmpy实践" class="headerlink" title="2.cosmpy实践"></a>2.cosmpy实践</h2><h3 id="2-1-找到proto源文件并导入相关依赖"><a href="#2-1-找到proto源文件并导入相关依赖" class="headerlink" title="2.1 找到proto源文件并导入相关依赖"></a>2.1 找到proto源文件并导入相关依赖</h3><p>改造 cosmos-sdk 项目的 proto 源文件路径一般在根目录下的 proto 文件夹中</p>
-<p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/proto.png"
-                        alt="proto"
-                 ></p>
-<p>需注意 <code>py-proto</code> 是最后生成的Python调用文件，至于其他三个文件都可通过Google下载</p>
-<h3 id="2-2-编译proto文件"><a href="#2-2-编译proto文件" class="headerlink" title="2.2 编译proto文件"></a>2.2 编译proto文件</h3><ul>
-<li><p>编译命令, <code>需进入proto路径下，并提前创建py-proto文件夹</code></p>
-<p>–proto_path&#x3D;.&#x2F;proto         # 指定proto文件的路径</p>
-<p>–python_out&#x3D;.&#x2F;proto&#x2F;py-proto –grpc_python_out&#x3D;.&#x2F;proto&#x2F;py-proto    # 指定Python调用文件路径</p>
-<p>$(find .&#x2F; ( -path “<em>&#x2F;proto&#x2F;</em>“ ) -type f -name “*.proto”)    # 查找proto文件夹下所有 .proto结尾文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m grpc_tools.protoc --proto_path=./proto --python_out=./proto/py-proto --grpc_python_out=./proto/py-proto $(find ./ \( -path &quot;*/proto/*&quot; \) -type f -name &quot;*.proto&quot;) </span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="2-3-生成的文件可能没有包含-init-文件，需要循环创建"><a href="#2-3-生成的文件可能没有包含-init-文件，需要循环创建" class="headerlink" title="2.3 生成的文件可能没有包含__init__文件，需要循环创建"></a>2.3 生成的文件可能没有包含<code>__init__</code>文件，需要循环创建</h3><blockquote>
-<p>若已经有则可跳过此步骤</p>
-</blockquote>
-<ul>
-<li><p>将 py-proto 文件夹导入cosmpy项目， 重命名为 proto 此时会覆盖旧项目 proto</p>
-</li>
-<li><p>在proto文件夹下创建<code>__init__.py</code> 文件</p>
-</li>
-<li><p>循环遍历每个文件夹并创建<code>__init__.py</code> 文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find ./cosmpy/proto/amino  -type d -not -name &#x27;.*&#x27; -exec sh -c &#x27;if [ ! -f &quot;&#123;&#125;/__init__.py&quot; ]; then touch &quot;&#123;&#125;/__init__.py&quot;; fi&#x27; \;</span><br><span class="line">find ./cosmpy/proto/cosmos  -type d -not -name &#x27;.*&#x27; -exec sh -c &#x27;if [ ! -f &quot;&#123;&#125;/__init__.py&quot; ]; then touch &quot;&#123;&#125;/__init__.py&quot;; fi&#x27; \;</span><br></pre></td></tr></table></figure>
-
-<p>其他文件夹操作方式类似，操作完毕后将得到完整可用的Python客户端调用文件</p>
-</li>
-</ul>
-<h3 id="2-4-按proto文件编写对应客户端代码"><a href="#2-4-按proto文件编写对应客户端代码" class="headerlink" title="2.4 按proto文件编写对应客户端代码"></a>2.4 按proto文件编写对应客户端代码</h3><p><img  
-                       lazyload
-                       alt="image"
-                       data-src="/blog/images/static/call-proto.png"
-                       
-                 ></p>
+<h2 id="Layer-3（应用层）"><a href="#Layer-3（应用层）" class="headerlink" title="Layer 3（应用层）"></a>Layer 3（应用层）</h2><p><strong>功能</strong>：支持DApp开发，提供用户交互界面（如DeFi、NFT平台）。<br><strong>关键技术</strong>：智能合约、跨链互操作性协议。</p>
+<h1 id="L2如何利用L1的安全性？"><a href="#L2如何利用L1的安全性？" class="headerlink" title="L2如何利用L1的安全性？"></a>L2如何利用L1的安全性？</h1><p>数据锚定（Data Availability）</p>
+<p>L2将交易数据压缩后提交至L1存储，确保数据不可篡改。例如，ZK-Rollups生成零知识证明（ZKP）并上传至L1，L1验证证明后确认交易有效性<br>。<br>欺诈证明（Optimistic Rollups）</p>
+<p>L2默认交易有效，但允许用户在挑战期内提交欺诈证明。若发现无效交易，L1执行验证并回滚状态，惩罚作恶节点<br>。<br>状态根同步</p>
+<p>L2定期将状态根（Merkle根）提交至L1合约。L1通过验证状态根确保L2状态与主链一致<br>。<br>经济激励与质押</p>
+<p>L2节点需质押资产于L1，若作恶则罚没质押金。例如，Optimism的序列器节点需抵押ETH，确保其诚实执行交易<br>。</p>
+<p>Optimism（OP Mainnet）：采用Optimistic Rollups，依赖L1的欺诈证明机制，7天挑战期内用户可质疑交易<br>。<br>zkSync：基于ZK-Rollups，通过零知识证明即时验证交易，数据压缩后提交至以太坊主网<br>。<br>安网SAFE：通过跨链协议将L2交易数据锚定至多条L1公链（如比特币、以太坊），利用多链共识增强安全性</p>
+<p>L2通过将关键数据（交易批次、状态根）和验证逻辑（欺诈证明&#x2F;ZKP）绑定至L1，继承其去中心化与抗攻击能力，同时通过链下计算提升性能。这种分层架构有效缓解了“区块链不可能三角”的挑战</p>
+<p>具体细节如下：</p>
+<p>核心参与方与定序器部署<br>定序器（Sequencer）</p>
+<p>角色：负责接收用户交易、排序并打包成批次提交至L1。<br>部署方式：当前主流L2（如Optimism、Arbitrum）采用单点中心化定序器<br>，但未来计划通过共享定序器网络（如Espresso、Astria）实现去中心化<br>。<br>质押要求：定序器需在L1质押资产（如Optimism要求抵押ETH），若作恶则罚没质押金<br>。<br>证明者（Prover）</p>
+<p>角色：在ZK-Rollup中生成零知识证明（ZKP），验证交易有效性（如zkSync的证明节点）<br>。<br>生成流程：证明者接收定序器的交易批次，通过ZK-SNARK&#x2F;STARK算法生成压缩证明<br>。<br>验证者（Verifier）</p>
+<p>角色：在L1通过智能合约验证ZKP或欺诈证明（如Optimism的挑战期机制）</p>
+<p>执行流程与L1验证<br>ZK-Rollup流程</p>
+<p>步骤：<br>用户提交交易至L2定序器；<br>定序器打包交易并生成状态根；<br>证明者生成ZKP并提交至L1验证合约；<br>L1合约验证ZKP有效性后更新状态<br>。<br>验证依赖：L1的验证合约（如zkSync的Verifier.sol）通过数学算法验证ZKP，无需重放交易<br>。<br>Optimistic Rollup流程</p>
+<p>步骤：<br>定序器提交交易批次至L1；<br>默认交易有效，进入7天挑战期；<br>验证者可提交欺诈证明，触发L1合约重放交易验证；<br>若验证失败，回滚状态并罚没定序器质押金</p>
+<p>关键合约与参数<br>L1智能合约类型</p>
+<p>主合约（Main Contract）：管理存款、提款及状态根提交（如Optimism的OVM_ChainStorageContainer）<br>。<br>验证合约（Verifier Contract）：验证ZKP或欺诈证明（如zkSync的ZkSync.sol）<br>。<br>状态合约（State Contract）：存储L2的Merkle根（如Arbitrum的Rollup.sol）<br>。<br>合约参数示例</p>
+<p>挑战期：Optimism设为7天，Arbitrum为1周<br>。<br>质押金额：定序器需质押ETH（如Optimism要求至少1 ETH）<br>。<br>数据压缩率：ZK-Rollup将交易压缩至约1%大小（如zkSync每批次处理数千笔交易）<br>。<br>安全性保障<br>数据锚定：L2交易数据压缩后存储于L1（如以太坊的Calldata），确保不可篡改<br>。<br>状态同步：L2定期提交Merkle根至L1合约，L1通过比对根哈希验证一致性<br>。<br>经济博弈：定序器质押资产与欺诈惩罚机制形成博弈平衡，确保诚实行为<br>。</p>
+<p>在Optimistic Rollup（OP）中，普通用户可以直接发起欺诈挑战，无需成为特定验证者角色。根据OP的机制设计，任何运行完整节点的用户（包括普通用户）均可对无效交易提出质疑<br>。</p>
+<p>当挑战在7天挑战期的最后一天成功时：</p>
+<p>挑战者奖励：成功挑战者将获得作恶定序器质押的ETH的一部分（例如，若质押金为X ETH，挑战者可获得X×(1−α)，其中α为销毁比例，通常设置为50%）<br>。<br>状态回滚范围：仅回滚被挑战的特定交易批次，而非7天内所有交易。例如，若欺诈发生在第n个批次，则仅该批次的状态被撤销，其他批次保持有效<br>。<br>交易不确定性处理：<br>L2用户默认以最新提交至L1的状态为准，但可通过快速取款服务（如做市商）提前锁定资金。做市商在验证交易有效性后即时支付，若后续挑战成功则损失由做市商承担<br>。<br>L2链下状态在挑战期内仍可继续使用，但提现至L1需等待挑战期结束或依赖第三方桥接服务<br>。<br>关键合约与参数：</p>
+<p>FraudVerifier.sol：处理欺诈证明验证，触发状态回滚<br>。<br>挑战期固定为50400个以太坊区块（约7天），质押金额由协议设定（如Optimism要求定序器至少质押1 ETH）<br>。<br>综上，OP通过局部回滚和经济博弈机制，在保障安全性的同时最小化对用户体验的影响。</p>
+<p>在Optimistic Rollup中，局部回滚通过智能合约的欺诈证明机制实现，具体流程如下：</p>
+<p>回滚范围控制<br>当某个交易批次被证明存在欺诈时，L1的FraudVerifier合约仅回滚该特定批次及其后续所有区块，使其成为孤块<br>。例如，若第n个批次被回滚，则第n+1、n+2等依赖该批次哈希的后续区块均失效。</p>
+<p>交易数据的存在性</p>
+<p>数据存储：被回滚的批次交易数据仍永久存储在L1的Calldata或Blob中<br>，但对应的状态变更（如余额更新）会被撤销。<br>状态有效性：L2链的最终有效状态以未被挑战成功的批次为准，因此被回滚的交易在状态树中不再生效，但原始数据仍可追溯<br>。<br>依赖关系的处理</p>
+<p>哈希链断裂：后续区块的哈希因依赖被回滚的批次而失效，需重新从第n−1个有效批次开始构建新链<br>。<br>用户影响：依赖L2状态的DApp需监听L1合约的最终状态根，并基于最新有效状态重新处理后续交易<br>。<br>技术实现示例：</p>
+<p>Optimism：单轮欺诈证明触发整批次回滚，后续区块需重新打包<br>。<br>Arbitrum：多轮欺诈证明允许仅回滚争议交易，减少影响范围<br>。<br>综上，局部回滚通过智能合约强制状态回退和哈希链断裂机制实现，被回滚交易数据仍存于L1但状态无效，依赖L2的应用需同步最新有效状态<br>。</p>
+<p>在Optimistic Rollup（如Optimism、Arbitrum）中，用户于L2的交易无需等待L1确认即可立即可用，但提现至L1需等待挑战期（通常7天）。具体机制如下：</p>
+<p>L2交易即时生效的原理<br>Sequencer的预确认（Pre-Confirmation）</p>
+<p>L2的定序器（Sequencer）在收到用户交易后，立即在链下执行并更新本地状态，向用户返回交易收据（Transaction Receipt）<br>。<br>用户看到的余额变化和交易结果基于Sequencer的链下状态，无需等待L1确认<br>。<br>链下状态与L1的异步同步</p>
+<p>Sequencer定期将交易批次压缩后提交至L1（如通过Calldata或EIP-4844 Blob），但L2的本地状态独立更新，用户可即时交互<br>。<br>L2的DApp默认以Sequencer的链下状态为准，仅在提现至L1时依赖L1的最终确认<br>。<br>L1安全性与挑战期的作用<br>欺诈证明与挑战期</p>
+<p>L2提交至L1的交易数据需经过挑战期（如7天），期间任何人可提交欺诈证明质疑无效交易<br>。<br>仅提现至L1需要等待挑战期结束，L2内部交易不受此限制<br>。<br>快速取款服务（Fast Withdrawal）</p>
+<p>第三方做市商提供即时提现服务：用户将L2资产转给做市商，做市商垫付L1资产，承担挑战期风险并收取手续费<br>。<br>技术实现细节<br>状态根提交：L2的op-proposer组件定期将状态根（Merkle根）提交至L1的DisputeGameFactory合约，L1通过验证状态根确保L2状态一致性<br>。<br>数据压缩：通过EIP-4844 Blob或第三方DA层（如Celestia）降低L1存储成本，同时保证数据可恢复性<br>。<br>欺诈证明流程：若挑战成功，仅回滚争议批次及其后续区块，不影响其他交易<br>。<br>总结<br>L2内部交易：依赖Sequencer的即时预确认，用户立即可用<br>。<br>L1最终性：提现至L1需等待挑战期，但L2内部状态通过欺诈证明和状态根同步继承L1安全性<br>。<br>快速提现：通过第三方服务绕过等待期，但需支付额外成本<br>。<br>通过链下执行与链上验证的解耦，Optimistic Rollup在保证安全性的同时实现了用户体验的即时性<br>。</p>
+<p>L2在L1上提现指的是用户将资产从Layer 2网络转移回Layer 1主链的过程。具体来说，这通常涉及以下两种方式：</p>
+<p>跨链桥直接提现<br>用户通过跨链桥将L2资产发送至L1地址，例如在zkSync中点击Withdraw按钮后，资产会经过以太坊主网验证后到达目标地址<br>。此过程需要等待L1区块确认，并支付Gas费。</p>
+<p>快速取款服务<br>第三方做市商（如流动性提供者）提供即时到账服务：用户将L2资产转给做市商，做市商垫付L1资产并收取手续费，后续通过L1合约完成清算<br>。这种方式无需等待挑战期（如Optimistic Rollup的7天），但需信任第三方。</p>
+<p>技术实现差异：</p>
+<p>ZK-Rollup（如zkSync）：提现需等待有效性证明在L1验证完成<br>。<br>Optimistic Rollup（如Optimism）：提现需经过挑战期（通常7天），期间可被质疑欺诈<br>。<br>比特币L2（如Goat网络）：通过BitVM2协议和运营商锁定机制实现提现，挑战期设为2周<br>。<br>因此，L2提现到L1既可通过跨链桥直接完成，也可依赖第三方服务加速，具体取决于底层协议设计。 </p>
 
                 </div>
                 
@@ -371,11 +341,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                cosmpy-sdk
+                分层架构解析
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2024/05/19/3-cosmos/01-cosmpy-sdk/
+                2025/02/19/0-base/09-L1与L2主流架构/
             </div>
         </div>
 
@@ -391,7 +361,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2024-05-19 14:26</div>
+                <div class="content">2025-02-19 15:27</div>
             </div>
 
 
@@ -466,31 +436,15 @@
                 
                     <div class="post-nav border-box">
                         
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/blog/2024/05/21/0-base/03-UTXO%E5%92%8CAccount%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94/"
-                                   title="UTXO和Account模型对比"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">UTXO和Account模型对比</span>
-                                        <span class="post-nav-item">上一篇</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2024/05/17/4-wallet/01-%E9%92%B1%E5%8C%85%E7%B1%BB%E5%88%AB/"
-                                   title="钱包类别"
+                                   href="/blog/2025/02/13/3-cosmos/03-%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90/"
+                                   title="架构解析.md"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">钱包类别</span>
+                                        <span class="post-nav-title-item text-ellipsis">架构解析.md</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -518,7 +472,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-cosmpy%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.</span> <span class="nav-text">1.cosmpy源码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 项目简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%B9%B6%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 下载源码并安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E5%92%8C%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 调试代码和模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E5%90%8E%E8%B0%83%E8%AF%95%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 更改配置后调试测试用例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cosmpy%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">2.cosmpy实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%89%BE%E5%88%B0proto%E6%BA%90%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 找到proto源文件并导入相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 编译proto文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%9C%89%E5%8C%85%E5%90%AB-init-%E6%96%87%E4%BB%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E5%BE%AA%E7%8E%AF%E5%88%9B%E5%BB%BA"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 生成的文件可能没有包含__init__文件，需要循环创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%8C%89proto%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 按proto文件编写对应客户端代码</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a></li></ol>
     </div>
 </div>
 
@@ -686,7 +640,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-cosmpy%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB"><span class="nav-number">1.</span> <span class="nav-text">1.cosmpy源码解读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 项目简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%8B%E8%BD%BD%E6%BA%90%E7%A0%81%E5%B9%B6%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 下载源码并安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%B0%83%E8%AF%95%E4%BB%A3%E7%A0%81%E5%92%8C%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 调试代码和模块解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%9B%B4%E6%94%B9%E9%85%8D%E7%BD%AE%E5%90%8E%E8%B0%83%E8%AF%95%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 更改配置后调试测试用例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-cosmpy%E5%AE%9E%E8%B7%B5"><span class="nav-number">2.</span> <span class="nav-text">2.cosmpy实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%89%BE%E5%88%B0proto%E6%BA%90%E6%96%87%E4%BB%B6%E5%B9%B6%E5%AF%BC%E5%85%A5%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 找到proto源文件并导入相关依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%BC%96%E8%AF%91proto%E6%96%87%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 编译proto文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%94%9F%E6%88%90%E7%9A%84%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E6%B2%A1%E6%9C%89%E5%8C%85%E5%90%AB-init-%E6%96%87%E4%BB%B6%EF%BC%8C%E9%9C%80%E8%A6%81%E5%BE%AA%E7%8E%AF%E5%88%9B%E5%BB%BA"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 生成的文件可能没有包含__init__文件，需要循环创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%8C%89proto%E6%96%87%E4%BB%B6%E7%BC%96%E5%86%99%E5%AF%B9%E5%BA%94%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 按proto文件编写对应客户端代码</span></a></li></ol></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">分层架构解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-0%EF%BC%88%E5%BA%95%E5%B1%82%E5%8D%8F%E8%AE%AE%E5%B1%82%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Layer 0（底层协议层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-1%EF%BC%88%E4%B8%BB%E9%93%BE%E5%B1%82%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Layer 1（主链层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-2%EF%BC%88%E6%89%A9%E5%B1%95%E5%B1%82%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Layer 2（扩展层）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layer-3%EF%BC%88%E5%BA%94%E7%94%A8%E5%B1%82%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Layer 3（应用层）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#L2%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8L1%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">L2如何利用L1的安全性？</span></a></li></ol>
     </div>
 </div>
 
