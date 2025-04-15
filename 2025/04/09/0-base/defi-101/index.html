@@ -9,7 +9,7 @@
     
     <title>
         
-            sei-chain-load |
+            defi-101 |
         
         Blog
     </title>
@@ -212,7 +212,7 @@
             <div class="post-content-bottom border-box">
                 
                     <div class="post-title">
-                        sei-chain-load
+                        defi-101
                     </div>
                 
 
@@ -238,42 +238,28 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2025-02-25 20:54:42</span>
+                <span class="datetime">2025-04-09 14:36:10</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Tue Feb 25 2025 20:55:19 GMT+0800">2025-02-25 20:55:19</span>
+                <span class="datetime" data-updated="Tue Apr 15 2025 10:25:10 GMT+0800">2025-04-15 10:25:10</span>
             </span>
         
 
         
-            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
-                <ul class="post-category-ul">
-                    
-                            <li class="category-item"><a href="/blog/categories/cosmos/">cosmos</a></li>
-                        
-                    
-                </ul>
-            </span>
+
         
 
         
-            <span class="post-tag meta-info-item border-box">
-                <ul class="post-tag-ul">
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
-                        
-                    
-                </ul>
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.8k 字</span>
             </span>
-        
-
-        
         
         
             <span class="meta-info-item post-min2read">
-                <i class="icon fas fa-clock"></i>&nbsp;<span>1 分钟</span>
+                <i class="icon fas fa-clock"></i>&nbsp;<span>6 分钟</span>
             </span>
         
         
@@ -290,7 +276,56 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    
+                    <h2 id="预言机-Oracle"><a href="#预言机-Oracle" class="headerlink" title="预言机(Oracle)"></a>预言机(Oracle)</h2><p>​预言机（Oracle）​ 是连接区块链与外部世界（链下）的桥梁，负责将现实世界的数据（如价格、天气、事件结果等）安全可靠地传输到区块链上，供智能合约使用。它解决了区块链无法直接获取链下数据的问题，是去中心化应用（DApp）运行的关键基础设施。</p>
+<h3 id="预言机的核心功能"><a href="#预言机的核心功能" class="headerlink" title="预言机的核心功能"></a>预言机的核心功能</h3><ol>
+<li>​数据输入（Input Oracle）​<br>将链下数据（如加密货币价格、天气数据、赛事结果等）传输到链上，供智能合约处理。例如，DeFi 协议需要获取 ETH 的实时价格来决定是否触发抵押品清算。</li>
+<li>​数据输出（Output Oracle）​<br>允许智能合约向链下系统发送指令，触发外部操作。例如，合约执行后自动通知物流系统发货，或向银行系统发起法币支付。</li>
+<li>​跨链通信<br>在不同区块链之间传递数据和资产，促进多链生态的互操作性（如 Polkadot 的跨链桥）。</li>
+<li>​计算服务<br>提供链下复杂计算（如机器学习、隐私计算），将结果返回链上，以节省 Gas 费用并突破区块链的性能限制。</li>
+</ol>
+<h3 id="预言机解决的核心问题"><a href="#预言机解决的核心问题" class="headerlink" title="预言机解决的核心问题"></a>预言机解决的核心问题</h3><ol>
+<li><p>​区块链的封闭性问题<br>区块链本身是一个封闭系统，智能合约无法主动获取链下数据。预言机打破了这种限制，让合约能够基于现实世界的数据执行逻辑。</p>
+</li>
+<li><p>​去中心化应用的可靠性<br>DeFi、保险、预测市场等应用高度依赖外部数据。例如：<br>​DeFi：依赖价格数据（如 Chainlink 提供）进行借贷、清算和衍生品结算。<br>​保险：依赖天气数据（如台风路径）自动触发赔付。<br>​GameFi：依赖随机数生成（RNG）确保游戏公平性。</p>
+</li>
+<li><p>数据可信度问题<br>去中心化预言机（如 Chainlink）通过多节点验证、数据源聚合和惩罚机制，防止单点故障或数据篡改，确保数据的准确性和抗攻击性。</p>
+</li>
+<li><p>​扩展应用场景<br>预言机让区块链应用不再局限于链上原生数据，能够覆盖金融、供应链、物联网等广泛领域。</p>
+</li>
+</ol>
+<h3 id="预言机的工作机制"><a href="#预言机的工作机制" class="headerlink" title="预言机的工作机制"></a>预言机的工作机制</h3><ol>
+<li>​去中心化设计：大多数主流预言机（如 Chainlink）通过多个节点获取数据，聚合后提交到链上，避免单点操控风险。</li>
+<li>经济激励与惩罚：节点需要质押代币，若提供错误数据会被惩罚（Slashing）。</li>
+<li>​数据源多样性：从多个独立数据源（如交易所、API）获取数据，通过算法（如取中位数）过滤异常值。</li>
+<li>可验证性：部分预言机使用零知识证明（ZKP）等技术，确保数据来源和传输过程可验证。</li>
+</ol>
+<h3 id="典型用例"><a href="#典型用例" class="headerlink" title="典型用例"></a>典型用例</h3><ol>
+<li>​DeFi 价格喂价：Chainlink 为 Aave、Compound 等提供资产价格。</li>
+<li>​动态 NFT：根据现实事件（如体育比赛结果）更新 NFT 属性。</li>
+<li>自动化保险：航班延误险根据航班 API 数据自动赔付。</li>
+<li>​供应链追踪：将物流数据上传到链上，确保溯源透明。</li>
+</ol>
+<h3 id="预言机的分类"><a href="#预言机的分类" class="headerlink" title="预言机的分类"></a>预言机的分类</h3><p>​中心化预言机：由单一实体提供数据（成本低但风险高，如早期项目）。<br>​去中心化预言机：由多节点网络提供数据（如 Chainlink、Band Protocol）。<br>​特定领域预言机：专注于某一类数据（如天气数据预言机 WeatherXM）。</p>
+<h2 id="闪电贷"><a href="#闪电贷" class="headerlink" title="闪电贷"></a>闪电贷</h2><p>闪电贷是一种无需抵押的区块链借贷方式，允许用户在单笔交易内借款并归还。如果未在交易结束前还款，整个交易会被回滚，确保资金安全。</p>
+<p>核心特点：<br>​无需抵押：仅需在交易结束时归还本金+利息。<br>​原子性：整个操作（借款、使用、还款）必须在一个区块内完成，否则自动失败。</p>
+<p>应用场景<br>​套利：利用不同交易所的价差低买高卖。<br>​清算：偿还他人抵押不足的贷款，赚取清算奖励。<br>​抵押品置换：例如在借贷协议中更换抵押物类型。</p>
+<p>示例<br>用户从Aave借出100 ETH，用这笔资金在Uniswap低价买入代币A，再到Sushiswap高价卖出，最后归还Aave的100 ETH和利息，剩余利润归自己。</p>
+<h2 id="三明治攻击（Sandwich-Attack）​"><a href="#三明治攻击（Sandwich-Attack）​" class="headerlink" title="三明治攻击（Sandwich Attack）​"></a>三明治攻击（Sandwich Attack）​</h2><p>三明治攻击是MEV（矿工可提取价值）的一种形式，攻击者通过在目标交易前后插入自己的交易，人为制造价格波动并从中获利。</p>
+<p>攻击步骤:<br>​监控大额交易：发现用户准备在DEX（如Uniswap）上买入大量代币A。<br>​抢先交易（Front-running）​：在用户交易前买入代币A，推高价格。<br>​用户交易执行：用户以更高的价格买入代币A，进一步拉高价格。<br>​滞后交易（Back-running）​：攻击者卖出代币A，赚取差价。</p>
+<p>示例<br>用户想用10 ETH购买代币A（当前价格1 ETH &#x3D; 100 A）。<br>攻击者抢先用5 ETH买入500 A，导致池子中ETH增多，价格变为1 ETH &#x3D; 90 A。<br>用户实际买入得到900 A（而非预期的1000 A）。<br>攻击者随后卖出500 A，获得约5.55 ETH（价格被用户交易进一步推高），净赚0.55 ETH。</p>
+<h2 id="MEV（矿工可提取价值）"><a href="#MEV（矿工可提取价值）" class="headerlink" title="MEV（矿工可提取价值）"></a>MEV（矿工可提取价值）</h2><p>MEV（矿工可提取价值）套利攻击的核心是通过在不同去中心化交易所（DEX）之间利用价格差异，在同一区块内完成低买高卖的操作。</p>
+<p>示例：跨DEX套利攻击<br>场景：<br>假设代币 A 在​ Uniswap的价格为​1ETH&#x3D;1000A，而在 ​Sushiswap 的价格为 ​1 ETH &#x3D; 1010 $A​（存在1%的价差）。<br>攻击者通过以下步骤实现无风险套利：</p>
+<ol>
+<li><p>监控价格差异<br> 使用MEV机器人实时扫描链上数据（如通过mev-inspect等工具），发现Uniswap和Sushiswap之间的价差。<br> 计算潜在利润：扣除Gas费、滑点和闪电贷利息后是否有利可图。</p>
+</li>
+<li><p>发起闪电贷<br> 借款：从AAVE或dYdX等平台通过闪电贷借入 ​1000 ETH​（无需抵押）。<br> 目标：利用借入的资金放大套利规模，实现无本金操作。</p>
+</li>
+<li><p>执行套利交易<br> 通过智能合约在同一笔交易中完成以下操作（原子化执行，避免风险）：<br> ​低价买入：在Uniswap用 ​1000 ETH 购买 ​1,000,000 $A​（假设无滑点）。<br> ​高价卖出：在Sushiswap卖出 ​1,000,000 $A，获得约 ​1009.9 ETH​（扣除0.1%手续费）。<br> ​偿还闪电贷：归还 ​1000 ETH 本金及利息（假设利息为 ​0.1 ETH）。<br> ​获利：剩余利润为 ​1009.9 ETH - 1000.1 ETH &#x3D; 9.8 ETH。</p>
+</li>
+<li><p>绕过竞争和抢跑<br> ​使用私有交易通道：通过Flashbots等MEV服务直接将交易发送给矿工，避免公开在公共内存池（mempool）中被其他机器人抢跑。<br> ​提高Gas费：支付优先Gas费（Priority Fee）以确保交易优先被打包。</p>
+</li>
+</ol>
+
                 </div>
                 
                         
@@ -298,11 +333,11 @@
     <div class="copyright-info-content border-box">
         <div class="copyright-info-top border-box">
             <div class="copyright-post-title border-box text-ellipsis">
-                sei-chain-load
+                defi-101
             </div>
 
             <div class="copyright-post-link border-box text-ellipsis">
-                2025/02/25/3-cosmos/sei-chain-load/
+                2025/04/09/0-base/defi-101/
             </div>
         </div>
 
@@ -318,7 +353,7 @@
                 <div class="type">
                     发布于
                 </div>
-                <div class="content">2025-02-25 20:54</div>
+                <div class="content">2025-04-09 14:36</div>
             </div>
 
 
@@ -350,14 +385,6 @@
 
                 <div class="post-bottom-tags-and-share border-box">
                     <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
-                                    </li>
-                                
-                            </ul>
                         
                     </div>
                     <div>
@@ -393,15 +420,31 @@
                 
                     <div class="post-nav border-box">
                         
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2025/04/15/0-base/%E5%85%A8%E9%93%BE%E8%B7%AF%E5%8E%8B%E6%B5%8B%E6%96%B9%E6%A1%88%E4%B8%8E%E5%AE%9E%E6%96%BD/"
+                                   title="全链路压测方案与实施"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">全链路压测方案与实施</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
                         
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/blog/2025/02/19/0-base/09-L1%E4%B8%8EL2%E4%B8%BB%E6%B5%81%E6%9E%B6%E6%9E%84/"
-                                   title="分层架构解析"
+                                   href="/blog/2025/02/25/3-cosmos/sei-chain-test/"
+                                   title="sei-chain-test"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">分层架构解析</span>
+                                        <span class="post-nav-title-item text-ellipsis">sei-chain-test</span>
                                         <span class="post-nav-item">下一篇</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
@@ -429,7 +472,7 @@
             <div class="pc-post-toc right-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA-Oracle"><span class="nav-number">1.</span> <span class="nav-text">预言机(Oracle)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">预言机的核心功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">预言机解决的核心问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">预言机的工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%94%A8%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">典型用例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.5.</span> <span class="nav-text">预言机的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E7%94%B5%E8%B4%B7"><span class="nav-number">2.</span> <span class="nav-text">闪电贷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%98%8E%E6%B2%BB%E6%94%BB%E5%87%BB%EF%BC%88Sandwich-Attack%EF%BC%89%E2%80%8B"><span class="nav-number">3.</span> <span class="nav-text">三明治攻击（Sandwich Attack）​</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MEV%EF%BC%88%E7%9F%BF%E5%B7%A5%E5%8F%AF%E6%8F%90%E5%8F%96%E4%BB%B7%E5%80%BC%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">MEV（矿工可提取价值）</span></a></li></ol>
     </div>
 </div>
 
@@ -468,7 +511,7 @@
             
                 <span class="count-box border-box word">
                     <span class="item-type border-box">总字数</span>
-                    <span class="item-value border-box word">54k</span>
+                    <span class="item-value border-box word">57k</span>
                 </span>
             
 
@@ -597,7 +640,7 @@
             <div class="tablet-post-toc">
                 <div class="post-toc-wrap border-box">
     <div class="post-toc border-box">
-        
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA-Oracle"><span class="nav-number">1.</span> <span class="nav-text">预言机(Oracle)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">预言机的核心功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E8%A7%A3%E5%86%B3%E7%9A%84%E6%A0%B8%E5%BF%83%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">预言机解决的核心问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">预言机的工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E7%94%A8%E4%BE%8B"><span class="nav-number">1.4.</span> <span class="nav-text">典型用例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E8%A8%80%E6%9C%BA%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">1.5.</span> <span class="nav-text">预言机的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AA%E7%94%B5%E8%B4%B7"><span class="nav-number">2.</span> <span class="nav-text">闪电贷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%98%8E%E6%B2%BB%E6%94%BB%E5%87%BB%EF%BC%88Sandwich-Attack%EF%BC%89%E2%80%8B"><span class="nav-number">3.</span> <span class="nav-text">三明治攻击（Sandwich Attack）​</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MEV%EF%BC%88%E7%9F%BF%E5%B7%A5%E5%8F%AF%E6%8F%90%E5%8F%96%E4%BB%B7%E5%80%BC%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">MEV（矿工可提取价值）</span></a></li></ol>
     </div>
 </div>
 

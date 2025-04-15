@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            全链路压测方案与实施 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"纵横千里独行客,何惧前路雨潇潇.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        全链路压测方案与实施
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2025-04-15 14:31:48</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Tue Apr 15 2025 15:41:13 GMT+0800">2025-04-15 15:41:13</span>
+            </span>
+        
+
+        
+
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>4 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h1 id="全链路压测方案与实施"><a href="#全链路压测方案与实施" class="headerlink" title="全链路压测方案与实施"></a>全链路压测方案与实施</h1><h2 id="一、全链路压测的关键技术"><a href="#一、全链路压测的关键技术" class="headerlink" title="一、全链路压测的关键技术"></a>一、全链路压测的关键技术</h2><h3 id="1-流量染色"><a href="#1-流量染色" class="headerlink" title="1. 流量染色"></a>1. 流量染色</h3><p>对于压测流量经过的每一个中间件和服务进行准确识别，区分压测流量与正常流量。</p>
+<h3 id="2-数据隔离"><a href="#2-数据隔离" class="headerlink" title="2. 数据隔离"></a>2. 数据隔离</h3><ul>
+<li><strong>影子数据库</strong>：在生产环境中使用影子数据库隔离压测数据和生产数据，避免对生产环境造成影响。</li>
+<li><strong>影子数据表</strong>：保障整个链路可追踪，确保数据出现错误时具备恢复能力。</li>
+</ul>
+<h3 id="3-风险管控机制"><a href="#3-风险管控机制" class="headerlink" title="3. 风险管控机制"></a>3. 风险管控机制</h3><p>建立风险熔断机制，一旦发现生产环境的线上压测对业务造成影响，通过规则或指标自动触发风险熔断。这包括控制施压机流量，或对生产系统损坏部分进行业务隔离。</p>
+<h3 id="4-日志隔离"><a href="#4-日志隔离" class="headerlink" title="4. 日志隔离"></a>4. 日志隔离</h3><p>由于日志是业务分析的重要数据来源，如不做日志隔离可能会对BI决策造成影响。例如，压测过程中大量使用某地域流量访问生产环境，可能导致BI分析错误判断该地区业务增长，从而做出错误决策。因此需要区分存储正常生产流量和压测流量的日志。</p>
+<h2 id="二、压测流程"><a href="#二、压测流程" class="headerlink" title="二、压测流程"></a>二、压测流程</h2><p>完整的压测流程一般包含以下几个步骤：</p>
+<ol>
+<li><strong>压测目标的制定</strong></li>
+<li><strong>压测链路的梳理</strong></li>
+<li><strong>压测环境的准备</strong></li>
+<li><strong>压测数据的构造</strong></li>
+<li><strong>发压测试</strong></li>
+<li><strong>瓶颈定位及容量微调</strong></li>
+<li><strong>压测总结和报告</strong></li>
+</ol>
+<h2 id="三、压测指标"><a href="#三、压测指标" class="headerlink" title="三、压测指标"></a>三、压测指标</h2><p>根据业务需求选择关注的指标，常用指标包括：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>QPS</strong></td>
+<td>Query Per Second，每秒处理的请求个数</td>
+</tr>
+<tr>
+<td><strong>TPS</strong></td>
+<td>Transactions Per Second，每秒处理的事务数（TPS ≤ QPS）</td>
+</tr>
+<tr>
+<td><strong>RT</strong></td>
+<td>Response Time，响应时间，等价于Latency</td>
+</tr>
+<tr>
+<td><strong>CPU使用率</strong></td>
+<td>出于节点宕机后负载均衡考虑，一般保持 &lt; 75%</td>
+</tr>
+<tr>
+<td><strong>内存使用率</strong></td>
+<td>观察内存占用情况，关注是否有尖刺或泄露</td>
+</tr>
+<tr>
+<td><strong>Load指标</strong></td>
+<td>CPU负载，表示一段时间内CPU正在处理及等待处理的进程数</td>
+</tr>
+<tr>
+<td><strong>缓存命中率</strong></td>
+<td>能命中缓存层（Redis、Memcached等）的流量比例</td>
+</tr>
+<tr>
+<td><strong>数据库耗时</strong></td>
+<td>数据库性能指标，通常是业务瓶颈的关键点</td>
+</tr>
+<tr>
+<td><strong>网络带宽</strong></td>
+<td>网络传输能力是否成为瓶颈</td>
+</tr>
+<tr>
+<td><strong>错误率</strong></td>
+<td>接口响应错误率或错误日志量</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：RT分为平均延时和Pct延时（分位数）。平均值不能真实反映服务响应延时，实际压测中一般参考Pct90、Pct99等指标。</p>
+</blockquote>
+<p>科学的评估方法应将指标、成功率、流量三者关联，例如：99%的响应在500毫秒内返回，且成功率为99.99%。</p>
+<h2 id="四、测试思路"><a href="#四、测试思路" class="headerlink" title="四、测试思路"></a>四、测试思路</h2><ol>
+<li><strong>响应时间约束下的最大吞吐量</strong>：在限定响应时间的条件下，系统能达到的最高QPS&#x2F;TPS</li>
+<li><strong>100%成功率下的最大吞吐量</strong>：不考虑响应时间长短，保证所有请求成功的最大处理量</li>
+<li><strong>容忍部分失败的最大吞吐量</strong>：允许一定失败率和慢响应的情况下（如95%成功率，95%请求响应时间为特定毫秒）的最大QPS</li>
+<li><strong>持续性能表现</strong>：考虑不同持续时间下（如10分钟vs.1小时）系统的性能表现和资源占用情况，包括CPU、内存、负载、句柄、线程数、IO、带宽等是否合理</li>
+</ol>
+<h2 id="五、目标预估"><a href="#五、目标预估" class="headerlink" title="五、目标预估"></a>五、目标预估</h2><p>压测前需要明确性能预期，以下是常用的目标预估方法：</p>
+<h3 id="1-历史监控数据"><a href="#1-历史监控数据" class="headerlink" title="1. 历史监控数据"></a>1. 历史监控数据</h3><p>对已上线且有监控的接口，可查看历史数据找出峰值QPS和PCT99。</p>
+<h3 id="2-业务类比预估"><a href="#2-业务类比预估" class="headerlink" title="2. 业务类比预估"></a>2. 业务类比预估</h3><p>对于新接口或未监控接口，可通过与功能类似的接口历史数据进行类比。</p>
+<h3 id="3-业务场景估算"><a href="#3-业务场景估算" class="headerlink" title="3. 业务场景估算"></a>3. 业务场景估算</h3><p>基于业务规模进行估算，常用”8&#x2F;2原则”（一天内80%的请求会在20%的时间内到达）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">峰值QPS = (总PV × 0.8) ÷ (60 × 60 × 24 × 0.2)</span><br></pre></td></tr></table></figure>
+
+<p>响应时间（RT）默认参考值：</p>
+<ul>
+<li>单服务单表类接口：RT &lt; 100ms</li>
+<li>较复杂接口：RT &lt; 300ms</li>
+<li>大数据量或调用链较长的接口：RT &lt; 1s</li>
+</ul>
+<h4 id="示例1：电商秒杀活动"><a href="#示例1：电商秒杀活动" class="headerlink" title="示例1：电商秒杀活动"></a>示例1：电商秒杀活动</h4><p>预估同时有1000万人参与，假设总QPS为1000万。</p>
+<ul>
+<li>前端秒杀倒计时形式使请求有2s的打散</li>
+<li>网关层做了20%几率拒绝请求的策略</li>
+</ul>
+<p>计算：下单接口总QPS &#x3D; 1000万 ÷ 2 × (1 - 0.2) &#x3D; 400万&#x2F;s</p>
+<h4 id="示例2：电商全天低价抢购活动"><a href="#示例2：电商全天低价抢购活动" class="headerlink" title="示例2：电商全天低价抢购活动"></a>示例2：电商全天低价抢购活动</h4><p>根据8&#x2F;2原则，预估午休（12-1点）和晚上下班后（7-10点）共4小时是流量高峰。<br>计算：接口峰值QPS &#x3D; 活动全天接口PV ÷ (4 × 3600s)</p>
+<h3 id="4-逐步摸索法"><a href="#4-逐步摸索法" class="headerlink" title="4. 逐步摸索法"></a>4. 逐步摸索法</h3><p>针对”三无接口”（无参考、无预估、无历史数据），采用逐步增加压力的方式，收集数据并分析，最终确定接口的最优处理能力。</p>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                全链路压测方案与实施
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2025/04/15/0-base/全链路压测方案与实施/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2025-04-15 14:31</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2025/04/09/0-base/defi-101/"
+                                   title="defi-101"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">defi-101</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%93%BE%E8%B7%AF%E5%8E%8B%E6%B5%8B%E6%96%B9%E6%A1%88%E4%B8%8E%E5%AE%9E%E6%96%BD"><span class="nav-number">1.</span> <span class="nav-text">全链路压测方案与实施</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%A8%E9%93%BE%E8%B7%AF%E5%8E%8B%E6%B5%8B%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">1.1.</span> <span class="nav-text">一、全链路压测的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%81%E9%87%8F%E6%9F%93%E8%89%B2"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 流量染色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 数据隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%A3%8E%E9%99%A9%E7%AE%A1%E6%8E%A7%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 风险管控机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%97%A5%E5%BF%97%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 日志隔离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8E%8B%E6%B5%8B%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二、压测流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8E%8B%E6%B5%8B%E6%8C%87%E6%A0%87"><span class="nav-number">1.3.</span> <span class="nav-text">三、压测指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E8%AF%95%E6%80%9D%E8%B7%AF"><span class="nav-number">1.4.</span> <span class="nav-text">四、测试思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%9B%AE%E6%A0%87%E9%A2%84%E4%BC%B0"><span class="nav-number">1.5.</span> <span class="nav-text">五、目标预估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8E%86%E5%8F%B2%E7%9B%91%E6%8E%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 历史监控数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%9A%E5%8A%A1%E7%B1%BB%E6%AF%94%E9%A2%84%E4%BC%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 业务类比预估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E4%BC%B0%E7%AE%97"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 业务场景估算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B1%EF%BC%9A%E7%94%B5%E5%95%86%E7%A7%92%E6%9D%80%E6%B4%BB%E5%8A%A8"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">示例1：电商秒杀活动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B2%EF%BC%9A%E7%94%B5%E5%95%86%E5%85%A8%E5%A4%A9%E4%BD%8E%E4%BB%B7%E6%8A%A2%E8%B4%AD%E6%B4%BB%E5%8A%A8"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">示例2：电商全天低价抢购活动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%80%90%E6%AD%A5%E6%91%B8%E7%B4%A2%E6%B3%95"><span class="nav-number">1.5.4.</span> <span class="nav-text">4. 逐步摸索法</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">57k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%93%BE%E8%B7%AF%E5%8E%8B%E6%B5%8B%E6%96%B9%E6%A1%88%E4%B8%8E%E5%AE%9E%E6%96%BD"><span class="nav-number">1.</span> <span class="nav-text">全链路压测方案与实施</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%85%A8%E9%93%BE%E8%B7%AF%E5%8E%8B%E6%B5%8B%E7%9A%84%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="nav-number">1.1.</span> <span class="nav-text">一、全链路压测的关键技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%B5%81%E9%87%8F%E6%9F%93%E8%89%B2"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 流量染色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 数据隔离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E9%A3%8E%E9%99%A9%E7%AE%A1%E6%8E%A7%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 风险管控机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%97%A5%E5%BF%97%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 日志隔离</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8E%8B%E6%B5%8B%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">二、压测流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8E%8B%E6%B5%8B%E6%8C%87%E6%A0%87"><span class="nav-number">1.3.</span> <span class="nav-text">三、压测指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%B5%8B%E8%AF%95%E6%80%9D%E8%B7%AF"><span class="nav-number">1.4.</span> <span class="nav-text">四、测试思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E7%9B%AE%E6%A0%87%E9%A2%84%E4%BC%B0"><span class="nav-number">1.5.</span> <span class="nav-text">五、目标预估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8E%86%E5%8F%B2%E7%9B%91%E6%8E%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 历史监控数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%9A%E5%8A%A1%E7%B1%BB%E6%AF%94%E9%A2%84%E4%BC%B0"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 业务类比预估</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%E4%BC%B0%E7%AE%97"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 业务场景估算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B1%EF%BC%9A%E7%94%B5%E5%95%86%E7%A7%92%E6%9D%80%E6%B4%BB%E5%8A%A8"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">示例1：电商秒杀活动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B2%EF%BC%9A%E7%94%B5%E5%95%86%E5%85%A8%E5%A4%A9%E4%BD%8E%E4%BB%B7%E6%8A%A2%E8%B4%AD%E6%B4%BB%E5%8A%A8"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">示例2：电商全天低价抢购活动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E9%80%90%E6%AD%A5%E6%91%B8%E7%B4%A2%E6%B3%95"><span class="nav-number">1.5.4.</span> <span class="nav-text">4. 逐步摸索法</span></a></li></ol></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
