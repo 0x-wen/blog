@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="0x-wen">
+    
+    <title>
+        
+            Celestia网络节点深度解析 |
+        
+        Blog
+    </title>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/blog/images/logo.svg">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/font/css/brands.min.css">
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"0x-wen.github.io","root":"/blog/","language":"zh-CN","path":"search.json"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Blog","author":"0x-wen","avatar":"/images/logo.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/   || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags   || fa-solid fa-tags","categories":"/categories  || fa-solid fa-layer-group","about":"/about || fa-solid fa-user-graduate"},"first_screen":{"enable":true,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"纵横千里独行客,何惧前路雨潇潇.","hitokoto":false},"social_contact":{"enable":true,"links":{"github":"https://github.com/0x-wen","weixin":"./images/wx-qrcode.jpg","qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":"libai7236@gmail.com"}},"scroll":{"progress_bar":true,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"updated"},"post":{"author_badge":{"enable":false,"level_badge":false,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":true,"style":"mac"},"highlight_theme":"obsidian"},"toc":{"enable":true,"number":true,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":true,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"/blog","source_data":{},"version":"4.1.1"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+        <span class="scroll-progress-bar"></span>
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/blog/">
+                    <img src="/blog/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/blog/">
+               Blog
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/archives"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/tags"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/categories"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/blog/about"
+                            >
+                                
+                                    <i class="menu-icon fa-solid fa-user-graduate"></i>
+                                
+                                关于
+                            </a>
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/"
+                    >首页</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/archives"
+                    >归档</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/tags"
+                    >标签</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/categories"
+                    >分类</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/blog/about"
+                    >关于</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        Celestia网络节点深度解析
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/blog/images/logo.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">0x-wen</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2025-02-25 20:54:42</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Mon Jun 23 2025 20:29:22 GMT+0800">2025-06-23 20:29:22</span>
+            </span>
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/blog/categories/cosmos/">cosmos</a></li>
+                        
+                    
+                            <li class="category-item">&nbsp;<i class="icon fas fa-angle-right"></i>&nbsp;<a href="/blog/categories/cosmos/celestia/">celestia</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/blog/tags/blockchain/">blockchain</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>1.3k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>5 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h2 id="1-桥节点（Bridge-Node）-数据中继引擎"><a href="#1-桥节点（Bridge-Node）-数据中继引擎" class="headerlink" title="1. 桥节点（Bridge Node）- 数据中继引擎"></a>1. 桥节点（Bridge Node）- 数据中继引擎</h2><p><strong>核心职责</strong>：连接共识层（Celestia-Core）与数据可用性（DA）网络</p>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><h4 id="1-连接核心链"><a href="#1-连接核心链" class="headerlink" title="1. 连接核心链"></a>1. 连接核心链</h4><ul>
+<li>通过 gRPC&#x2F;RPC 直连 Celestia-Core 节点（验证节点或全节点）</li>
+<li>监听 NewBlock 事件：<code>core.Subscribe(&quot;NewBlock&quot;)</code></li>
+</ul>
+<h4 id="2-数据扩展处理"><a href="#2-数据扩展处理" class="headerlink" title="2. 数据扩展处理"></a>2. 数据扩展处理</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">processBlock</span><span class="params">(block Block)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 基础验证</span></span><br><span class="line">    <span class="keyword">if</span> err := block.ValidateBasic(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Error(<span class="string">&quot;Invalid block&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 生成纠删码分片</span></span><br><span class="line">    shares := rs.Encode(block.Data)</span><br><span class="line">    <span class="comment">// 构建数据可用性头(DAH)</span></span><br><span class="line">    dah := BuildDAH(shares)</span><br><span class="line">    <span class="comment">// 创建扩展头</span></span><br><span class="line">    extHeader := ExtendedHeader&#123;</span><br><span class="line">        Header: block.Header,</span><br><span class="line">        DAH:    dah,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-广播机制"><a href="#3-广播机制" class="headerlink" title="3. 广播机制"></a>3. 广播机制</h4><ul>
+<li>使用 GossipSub 协议的 HeaderSub 主题广播扩展头</li>
+<li>消息结构：<code>&#123;Height, Hash, DAH_Root, ValidatorSet&#125;</code></li>
+<li>网络拓扑：桥节点形成 DA 网络的初始数据源</li>
+</ul>
+<h4 id="4-关键特性"><a href="#4-关键特性" class="headerlink" title="4. 关键特性"></a>4. 关键特性</h4><ul>
+<li>无状态设计：不存储历史数据</li>
+<li>故障恢复：自动重连核心链</li>
+<li>负载均衡：可连接多个核心节点</li>
+</ul>
+<hr>
+<h2 id="2-全节点（Full-Node）-数据完整性卫士"><a href="#2-全节点（Full-Node）-数据完整性卫士" class="headerlink" title="2. 全节点（Full Node）- 数据完整性卫士"></a>2. 全节点（Full Node）- 数据完整性卫士</h2><p><strong>核心职责</strong>：保证数据完整性与生成欺诈证明</p>
+<h4 id="头部同步"><a href="#头部同步" class="headerlink" title="头部同步"></a>头部同步</h4><ul>
+<li>订阅 HeaderSub 获取扩展头</li>
+<li>使用 HeaderSync 服务维护头部链：<code>headerChain.Add(extHeader)</code></li>
+</ul>
+<h4 id="数据重建"><a href="#数据重建" class="headerlink" title="数据重建"></a>数据重建</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">reconstructBlock</span><span class="params">(extHeader ExtendedHeader)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 随机采样分片</span></span><br><span class="line">    samples := sampler.RandomSample(extHeader.DAH, <span class="number">50</span>) <span class="comment">// 采样50个分片</span></span><br><span class="line">    <span class="comment">// 从P2P网络获取分片数据</span></span><br><span class="line">    shares := shareService.FetchShares(samples)</span><br><span class="line">    <span class="comment">// 重构完整区块</span></span><br><span class="line">    block := rs.Decode(shares)</span><br><span class="line">    <span class="comment">// 验证数据一致性</span></span><br><span class="line">    <span class="keyword">if</span> !bytes.Equal(block.Header.Root, extHeader.DAH.Root) &#123;</span><br><span class="line">        generateFraudProof(extHeader, shares)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="欺诈证明生成"><a href="#欺诈证明生成" class="headerlink" title="欺诈证明生成"></a>欺诈证明生成</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">generateFraudProof</span><span class="params">(header ExtendedHeader, invalidShares []Share)</span></span> &#123;</span><br><span class="line">    proof := FraudProof&#123;</span><br><span class="line">        HeaderHash: header.Hash(),</span><br><span class="line">        InvalidShares: invalidShares,</span><br><span class="line">        Timestamp: time.Now(),</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 签名证明</span></span><br><span class="line">    signedProof := Sign(proof, nodePrivKey)</span><br><span class="line">    <span class="comment">// 广播至FraudSub</span></span><br><span class="line">    fraudSub.Publish(signedProof)</span><br><span class="line">    <span class="comment">// 节点自停</span></span><br><span class="line">    node.Stop()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>存储结构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[分片存储] --&gt; B[命名空间索引]</span><br><span class="line">    A --&gt; C[纠删码分片]</span><br><span class="line">    D[头部链] --&gt; E[区块链状态]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-轻节点（Light-Node）-可验证的轻客户端"><a href="#3-轻节点（Light-Node）-可验证的轻客户端" class="headerlink" title="3. 轻节点（Light Node）- 可验证的轻客户端"></a>3. 轻节点（Light Node）- 可验证的轻客户端</h2><p><strong>核心职责</strong>：通过随机采样低成本验证数据</p>
+<h4 id="头部同步优化"><a href="#头部同步优化" class="headerlink" title="头部同步优化"></a>头部同步优化</h4><ul>
+<li>初始同步：从可信检查点开始</li>
+<li>增量更新：订阅 HeaderSub 获取最新头</li>
+<li>信任机制：设置 <code>trustPeriod = unbondingPeriod</code></li>
+</ul>
+<h4 id="数据可用性抽样（DAS）"><a href="#数据可用性抽样（DAS）" class="headerlink" title="数据可用性抽样（DAS）"></a>数据可用性抽样（DAS）</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">performDAS</span><span class="params">(extHeader ExtendedHeader)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 基于头哈希生成随机种子</span></span><br><span class="line">    seed := sha256.Sum256(extHeader.Hash())</span><br><span class="line">    <span class="comment">// 生成随机采样索引</span></span><br><span class="line">    indexes := sampler.GenerateIndexes(seed, <span class="number">30</span>) <span class="comment">// 采样30个分片</span></span><br><span class="line">    <span class="comment">// 获取分片证明</span></span><br><span class="line">    shares, proofs := shareService.FetchSharesWithProof(indexes)</span><br><span class="line">    <span class="comment">// 验证证明</span></span><br><span class="line">    <span class="keyword">for</span> i, share := <span class="keyword">range</span> shares &#123;</span><br><span class="line">        <span class="keyword">if</span> !proofs[i].Verify(extHeader.DAH.Root) &#123;</span><br><span class="line">            handleInvalidSample(extHeader)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="欺诈证明处理"><a href="#欺诈证明处理" class="headerlink" title="欺诈证明处理"></a>欺诈证明处理</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fraudSub.Subscribe(<span class="function"><span class="keyword">func</span><span class="params">(proof FraudProof)</span></span> &#123;</span><br><span class="line">    <span class="comment">// 验证签名</span></span><br><span class="line">    <span class="keyword">if</span> !VerifySignature(proof) &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="comment">// 忽略无效签名</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 检查对应头部</span></span><br><span class="line">    <span class="keyword">if</span> header := headerChain.Get(proof.HeaderHash); header != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="comment">// 验证证明有效性</span></span><br><span class="line">        <span class="keyword">if</span> validateFraudProof(proof) &#123;</span><br><span class="line">            node.Stop() <span class="comment">// 安全停机</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="信任模型"><a href="#信任模型" class="headerlink" title="信任模型"></a>信任模型</h4><ul>
+<li>初始信任：依赖创世或可信检查点</li>
+<li>持续验证：通过 DAS 建立概率信任</li>
+<li>故障熔断：欺诈证明触发安全停机</li>
+</ul>
+<hr>
+<h2 id="4-跨节点协作场景"><a href="#4-跨节点协作场景" class="headerlink" title="4. 跨节点协作场景"></a>4. 跨节点协作场景</h2><ul>
+<li><strong>新区块生命周期</strong></li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant Core as Celestia-Core</span><br><span class="line">    participant Bridge</span><br><span class="line">    participant Full</span><br><span class="line">    participant Light</span><br><span class="line">    </span><br><span class="line">    Core-&gt;&gt;Bridge: NewBlock(高度=N)</span><br><span class="line">    Bridge-&gt;&gt;Bridge: 生成DAH</span><br><span class="line">    Bridge-&gt;&gt;Full: Broadcast(ExtendedHeader_N)</span><br><span class="line">    Bridge-&gt;&gt;Light: Broadcast(ExtendedHeader_N)</span><br><span class="line">    Full-&gt;&gt;Full: 下载分片→重构区块</span><br><span class="line">    alt 数据有效</span><br><span class="line">        Full-&gt;&gt;Full: 存储分片</span><br><span class="line">    else 数据无效</span><br><span class="line">        Full-&gt;&gt;Full: 生成欺诈证明</span><br><span class="line">        Full-&gt;&gt;FraudSub: 广播证明</span><br><span class="line">        FraudSub-&gt;&gt;Light: 传递证明</span><br><span class="line">        Light-&gt;&gt;Light: 验证后停机</span><br><span class="line">    end</span><br><span class="line">    Light-&gt;&gt;Light: 随机采样验证</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>轻节点同步流程</strong><ul>
+<li>启动时获取可信检查点（高度&#x3D;H）</li>
+<li>从 HeaderSub 接收最新头（高度&#x3D;H+100）</li>
+<li>计算信任间隔：<code>currentTime - header[H].Time</code></li>
+<li>若超过 trustPeriod，需请求新可信头，重新建立信任链</li>
+<li>并行执行：HeaderSync 继续同步头部，DASer 验证历史数据可用性</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="5-核心技术实现"><a href="#5-核心技术实现" class="headerlink" title="5. 核心技术实现"></a>5. 核心技术实现</h2><h3 id="数据可用性头（DAH）结构"><a href="#数据可用性头（DAH）结构" class="headerlink" title="数据可用性头（DAH）结构"></a>数据可用性头（DAH）结构</h3><figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message </span><span class="title class_">DataAvailabilityHeader</span> &#123;</span><br><span class="line">  <span class="type">bytes</span> root         = <span class="number">1</span>;  <span class="comment">// NMT根哈希</span></span><br><span class="line">  <span class="type">uint32</span> data_width  = <span class="number">2</span>;  <span class="comment">// 原始数据分片数</span></span><br><span class="line">  <span class="type">uint32</span> code_width  = <span class="number">3</span>;  <span class="comment">// 编码后分片数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="NMT树优化"><a href="#NMT树优化" class="headerlink" title="NMT树优化"></a>NMT树优化</h3><ul>
+<li>去除17字节前缀，通过树结构推导节点类型</li>
+<li>命名空间存储分离，不重复存储 namespaceID</li>
+</ul>
+<h3 id="网络协议栈"><a href="#网络协议栈" class="headerlink" title="网络协议栈"></a>网络协议栈</h3><table>
+<thead>
+<tr>
+<th>协议层</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FraudSub</td>
+<td>欺诈证明传播</td>
+</tr>
+<tr>
+<td>HeaderSub</td>
+<td>扩展头广播</td>
+</tr>
+<tr>
+<td>ShareNet</td>
+<td>分片数据传输</td>
+</tr>
+<tr>
+<td>TxSub</td>
+<td>用户交易中继</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="6-安全机制深度"><a href="#6-安全机制深度" class="headerlink" title="6. 安全机制深度"></a>6. 安全机制深度</h2><h3 id="长程攻击防护"><a href="#长程攻击防护" class="headerlink" title="长程攻击防护"></a>长程攻击防护</h3><ul>
+<li>信任期（trustPeriod）&#x3D; 解绑期（unbondingPeriod）</li>
+<li>主观头过期时触发重新信任</li>
+<li>基于 Tendermint 轻客户端模型</li>
+</ul>
+<h3 id="抽样安全保证"><a href="#抽样安全保证" class="headerlink" title="抽样安全保证"></a>抽样安全保证</h3><ul>
+<li>采样30个分片可检测99.9%的数据不可用</li>
+<li>公式：<code>1 - (1 - missing_ratio)^samples</code></li>
+</ul>
+<h3 id="经济安全模型"><a href="#经济安全模型" class="headerlink" title="经济安全模型"></a>经济安全模型</h3><ul>
+<li>欺诈证明使作恶成本显性化</li>
+<li>无效证明发送者会被信誉系统惩罚</li>
+<li>节点停机保护用户资产安全</li>
+</ul>
+<hr>
+<h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h2><p>Celestia 通过分层架构实现：</p>
+<ul>
+<li><strong>解耦验证</strong>：共识与数据可用性分离</li>
+<li><strong>横向扩展</strong>：轻节点可无限扩展</li>
+<li><strong>最小信任</strong>：轻客户端不依赖全节点诚实性</li>
+<li><strong>成本优化</strong>：存储负担由全节点承担</li>
+</ul>
+<p>关键创新点在于通过密码学和经济机制设计，使轻节点能以极低成本验证超大规模数据集的可用性，为模块化区块链奠定基础。</p>
+
+                </div>
+                
+                        
+<div class="post-copyright-info-container border-box">
+    <div class="copyright-info-content border-box">
+        <div class="copyright-info-top border-box">
+            <div class="copyright-post-title border-box text-ellipsis">
+                Celestia网络节点深度解析
+            </div>
+
+            <div class="copyright-post-link border-box text-ellipsis">
+                2025/02/25/3-cosmos/celestia/
+            </div>
+        </div>
+
+        <div class="copyright-info-bottom border-box">
+            <div class="copyright-post-author bottom-item">
+                <div class="type">
+                    作者
+                </div>
+                <div class="content">0x-wen</div>
+            </div>
+
+            <div class="post-time bottom-item">
+                <div class="type">
+                    发布于
+                </div>
+                <div class="content">2025-02-25 20:54</div>
+            </div>
+
+
+            <div class="post-license bottom-item">
+                <div class="type">
+                    许可
+                </div>
+                <div class="content tooltip" data-tooltip-content="CC BY-NC-SA 4.0">
+                    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans" target="_blank">
+                        
+                            <i class="fa-brands fa-creative-commons"></i>
+                            <i class="fa-brands fa-creative-commons-by"></i>
+                            <i class="fa-brands fa-creative-commons-nc"></i>
+                            <i class="fa-brands fa-creative-commons-sa"></i>
+                        
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <i class="copyright-bg fa-solid fa-copyright"></i>
+    </div>
+    <div class="copy-copyright-info flex-center tooltip" data-tooltip-content="复制版权信息" data-tooltip-offset-y="-2px">
+        <i class="fa-solid fa-copy"></i>
+    </div>
+</div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/blog/tags/blockchain/">blockchain</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/blog/2025/04/09/0-base/defi-101/"
+                                   title="defi-101"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">defi-101</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/blog/2025/02/19/0-base/09-L1%E4%B8%8EL2%E4%B8%BB%E6%B5%81%E6%9E%B6%E6%9E%84/"
+                                   title="分层架构解析"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">分层架构解析</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A1%A5%E8%8A%82%E7%82%B9%EF%BC%88Bridge-Node%EF%BC%89-%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%BB%A7%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text">1. 桥节点（Bridge Node）- 数据中继引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">工作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%BF%9E%E6%8E%A5%E6%A0%B8%E5%BF%83%E9%93%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 连接核心链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E6%89%A9%E5%B1%95%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 数据扩展处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 广播机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 关键特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%A8%E8%8A%82%E7%82%B9%EF%BC%88Full-Node%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E5%8D%AB%E5%A3%AB"><span class="nav-number">2.</span> <span class="nav-text">2. 全节点（Full Node）- 数据完整性卫士</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E5%90%8C%E6%AD%A5"><span class="nav-number">2.0.1.</span> <span class="nav-text">头部同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%87%8D%E5%BB%BA"><span class="nav-number">2.0.2.</span> <span class="nav-text">数据重建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E7%94%9F%E6%88%90"><span class="nav-number">2.0.3.</span> <span class="nav-text">欺诈证明生成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%BD%BB%E8%8A%82%E7%82%B9%EF%BC%88Light-Node%EF%BC%89-%E5%8F%AF%E9%AA%8C%E8%AF%81%E7%9A%84%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">3. 轻节点（Light Node）- 可验证的轻客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E5%90%8C%E6%AD%A5%E4%BC%98%E5%8C%96"><span class="nav-number">3.0.1.</span> <span class="nav-text">头部同步优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E7%94%A8%E6%80%A7%E6%8A%BD%E6%A0%B7%EF%BC%88DAS%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">数据可用性抽样（DAS）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E5%A4%84%E7%90%86"><span class="nav-number">3.0.3.</span> <span class="nav-text">欺诈证明处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E4%BB%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.0.4.</span> <span class="nav-text">信任模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%B7%A8%E8%8A%82%E7%82%B9%E5%8D%8F%E4%BD%9C%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">4. 跨节点协作场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">5. 核心技术实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E7%94%A8%E6%80%A7%E5%A4%B4%EF%BC%88DAH%EF%BC%89%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">数据可用性头（DAH）结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NMT%E6%A0%91%E4%BC%98%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">NMT树优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88"><span class="nav-number">5.3.</span> <span class="nav-text">网络协议栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E6%B7%B1%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">6. 安全机制深度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E7%A8%8B%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4"><span class="nav-number">6.1.</span> <span class="nav-text">长程攻击防护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E6%A0%B7%E5%AE%89%E5%85%A8%E4%BF%9D%E8%AF%81"><span class="nav-number">6.2.</span> <span class="nav-text">抽样安全保证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E5%AE%89%E5%85%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.3.</span> <span class="nav-text">经济安全模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">7. 总结</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2025
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/blog/">0x-wen</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+                <span class="count-box border-box word">
+                    <span class="item-type border-box">总字数</span>
+                    <span class="item-value border-box word">58.6k</span>
+                </span>
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A1%A5%E8%8A%82%E7%82%B9%EF%BC%88Bridge-Node%EF%BC%89-%E6%95%B0%E6%8D%AE%E4%B8%AD%E7%BB%A7%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text">1. 桥节点（Bridge Node）- 数据中继引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">工作流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%BF%9E%E6%8E%A5%E6%A0%B8%E5%BF%83%E9%93%BE"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 连接核心链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%95%B0%E6%8D%AE%E6%89%A9%E5%B1%95%E5%A4%84%E7%90%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 数据扩展处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 广播机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%85%B3%E9%94%AE%E7%89%B9%E6%80%A7"><span class="nav-number">1.1.4.</span> <span class="nav-text">4. 关键特性</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%A8%E8%8A%82%E7%82%B9%EF%BC%88Full-Node%EF%BC%89-%E6%95%B0%E6%8D%AE%E5%AE%8C%E6%95%B4%E6%80%A7%E5%8D%AB%E5%A3%AB"><span class="nav-number">2.</span> <span class="nav-text">2. 全节点（Full Node）- 数据完整性卫士</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E5%90%8C%E6%AD%A5"><span class="nav-number">2.0.1.</span> <span class="nav-text">头部同步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%87%8D%E5%BB%BA"><span class="nav-number">2.0.2.</span> <span class="nav-text">数据重建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E7%94%9F%E6%88%90"><span class="nav-number">2.0.3.</span> <span class="nav-text">欺诈证明生成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%BD%BB%E8%8A%82%E7%82%B9%EF%BC%88Light-Node%EF%BC%89-%E5%8F%AF%E9%AA%8C%E8%AF%81%E7%9A%84%E8%BD%BB%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">3. 轻节点（Light Node）- 可验证的轻客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E5%90%8C%E6%AD%A5%E4%BC%98%E5%8C%96"><span class="nav-number">3.0.1.</span> <span class="nav-text">头部同步优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E7%94%A8%E6%80%A7%E6%8A%BD%E6%A0%B7%EF%BC%88DAS%EF%BC%89"><span class="nav-number">3.0.2.</span> <span class="nav-text">数据可用性抽样（DAS）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AC%BA%E8%AF%88%E8%AF%81%E6%98%8E%E5%A4%84%E7%90%86"><span class="nav-number">3.0.3.</span> <span class="nav-text">欺诈证明处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E4%BB%BB%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.0.4.</span> <span class="nav-text">信任模型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%B7%A8%E8%8A%82%E7%82%B9%E5%8D%8F%E4%BD%9C%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">4. 跨节点协作场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">5. 核心技术实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E7%94%A8%E6%80%A7%E5%A4%B4%EF%BC%88DAH%EF%BC%89%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.</span> <span class="nav-text">数据可用性头（DAH）结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NMT%E6%A0%91%E4%BC%98%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">NMT树优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE%E6%A0%88"><span class="nav-number">5.3.</span> <span class="nav-text">网络协议栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6%E6%B7%B1%E5%BA%A6"><span class="nav-number">6.</span> <span class="nav-text">6. 安全机制深度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E7%A8%8B%E6%94%BB%E5%87%BB%E9%98%B2%E6%8A%A4"><span class="nav-number">6.1.</span> <span class="nav-text">长程攻击防护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E6%A0%B7%E5%AE%89%E5%85%A8%E4%BF%9D%E8%AF%81"><span class="nav-number">6.2.</span> <span class="nav-text">抽样安全保证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E6%B5%8E%E5%AE%89%E5%85%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">6.3.</span> <span class="nav-text">经济安全模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">7. 总结</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+<!-- common -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/libs/anime.min.js"></script>
+
+<!-- local-search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/lazyload.min.js"></script>
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.1.1/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
